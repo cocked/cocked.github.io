@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>01javase入门基础总结 | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  
+  <meta name="description" content="一、String介绍(引用类型) 123456789101112131415161718192021222324252627282930313233343536373839404142434445461.java.lang.String字符串.	用&amp;quot;&amp;quot;括住的时字符串,都可以看做是实现此类的实例	类String中也有许多简单方法2.特点	1).字符串不变:字符串的值在创建后不能被">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01JavaSE入门基础总结">
+<meta property="og:url" content="https://cocked.github.io/2018/08/20/01JavaSE入门基础总结/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="一、String介绍(引用类型) 123456789101112131415161718192021222324252627282930313233343536373839404142434445461.java.lang.String字符串.	用&amp;quot;&amp;quot;括住的时字符串,都可以看做是实现此类的实例	类String中也有许多简单方法2.特点	1).字符串不变:字符串的值在创建后不能被">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-20T13:01:00.825Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="01JavaSE入门基础总结">
+<meta name="twitter:description" content="一、String介绍(引用类型) 123456789101112131415161718192021222324252627282930313233343536373839404142434445461.java.lang.String字符串.	用&amp;quot;&amp;quot;括住的时字符串,都可以看做是实现此类的实例	类String中也有许多简单方法2.特点	1).字符串不变:字符串的值在创建后不能被">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="cocked.github.io/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="cocked.github.io/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="cocked.github.io/css/style.css">
+
+  <script src="cocked.github.io/js/jquery-3.1.1.min.js"></script>
+  <script src="cocked.github.io/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="cocked.github.io/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="cocked.github.io/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="cocked.github.io/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="cocked.github.io/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="cocked.github.io/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="cocked.github.io/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="cocked.github.io/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="cocked.github.io/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="cocked.github.io/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="cocked.github.io/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: 'cocked.github.io/',
+        CONTENT_URL: 'cocked.github.io/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="cocked.github.io/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-01JavaSE入门基础总结" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      01JavaSE入门基础总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="cocked.github.io/2018/08/20/01JavaSE入门基础总结/" class="article-date">
+	  <time datetime="2018-08-20T13:00:18.000Z" itemprop="datePublished">2018-08-20</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一、String介绍(引用类型)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">1.java.lang.String字符串.</span><br><span class="line">	用&quot;&quot;括住的时字符串,都可以看做是实现此类的实例</span><br><span class="line">	类String中也有许多简单方法</span><br><span class="line"></span><br><span class="line">2.特点</span><br><span class="line">	1).字符串不变:字符串的值在创建后不能被更改</span><br><span class="line">	2).因为String对象不可改变.所有他们可以被共享</span><br><span class="line">	3).(底层是这么实现的)对String s1 赋值 &quot;abc&quot; 等效于char[] data = [&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]</span><br><span class="line"></span><br><span class="line">3.构造举例(面试可能会问，)</span><br><span class="line"></span><br><span class="line">// 无参构造</span><br><span class="line">String str = new String();</span><br><span class="line"></span><br><span class="line">// 通过字符数组构造</span><br><span class="line">char chars[] = &#123;&apos;a&apos;,&apos;b&apos;,&apos;c&apos;&#125;;</span><br><span class="line">String str2 = new String(chars);</span><br><span class="line"></span><br><span class="line">// 通过字节数组构造</span><br><span class="line">byte b[] = &#123;97,98,99&#125;;</span><br><span class="line">String str3 = new String(b);</span><br><span class="line"></span><br><span class="line">4.字符串的比较（面试的时候会问，结合String进行理解）</span><br><span class="line">	1.		== 		比较</span><br><span class="line">		1.对基本类型 这个东西 可以 比较基本类型 四类八种 （比较的是值是否相等）</span><br><span class="line">		2.对引用类型进行比较时， 则比较地址值</span><br><span class="line">		</span><br><span class="line">	2.equals(String str)  </span><br><span class="line">		内容相同 ，返回true</span><br><span class="line">		</span><br><span class="line">5.String 方法</span><br><span class="line">（1）获取</span><br><span class="line">equalsIgnoreCase(String str)	忽略大小写比较内容</span><br><span class="line"></span><br><span class="line">int	length()	返回字符串长度</span><br><span class="line"></span><br><span class="line">String	concat 		将指定的字符串连接到该字符串的末尾</span><br><span class="line"></span><br><span class="line">char	charAt(int index)	返回指定索引处的char值</span><br><span class="line"></span><br><span class="line">int indexOf(String str) 	返回指定字符串第一次出现该字符串的位置(索引)	找到了就是对应的首次出现的索引，找不到就返回-1</span><br><span class="line"></span><br><span class="line">String substring (int beginIndex) 返回一个字符串，从beginIndex开始截取字符串到最后</span><br><span class="line"></span><br><span class="line">String substring (int beginIndex, int endIndex) 返回一个字符串，从beginIndex开始截取字符串</span><br><span class="line">到endIndex截取字符串。 含beg 不含 end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">（2）转换</span><br><span class="line">1.String replace()</span><br><span class="line">ex:</span><br><span class="line">	String str = &quot;abbccd&quot;</span><br><span class="line">	String newstr = str.replace(&apos;b&apos;,&apos;*&apos;)</span><br><span class="line">	System.out.println(newstr)</span><br><span class="line">		</span><br><span class="line">		a**ccd</span><br><span class="line">	此处将含有b的全部替换成*了</span><br><span class="line">	</span><br><span class="line">	String newstr = str.replace(&quot;bb&quot;,&quot;*&quot;)</span><br><span class="line">	</span><br><span class="line">		运行结果为a*ccd</span><br><span class="line">2.</span><br><span class="line">char [] chars = toCharArray()转成字符数组	</span><br><span class="line">3.</span><br><span class="line">	byte[] getByte();使用平台默认的字符集将该String编码新的字节数组.</span><br><span class="line">4. String[] split(String regex)   &quot;&quot;\\.&quot;表示.转义一下</span><br><span class="line">	以 regex对字符串进行分割</span><br></pre></td></tr></table></figure>
+<p>二、StringBuffer</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1.类介绍 </span><br><span class="line">	①线程安全的可变字符串序列，一个类似于String的字符串缓冲区，但是不能修改（就是不能通过加号+连接，String就可以）</span><br><span class="line">	②StringBuffer和String类的区别</span><br><span class="line">		String是一个可改变的字符序列</span><br><span class="line">		StringBuffer是一个可变的字符序列</span><br><span class="line">2.构造方法</span><br><span class="line">	StringBuffer()	构造一个没有字符的字符串缓冲区，初始容量为16个字符</span><br><span class="line">	StringBuffer(int capacity)	构造一个没有字符的字符串缓冲区和指定初始容量</span><br><span class="line">	StringBuffer(CharSequence seq)	构造一个字符串缓冲区,其中包含与指定的 CharSequence相同的字符。</span><br><span class="line">	StringBuffer(String str)	构造一个初始化为指定字符串内容的字符串缓冲区。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">	notes:</span><br><span class="line">		从jdk5开始,为该类补充了一个单个线程使用的等价类,即StringBuilder类,通常优先使用StringBuilder类,因为他支持所有相同操作,但是由于它不执行同步,所有速度更快</span><br><span class="line">3.增删,替换翻转,截取()</span><br><span class="line"></span><br><span class="line">	StringBuffer sb = new StringBuffer(&quot;abcd&quot;);</span><br><span class="line">	①添加</span><br><span class="line">	sb.append(&quot;str12&quot;);			//在末尾添加一个字符串</span><br><span class="line">	sb.insert(3,&quot;hhh&quot;);			//在指定位置添加指定字符串</span><br><span class="line">	②删除</span><br><span class="line">	sb.deleteCharAt(3);			//删除指定1位置的字符 并返回本身</span><br><span class="line">	sb.delete(1,3);     //左闭右开</span><br><span class="line">	③清空缓冲区</span><br><span class="line">	sb.delete(0,sb.length());</span><br><span class="line">	</span><br><span class="line">	④替换</span><br><span class="line">	sb.replace(0,3,&quot;bai&quot;)	// 包含头不包含尾</span><br><span class="line">	⑤翻转</span><br><span class="line">	sb.reverse();</span><br><span class="line">	⑥截取</span><br><span class="line">	sb.substring(int start)		//从指定位置截取到末尾</span><br><span class="line">	sb.substring(int start,int end)		//从指定位置开始到结束位置，包括开始位置，不包括结束位置</span><br><span class="line">	// 截取 返回值不再是StringBuffer而是String</span><br><span class="line"></span><br><span class="line">4.StringBuffer  --&gt; String</span><br><span class="line">	String --》 StringBuffer</span><br><span class="line">		a.通过构造方法</span><br><span class="line">			StringBuffer stringBuffer = new StringBuffer(&quot;woai&quot;);</span><br><span class="line">			System.out.println(stringBuffer);       // 通过构造方法完成转换成String</span><br><span class="line">		b.通过append()方法</span><br><span class="line">			StringBuffer stringBuffer = new StringBuffer();</span><br><span class="line">			stringBuffer.append(&quot;woai&quot;);</span><br><span class="line">			System.out.println(stringBuffer);       // 通过append()方法完成转换成String</span><br><span class="line">	</span><br><span class="line">	StringBuffer --》 String</span><br><span class="line">		StringBuffer sb = new StringBuffer(&quot;woai1&quot;);</span><br><span class="line">		a.通过构造方法</span><br><span class="line">			String s = new String(sb);      // 通过构造方法</span><br><span class="line">			System.out.println(s);</span><br><span class="line">		b.通过toString()方法</span><br><span class="line">			String string = sb.toString();      //通过toString()方法</span><br><span class="line">			System.out.println(&quot;string = &quot; + string);</span><br><span class="line">		c.通过subString(0,length);</span><br><span class="line">		    String substring = sb.substring(0, sb.length());</span><br><span class="line">			System.out.println(substring);</span><br><span class="line">	</span><br><span class="line">5.数组 --&gt; 字符串</span><br><span class="line">	举例：</span><br><span class="line">		int [] arr = &#123;1,2,3,&#125;;</span><br><span class="line">	输出结果:</span><br><span class="line">		&quot;[1,2,3]&quot;</span><br><span class="line">	用StringBuff的功能实现：</span><br><span class="line">		int[] arr = &#123;1, 2, 3&#125;;</span><br><span class="line">		StringBuffer stringBuffer = new StringBuffer();</span><br><span class="line">		stringBuffer.append(&quot;[&quot;);</span><br><span class="line">		for (int i = 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">			if (i == arr.length - 1) &#123;</span><br><span class="line">            stringBuffer.append(arr[i]).append(&quot;]&quot;);		//	使用这样的添加方式会减少垃圾的存在</span><br><span class="line">			&#125;else &#123;</span><br><span class="line">            stringBuffer.append(arr[i]).append(&quot;,&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(stringBuffer);</span><br><span class="line"></span><br><span class="line">6.字符串翻转</span><br><span class="line">	通过StringBuffer进行翻转</span><br><span class="line">	</span><br><span class="line">7.StringBuffer和StringBuilder区别</span><br><span class="line">	StringBuffer是jdk1.0版本的，是线程安全的，效率低的 		(对于用户访问量大的bat 保证其稳定性，对于金融要求，保证其稳定，其他都不存在)</span><br><span class="line">	StringBuilder是jdk1.5版本的，是线程不安全的，效率高的</span><br><span class="line">	</span><br><span class="line">	String和StringBuffer，StringBuilder的区别</span><br><span class="line">		String是一个不可变的字符序列</span><br><span class="line">		StringBuffer，StringBuilder是可变的字符序列</span><br><span class="line"></span><br><span class="line">8.String和StringBuffer作为参数传递</span><br><span class="line">	基本数据类型的值传递，不改变其值</span><br><span class="line">	引用数据类型的值传递，改变其值		//	因为传递的是内存地址，</span><br><span class="line">	</span><br><span class="line">	String s = &quot;heihei&quot;;</span><br><span class="line">    System.out.println(s);</span><br><span class="line">    change(s);</span><br><span class="line">    System.out.println(s);	//	heihei</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;------------------&quot;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">StringBuffer sb = new StringBuffer();</span><br><span class="line">sb.append(&quot;hhhhhh&quot;);</span><br><span class="line">change(sb);</span><br><span class="line">System.out.println(&quot;sb = &quot; + sb);	// heiheihhhhhh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">9.数组-冒泡,选择,二分排序</span><br><span class="line">	(1)冒泡</span><br><span class="line">		// 数据元素：&#123;24,69,80,57,13&#125;</span><br><span class="line">			相邻元素两两比较，大的往后放，第一次完毕，最大值出现在了最大索引处</span><br><span class="line">	(2)选择</span><br><span class="line">	(3)二分排序</span><br><span class="line">10.Arrays类</span><br><span class="line">11.Interger类</span><br><span class="line">12.String --&gt; int</span><br><span class="line">13.Interger面试题</span><br></pre></td></tr></table></figure>
+<p>​<br>三、StringBuffer的构造方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">* public StringBuffer():无参构造方法</span><br><span class="line">* public StringBuffer(int capacity)	指定容量的字符串缓冲区对象</span><br><span class="line">* public StringBuffer(String str) 指定字符串内容的字符串缓冲区对象</span><br><span class="line"></span><br><span class="line">StringBuffer sb = new StringBuffer()</span><br><span class="line">sb.append(&quot;&quot;)</span><br><span class="line">sb.insert(int offset , String str)// </span><br><span class="line">// 在指定位置把任意类型的数据插入到字符串缓冲区里面，并返回字符串本身</span><br><span class="line">// 在new的时候是在堆内存中创建了一个对象，底层是一个长度为16的字符数组，当调用添加方法时，不会再重新创建对象，在不断向原缓冲区添加zifu</span><br><span class="line">sb.deleteCharAt(4) // 根据索引删除索引位置上对应的字符</span><br><span class="line">sb.detel(0,2)		// 删除的时候包含头不包含尾</span><br><span class="line">sb.detel(0,sb.length()) 	// 情况缓冲区</span><br><span class="line">sb.replace(0,3,&quot;bai&quot;)		// 替换  替换指定区域的字符</span><br><span class="line">sb.reverse()				// 翻转</span><br><span class="line">sb.substring()				// 截取</span><br><span class="line">sb.reverse()				// 翻转</span><br><span class="line"></span><br><span class="line">String   --&gt; StringBuffer</span><br><span class="line"></span><br><span class="line">	//通过构造方法</span><br><span class="line">	//和 append 将  字符串 转换为 StringBuffer对象</span><br><span class="line">	StringBuffer sb = new StringBuffer(&quot;heima&quot;)</span><br><span class="line">	</span><br><span class="line">StringBuffer   --&gt; String</span><br><span class="line"></span><br><span class="line">	// 通过构造方法</span><br><span class="line">	// 通过toString()方法</span><br><span class="line">	// 通过subString(0,length)</span><br><span class="line"></span><br><span class="line">StringBuffer和StrinBuilder的区别：</span><br></pre></td></tr></table></figure>
+<p>四、Arrays</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.util.Arrays(操作数组的各种方法,如排序和搜索)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.sort 排序 直接打印 无返回值</span><br><span class="line">2.</span><br></pre></td></tr></table></figure>
+<p>五、Math</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java.lang.Math 类包含用于基本数学运算方法,如初等指数,对数,平方根和三角函数</span><br><span class="line">其所有方法为静态方法，并且不会创建对象，调用起来非常简单。</span><br><span class="line"></span><br><span class="line">1.abs</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Math.sqrt()//计算平方根</span><br><span class="line">Math.cbrt()//计算立方根</span><br><span class="line">Math.pow(a, b)//计算a的b次方</span><br><span class="line">Math.max( , );//计算最大值</span><br><span class="line">Math.min( , );//计算最小值</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Math.sqrt(16));   //4.0 </span><br><span class="line">System.out.println(Math.cbrt(8));    //2.0</span><br><span class="line">System.out.println(Math.pow(3,2));     //9.0</span><br><span class="line">System.out.println(Math.max(2.3,4.5));//4.5</span><br><span class="line">System.out.println(Math.min(2.3,4.5));//2.3</span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line"> * abs求绝对值 </span><br><span class="line"> */  </span><br><span class="line">System.out.println(Math.abs(-10.4));    //10.4  </span><br><span class="line">System.out.println(Math.abs(10.1));     //10.1  </span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line"> * ceil天花板的意思，就是返回大的值</span><br><span class="line"> */  </span><br><span class="line">System.out.println(Math.ceil(-10.1));   //-10.0  </span><br><span class="line">System.out.println(Math.ceil(10.7));    //11.0  </span><br><span class="line">System.out.println(Math.ceil(-0.7));    //-0.0  </span><br><span class="line">System.out.println(Math.ceil(0.0));     //0.0  </span><br><span class="line">System.out.println(Math.ceil(-0.0));    //-0.0  </span><br><span class="line">System.out.println(Math.ceil(-1.7));    //-1.0</span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line"> * floor地板的意思，就是返回小的值 </span><br><span class="line"> */  </span><br><span class="line">System.out.println(Math.floor(-10.1));  //-11.0  </span><br><span class="line">System.out.println(Math.floor(10.7));   //10.0  </span><br><span class="line">System.out.println(Math.floor(-0.7));   //-1.0  </span><br><span class="line">System.out.println(Math.floor(0.0));    //0.0  </span><br><span class="line">System.out.println(Math.floor(-0.0));   //-0.0  </span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line"> * random 取得一个大于或者等于0.0小于不等于1.0的随机数 </span><br><span class="line"> */  </span><br><span class="line">System.out.println(Math.random());  //小于1大于0的double类型的数</span><br><span class="line">System.out.println(Math.random()*2);//大于0小于1的double类型的数</span><br><span class="line">System.out.println(Math.random()*2+1);//大于1小于2的double类型的数</span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line"> * rint 四舍五入，返回double值 </span><br><span class="line"> * 注意.5的时候会取偶数    异常的尴尬=。=</span><br><span class="line"> */  </span><br><span class="line">System.out.println(Math.rint(10.1));    //10.0  </span><br><span class="line">System.out.println(Math.rint(10.7));    //11.0  </span><br><span class="line">System.out.println(Math.rint(11.5));    //12.0  </span><br><span class="line">System.out.println(Math.rint(10.5));    //10.0  </span><br><span class="line">System.out.println(Math.rint(10.51));   //11.0  </span><br><span class="line">System.out.println(Math.rint(-10.5));   //-10.0  </span><br><span class="line">System.out.println(Math.rint(-11.5));   //-12.0  </span><br><span class="line">System.out.println(Math.rint(-10.51));  //-11.0  </span><br><span class="line">System.out.println(Math.rint(-10.6));   //-11.0  </span><br><span class="line">System.out.println(Math.rint(-10.2));   //-10.0  </span><br><span class="line"></span><br><span class="line">/** </span><br><span class="line"> * round 四舍五入，float时返回int值，double时返回long值 </span><br><span class="line"> */  </span><br><span class="line">System.out.println(Math.round(10.1));   //10  </span><br><span class="line">System.out.println(Math.round(10.7));   //11  </span><br><span class="line">System.out.println(Math.round(10.5));   //11  </span><br><span class="line">System.out.println(Math.round(10.51));  //11  </span><br><span class="line">System.out.println(Math.round(-10.5));  //-10  </span><br><span class="line">System.out.println(Math.round(-10.51)); //-11  </span><br><span class="line">System.out.println(Math.round(-10.6));  //-11  </span><br><span class="line">System.out.println(Math.round(-10.2));  //-10</span><br></pre></td></tr></table></figure>
+<p>六、static(在方法区有一块固定的存储区域,由于优先于对象存在,所以可以被所有对象共享)<br>​    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">在定义方法的时候你写main方法的类加static,</span><br><span class="line">写普通类的写方法的时候就不要加static</span><br><span class="line"></span><br><span class="line">1.static可以用来修饰成员变量和成员方法，</span><br><span class="line">被修饰的成员属于类，而不是单单属于某个对象，</span><br><span class="line">也就是说，既然属于类，就可以不靠创建对象来调用了</span><br><span class="line"></span><br><span class="line">进一步介绍：</span><br><span class="line">	修饰成员变量</span><br><span class="line">	当static修饰成员变量时，该变量称为类变量，该类的每个对象都共享同一个类变量的值，任何对象都可以更改</span><br><span class="line">	该变量的值，但也可以在不创建该类的对象的情况下对类变量进行操作</span><br><span class="line">		</span><br><span class="line">		类名.类变量</span><br><span class="line">		类名.静态方法名(参数);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">修饰成员方法 (静态方法可以访问静态变量,不能访问普通的变量)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">类名.方法() 推荐</span><br><span class="line">对象名.方法名() 麻烦</span><br><span class="line"></span><br><span class="line">特点</span><br><span class="line">静态方法只能访问静态内容(成员变量,静态成员方法)</span><br></pre></td></tr></table></figure>
+<p>​<br>​        </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">notes:</span><br><span class="line">	静态方法 可以直接访问 静态变量和 静态方法.</span><br><span class="line">	静态方法 不能直接访问 普通成员变量 或 成员方法,反之成员方法可以直接访问静态变量或静态方法</span><br><span class="line">	静态方法 不能使用this关键字</span><br></pre></td></tr></table></figure>
+<p>​<br>七、静态代码块(想在main方法之前执行,可以给静态成员变量赋值)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">静态代码块：定义成员位置，使用static修饰代码块()</span><br><span class="line">位置:类方法外</span><br><span class="line">执行:随着类的加载而执行且执行一次,优先于main方法构造和构造方法执行</span><br><span class="line"></span><br><span class="line">格式:</span><br><span class="line">	public class ClassName&#123;</span><br><span class="line">		static&#123;</span><br><span class="line">			// </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>​        </p>
+<p>JAVA中分为基本数据类型和引用数据类型区别<br>一、基本数据类型：</p>
+<p>byte：Java中最小的数据类型，在内存中占8位(bit)，即1个字节，取值范围-128~127，默认值0</p>
+<p>short：短整型，在内存中占16位，即2个字节，取值范围-32768~32717，默认值0</p>
+<p>char：字符型，用于存储单个字符，占16位，即2个字节，取值范围0~65535，默认值为空</p>
+<p>int：整型，用于存储整数，在内在中占32位，即4个字节，取值范围-2147483648~2147483647，默认值0</p>
+<p>long：长整型，在内存中占64位，即8个字节-2^63~2^63-1，默认值0L</p>
+<p>float：浮点型，在内存中占32位，即4个字节，用于存储带小数点的数字（与double的区别在于float类型有效小数点只有6~7位），默认值0</p>
+<p>double：双精度浮点型，用于存储带有小数点的数字，在内存中占64位，即8个字节，默认值0</p>
+<p>boolean：布尔类型，占1个字节，用于判断真或假（仅有两个值，即true、false），默认值false</p>
+<p>二、引用数据类型：</p>
+<p>类、接口类型、数组类型、枚举类型、注解类型。</p>
+<p>区别：</p>
+<p>基本数据类型在被创建时，在栈上给其划分一块内存，将数值直接存储在栈上。</p>
+<p>引用数据类型在被创建时，首先要在栈上给其引用（句柄）分配一块内存，而对象的具体信息都存储在堆内存上，然后由栈上面的引用指向堆中对象的地址。</p>
+<p>例如，有一个类Person,有属性name,age,带有参的构造方法，</p>
+<p>Person p = new Person(“zhangsan”,20);</p>
+<p>在内存中的具体创建过程是：</p>
+<p>1.首先在栈内存中位其p分配一块空间;</p>
+<p>2.在堆内存中为Person对象分配一块空间，并为其三个属性设初值””，0；</p>
+<p>3.根据类Person中对属性的定义，为该对象的两个属性进行赋值操作；</p>
+<p>4.调用构造方法，为两个属性赋值为”Tom”,20；（注意这个时候p与Person对象之间还没有建立联系）；</p>
+<p>5.将Person对象在堆内存中的地址，赋值给栈中的p;通过引用（句柄）p可以找到堆中对象的具体信息。</p>
+<p>相关知识：</p>
+<p>静态区： 保存自动全局变量和 static 变量（包括 static 全局和局部变量）。静态区的内容在总个程序的生命周期内都存在，由编译器在编译的时候分配。</p>
+<p>堆区：  一般由程序员分配释放，由 malloc 系列函数或 new 操作符分配的内存，其生命周期由 free 或 delete 决定。在没有释放之前一直存在，直到程序结束，由OS释放。其特点是使用灵活，空间比较大，但容易出错</p>
+<p>栈区： 由编译器自动分配释放，保存局部变量，栈上的内容只在函数的范围内存在，当函数运行结束，这些内容也会自动被销毁，其特点是效率高，但空间大小有限</p>
+<p>文字常量区： 常量字符串就是放在这里的。   程序结束后由系统释放。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="cocked.github.io/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis的个人博客</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="cocked.github.io/2018/08/20/01JavaSE入门基础总结/" target="_blank" title="01JavaSE入门基础总结">https://cocked.github.io/2018/08/20/01JavaSE入门基础总结/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="cocked.github.io/2018/08/20/Jquery初探/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Jquery初探</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav">None</ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="cocked.github.io/" class="mobile-nav-link">Home</a>
+  
+    <a href="cocked.github.io/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="cocked.github.io/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="cocked.github.io/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="cocked.github.io/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="cocked.github.io/fancybox/jquery.fancybox.css">
+  <script src="cocked.github.io/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="cocked.github.io/js/scripts.js"></script>
+
+
+
+
+  <script src="cocked.github.io/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis的个人博客 All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
