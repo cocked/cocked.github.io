@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>02javase基本语法总结 | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="javaSE" />
+  
+  
+  
+  
+  <meta name="description" content="一、StringBuffer1.类介绍1234①线程安全的可变字符串序列，一个类似于String的字符串缓冲区，但是不能修改（就是不能通过加号+连接，String就可以）②StringBuffer和String类的区别	String是一个可改变的字符序列	StringBuffer是一个可变的字符序列 2.构造方法12345StringBuffer()	构造一个没有字符的字符串缓冲区，初始容量为16">
+<meta name="keywords" content="javaSE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02JavaSE基本语法总结">
+<meta property="og:url" content="htts://cocked.github.io/2016/10/26/02JavaSE基本语法总结/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="一、StringBuffer1.类介绍1234①线程安全的可变字符串序列，一个类似于String的字符串缓冲区，但是不能修改（就是不能通过加号+连接，String就可以）②StringBuffer和String类的区别	String是一个可改变的字符序列	StringBuffer是一个可变的字符序列 2.构造方法12345StringBuffer()	构造一个没有字符的字符串缓冲区，初始容量为16">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-27T02:22:13.192Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="02JavaSE基本语法总结">
+<meta name="twitter:description" content="一、StringBuffer1.类介绍1234①线程安全的可变字符串序列，一个类似于String的字符串缓冲区，但是不能修改（就是不能通过加号+连接，String就可以）②StringBuffer和String类的区别	String是一个可改变的字符序列	StringBuffer是一个可变的字符序列 2.构造方法12345StringBuffer()	构造一个没有字符的字符串缓冲区，初始容量为16">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-02JavaSE基本语法总结" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      02JavaSE基本语法总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2016/10/26/02JavaSE基本语法总结/" class="article-date">
+	  <time datetime="2016-10-26T11:59:02.000Z" itemprop="datePublished">2016-10-26</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、StringBuffer"><a href="#一、StringBuffer" class="headerlink" title="一、StringBuffer"></a>一、StringBuffer</h1><h2 id="1-类介绍"><a href="#1-类介绍" class="headerlink" title="1.类介绍"></a>1.类介绍</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">①线程安全的可变字符串序列，一个类似于String的字符串缓冲区，但是不能修改（就是不能通过加号+连接，String就可以）</span><br><span class="line">②StringBuffer和String类的区别</span><br><span class="line">	String是一个可改变的字符序列</span><br><span class="line">	StringBuffer是一个可变的字符序列</span><br></pre></td></tr></table></figure>
+<h2 id="2-构造方法"><a href="#2-构造方法" class="headerlink" title="2.构造方法"></a>2.构造方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">StringBuffer()	构造一个没有字符的字符串缓冲区，初始容量为16个字符</span><br><span class="line">StringBuffer(int capacity)	构造一个没有字符的字符串缓冲区和指定初始容量</span><br><span class="line">StringBuffer(CharSequence seq)	构造一个字符串缓冲区,其中包含与指定的 CharSequence相同的字符。</span><br><span class="line">StringBuffer(String str)	构造一个初始化为指定字符串内容的字符串缓冲区。 </span><br><span class="line">	Notes：从jdk5开始,为该类补充了一个单个线程使用的等价类,即StringBuilder类,通常优先使用StringBuilder类,因为他支持所有相同操作,但是由于它不执行同步,所有速度更快</span><br></pre></td></tr></table></figure>
+<h2 id="3-增删-替换翻转-截取"><a href="#3-增删-替换翻转-截取" class="headerlink" title="3.增删,替换翻转,截取()"></a>3.增删,替换翻转,截取()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">StringBuffer sb = new StringBuffer(&quot;abcd&quot;);</span><br><span class="line">①添加</span><br><span class="line">sb.append(&quot;str12&quot;);			//在末尾添加一个字符串</span><br><span class="line">sb.insert(3,&quot;hhh&quot;);			//在指定位置添加指定字符串</span><br><span class="line">②删除</span><br><span class="line">sb.deleteCharAt(3);			//删除指定1位置的字符 并返回本身</span><br><span class="line">sb.delete(1,3);     //左闭右开</span><br><span class="line">③清空缓冲区</span><br><span class="line">sb.delete(0,sb.length());</span><br><span class="line"></span><br><span class="line">④替换</span><br><span class="line">sb.replace(0,3,&quot;bai&quot;)	// 包含头不包含尾</span><br><span class="line">⑤翻转</span><br><span class="line">sb.reverse();</span><br><span class="line">⑥截取</span><br><span class="line">sb.substring(int start)		//从指定位置截取到末尾</span><br><span class="line">sb.substring(int start,int end)		//从指定位置开始到结束位置，包括开始位置，不包括结束位置</span><br><span class="line">// 截取 返回值不再是StringBuffer而是String</span><br></pre></td></tr></table></figure>
+<h2 id="4-StringBuffer-–-gt-String"><a href="#4-StringBuffer-–-gt-String" class="headerlink" title="4.StringBuffer  –&gt; String"></a>4.StringBuffer  –&gt; String</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">String --》 StringBuffer</span><br><span class="line">	a.通过构造方法</span><br><span class="line">		StringBuffer stringBuffer = new StringBuffer(&quot;woai&quot;);</span><br><span class="line">		System.out.println(stringBuffer);       // 通过构造方法完成转换成String</span><br><span class="line">	b.通过append()方法</span><br><span class="line">		StringBuffer stringBuffer = new StringBuffer();</span><br><span class="line">		stringBuffer.append(&quot;woai&quot;);</span><br><span class="line">		System.out.println(stringBuffer);       // 通过append()方法完成转换成String</span><br><span class="line"></span><br><span class="line">StringBuffer --》 String</span><br><span class="line">	StringBuffer sb = new StringBuffer(&quot;woai1&quot;);</span><br><span class="line">	a.通过构造方法</span><br><span class="line">		String s = new String(sb);      // 通过构造方法</span><br><span class="line">		System.out.println(s);</span><br><span class="line">	b.通过toString()方法</span><br><span class="line">		String string = sb.toString();      //通过toString()方法</span><br><span class="line">		System.out.println(&quot;string = &quot; + string);</span><br><span class="line">	c.通过subString(0,length);</span><br><span class="line">	    String substring = sb.substring(0, sb.length());</span><br><span class="line">		System.out.println(substring);</span><br></pre></td></tr></table></figure>
+<h2 id="5-数组-–-gt-字符串"><a href="#5-数组-–-gt-字符串" class="headerlink" title="5.数组 –&gt; 字符串"></a>5.数组 –&gt; 字符串</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">举例：</span><br><span class="line">		int [] arr = &#123;1,2,3,&#125;;</span><br><span class="line">	输出结果:</span><br><span class="line">		&quot;[1,2,3]&quot;</span><br><span class="line">	用StringBuff的功能实现：</span><br><span class="line">		int[] arr = &#123;1, 2, 3&#125;;</span><br><span class="line">		StringBuffer stringBuffer = new StringBuffer();</span><br><span class="line">		stringBuffer.append(&quot;[&quot;);</span><br><span class="line">		for (int i = 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">			if (i == arr.length - 1) &#123;</span><br><span class="line">            stringBuffer.append(arr[i]).append(&quot;]&quot;);		//	使用这样的添加方式会减少垃圾的存在</span><br><span class="line">			&#125;else &#123;</span><br><span class="line">            stringBuffer.append(arr[i]).append(&quot;,&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(stringBuffer);</span><br></pre></td></tr></table></figure>
+<h2 id="6-字符串翻转"><a href="#6-字符串翻转" class="headerlink" title="6.字符串翻转"></a>6.字符串翻转</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过StringBuffer进行翻转</span><br></pre></td></tr></table></figure>
+<h2 id="7-StringBuffer和StringBuilder区别"><a href="#7-StringBuffer和StringBuilder区别" class="headerlink" title="7.StringBuffer和StringBuilder区别"></a>7.StringBuffer和StringBuilder区别</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">StringBuffer是jdk1.0版本的，是线程安全的，效率低的 		(对于用户访问量大的bat 保证其稳定性，对于金融要求，保证其稳定，其他都不存在)</span><br><span class="line">	StringBuilder是jdk1.5版本的，是线程不安全的，效率高的</span><br><span class="line">	</span><br><span class="line">	String和StringBuffer，StringBuilder的区别</span><br><span class="line">		String是一个不可变的字符序列</span><br><span class="line">		StringBuffer，StringBuilder是可变的字符序列</span><br></pre></td></tr></table></figure>
+<h2 id="8-String和StringBuffer作为参数传递"><a href="#8-String和StringBuffer作为参数传递" class="headerlink" title="8.String和StringBuffer作为参数传递"></a>8.String和StringBuffer作为参数传递</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">基本数据类型的值传递，不改变其值</span><br><span class="line">引用数据类型的值传递，改变其值		//	因为传递的是内存地址，</span><br><span class="line"></span><br><span class="line">String s = &quot;heihei&quot;;</span><br><span class="line">   System.out.println(s);</span><br><span class="line">   change(s);</span><br><span class="line">   System.out.println(s);	//	heihei</span><br><span class="line">   System.out.println(&quot;------------------&quot;);</span><br><span class="line">   StringBuffer sb = new StringBuffer();</span><br><span class="line">   sb.append(&quot;hhhhhh&quot;);</span><br><span class="line">   change(sb);</span><br><span class="line">   System.out.println(&quot;sb = &quot; + sb);	// heiheihhhhhh</span><br></pre></td></tr></table></figure>
+<h2 id="9-数组-冒泡-选择-二分排序"><a href="#9-数组-冒泡-选择-二分排序" class="headerlink" title="9.数组-冒泡,选择,二分排序"></a>9.数组-冒泡,选择,二分排序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(1)冒泡</span><br><span class="line">	// 数据元素：&#123;24,69,80,57,13&#125;</span><br><span class="line">		相邻元素两两比较，大的往后放，第一次完毕，最大值出现在了最大索引处</span><br><span class="line">(2)选择</span><br><span class="line">(3)二分排序</span><br></pre></td></tr></table></figure>
+<h2 id="10-Arrays类"><a href="#10-Arrays类" class="headerlink" title="10.Arrays类"></a>10.Arrays类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="11-Interger类"><a href="#11-Interger类" class="headerlink" title="11.Interger类"></a>11.Interger类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="12-String-–-gt-int"><a href="#12-String-–-gt-int" class="headerlink" title="12.String –&gt; int"></a>12.String –&gt; int</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="13-Interger面试题"><a href="#13-Interger面试题" class="headerlink" title="13.Interger面试题"></a>13.Interger面试题</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="二、正则表达式"><a href="#二、正则表达式" class="headerlink" title="二、正则表达式"></a>二、正则表达式</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">1.概述和简单使用</span><br><span class="line">	 * [abc] a,b或c(简单类)</span><br><span class="line">	 * [^abc] 任何字符,除了a,b,或c (否定)</span><br><span class="line">	 * [a-zA-Z]   a到 z 或 A 到 Z, 两头的字母包括在内（范围）</span><br><span class="line">	 * [a-d[m-p]] a到 d 或 m到p  ;    [a-dm-p]   (并集)</span><br><span class="line">	 * [a-z&amp;&amp;[def]] d,e,或 f (交集)</span><br><span class="line">	 * [a-z&amp;&amp;[^bc]] a 到 z ，除了b和c;  [ad-z](减去)</span><br><span class="line">	 * [a-z&amp;&amp;[^m-p]] a 到 z 而非 m 到 p;  [a-lq-z](减去)</span><br><span class="line">	 </span><br><span class="line">2.预定义字符类</span><br><span class="line">	\d 数字:[0-9]</span><br><span class="line">	\D 非数字:[^0-9]</span><br><span class="line">	\s 空白字符:[\t\n\x0B\f\r]</span><br><span class="line">	\S 非空白字符:[^\s]</span><br><span class="line">	\w 单词字符:[a-zA-Z_0-9]</span><br><span class="line">	\W 非单词字符：[^\w]</span><br><span class="line">	</span><br><span class="line">3.常见对象(数量词)</span><br><span class="line">	X? X,一次或一次也没有</span><br><span class="line">	X* X,零次或多次</span><br><span class="line">	X+ X,一次或多次</span><br><span class="line">	X&#123;n&#125; X,恰好n次</span><br><span class="line">	X&#123;n,&#125; X,至少n次</span><br><span class="line">	X&#123;n,m&#125; X,至少n次,但是不超过m次</span><br></pre></td></tr></table></figure>
+<p>​        </p>
+<h1 id="二、Collection"><a href="#二、Collection" class="headerlink" title="二、Collection"></a>二、Collection</h1><h1 id="三、List"><a href="#三、List" class="headerlink" title="三、List"></a>三、List</h1><h1 id="四、Set"><a href="#四、Set" class="headerlink" title="四、Set"></a>四、Set</h1><h1 id="五、Map"><a href="#五、Map" class="headerlink" title="五、Map"></a>五、Map</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">********** 总结 *************</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Collection</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">* List	(存取有序，有索引，可以重复)</span><br><span class="line">	-ArrayList</span><br><span class="line">		底层是数组实现的，线程不安全，查找和修改快，增和删比较慢</span><br><span class="line">	-LinkedList</span><br><span class="line">		底层是链表实现的，线程不安全，增删快，查找和修改比较慢</span><br><span class="line">	-Vector</span><br><span class="line">		底层是数组实现的，线程安全，无论增删 查找都慢</span><br><span class="line">		</span><br><span class="line">	notes：</span><br><span class="line">		如果查找和修改多，用ArrayList</span><br><span class="line">		如果增和删多，用LinkedList</span><br><span class="line">		如果都多，用ArrayList</span><br><span class="line">* Set (存取无序，无需索引，不可以重复)</span><br><span class="line">	-HashSet</span><br><span class="line">		底层是哈希算法实现的</span><br><span class="line">		LinkedHashSet	</span><br><span class="line">			底层是链表实现，但是也可以保证元素的唯一性，和HasSet原理一样</span><br><span class="line">	-TreeSet</span><br><span class="line">		底层是二叉树算法实现的</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">	notes：</span><br><span class="line">		一般在开发的时候不需要对存储的元素排序，所以在开发的时候大多用HashSet , HashSet的效率比较高</span><br><span class="line">		TreeSet在面试的时候比较多，问你有几种排序方式，和几种排序方式的区别。</span><br><span class="line"></span><br><span class="line">* Map</span><br><span class="line"></span><br><span class="line">	HashMap	</span><br><span class="line">		底层是哈希算法，针对键</span><br><span class="line">		LinkedHashMap</span><br><span class="line">			底层是链表，针对键</span><br><span class="line">			</span><br><span class="line">	TreeMap</span><br><span class="line">		底层是二叉树算法，针对键</span><br><span class="line">		</span><br><span class="line">	notes：</span><br><span class="line">		开发中用HashMap比较多</span><br></pre></td></tr></table></figure>
+<h1 id="六、异常-amp-IO-文件类"><a href="#六、异常-amp-IO-文件类" class="headerlink" title="六、异常&amp;IO(文件类)"></a>六、异常&amp;IO(文件类)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">1.异常概述和分类</span><br><span class="line">	*概述</span><br><span class="line">		是java程序在运行过程中出现的错误</span><br><span class="line">	*分类</span><br><span class="line">		通过API可以查看Throwable 有两个子类error 和exception</span><br><span class="line">		error</span><br><span class="line">			服务器宕机，数据库崩溃</span><br><span class="line">		Exception</span><br><span class="line">			*RuntimeException  运行时异常</span><br><span class="line"></span><br><span class="line">2.异常(关于finally关键字的面试题)</span><br><span class="line">	A.final , finally 和 finalize的区别</span><br><span class="line">	B.如果catch里面有return 语句请问finally的代码还会执行吗? 如果会是在return前还是后</span><br><span class="line"></span><br><span class="line">3.自定义异常</span><br><span class="line">	继承Exception	编译时异常</span><br><span class="line">	继承RuntimeException	运行时异常</span><br><span class="line">	</span><br><span class="line">4.异常的注意事项及使用异常处理</span><br><span class="line">	A:注意事项</span><br><span class="line">		a.子类重写父类的方法时,子类的方法必须抛出相同的异常或父类异常的子类.</span><br><span class="line">		b.如果父类抛出多个异常,子类重写父类时,只能抛出相同的异常或者时他的子集,子集不能抛出父类没有的异常</span><br><span class="line">		c.如果被重写的方法没有异常抛出，那么子类的方法绝不可以抛出异常，如果子类方法内有异常发生，那么子类只能try，不能throws</span><br><span class="line"></span><br><span class="line">	B:如何使用异常处理</span><br><span class="line">		原则：如果该功能的内部可以将问题处理，就用try ，如果处理不了，交由调用者处理，这里用throws</span><br><span class="line">		区别：</span><br><span class="line">			*后续程序需要继续运行就try</span><br><span class="line">			*后续程序不需要运行就throws</span><br><span class="line">			</span><br><span class="line">		*如果JDK没有提供对应的异常，需要自定义异常</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2016/10/26/02JavaSE基本语法总结/" target="_blank" title="02JavaSE基本语法总结">htts://cocked.github.io/2016/10/26/02JavaSE基本语法总结/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/01/03JavaSE异常处理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          03JavaSE异常处理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/20/01JavaSE入门基础总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">01JavaSE入门基础总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、StringBuffer"><span class="nav-number">1.</span> <span class="nav-text">一、StringBuffer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-类介绍"><span class="nav-number">1.1.</span> <span class="nav-text">1.类介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-构造方法"><span class="nav-number">1.2.</span> <span class="nav-text">2.构造方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-增删-替换翻转-截取"><span class="nav-number">1.3.</span> <span class="nav-text">3.增删,替换翻转,截取()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-StringBuffer-–-gt-String"><span class="nav-number">1.4.</span> <span class="nav-text">4.StringBuffer  –&gt; String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-数组-–-gt-字符串"><span class="nav-number">1.5.</span> <span class="nav-text">5.数组 –&gt; 字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-字符串翻转"><span class="nav-number">1.6.</span> <span class="nav-text">6.字符串翻转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-StringBuffer和StringBuilder区别"><span class="nav-number">1.7.</span> <span class="nav-text">7.StringBuffer和StringBuilder区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-String和StringBuffer作为参数传递"><span class="nav-number">1.8.</span> <span class="nav-text">8.String和StringBuffer作为参数传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-数组-冒泡-选择-二分排序"><span class="nav-number">1.9.</span> <span class="nav-text">9.数组-冒泡,选择,二分排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-Arrays类"><span class="nav-number">1.10.</span> <span class="nav-text">10.Arrays类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-Interger类"><span class="nav-number">1.11.</span> <span class="nav-text">11.Interger类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-String-–-gt-int"><span class="nav-number">1.12.</span> <span class="nav-text">12.String –&gt; int</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-Interger面试题"><span class="nav-number">1.13.</span> <span class="nav-text">13.Interger面试题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、正则表达式"><span class="nav-number">2.</span> <span class="nav-text">二、正则表达式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Collection"><span class="nav-number">3.</span> <span class="nav-text">二、Collection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、List"><span class="nav-number">4.</span> <span class="nav-text">三、List</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、Set"><span class="nav-number">5.</span> <span class="nav-text">四、Set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、Map"><span class="nav-number">6.</span> <span class="nav-text">五、Map</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、异常-amp-IO-文件类"><span class="nav-number">7.</span> <span class="nav-text">六、异常&amp;IO(文件类)</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

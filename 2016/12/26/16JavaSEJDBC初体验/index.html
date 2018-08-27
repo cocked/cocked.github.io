@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>16javasejdbc初体验 | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="javaSE" />
+  
+  
+  
+  
+  <meta name="description" content="一、JDBC常用类和接口JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API。JDBC是Java访问数据库的标准规范，可以为不同的关系型数据库提供统一访问，它由一组用Java语言编写的接口和类组成。 JDBC**与数据库驱动的关系：接口与实现类的关系。** 二、JDBC常用类和接口JDBC有关的类：都在java.sql 和">
+<meta name="keywords" content="javaSE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="16JavaSEJDBC初体验">
+<meta property="og:url" content="htts://cocked.github.io/2016/12/26/16JavaSEJDBC初体验/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="一、JDBC常用类和接口JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API。JDBC是Java访问数据库的标准规范，可以为不同的关系型数据库提供统一访问，它由一组用Java语言编写的接口和类组成。 JDBC**与数据库驱动的关系：接口与实现类的关系。** 二、JDBC常用类和接口JDBC有关的类：都在java.sql 和">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-27T02:23:09.962Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="16JavaSEJDBC初体验">
+<meta name="twitter:description" content="一、JDBC常用类和接口JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API。JDBC是Java访问数据库的标准规范，可以为不同的关系型数据库提供统一访问，它由一组用Java语言编写的接口和类组成。 JDBC**与数据库驱动的关系：接口与实现类的关系。** 二、JDBC常用类和接口JDBC有关的类：都在java.sql 和">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-16JavaSEJDBC初体验" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      16JavaSEJDBC初体验
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2016/12/26/16JavaSEJDBC初体验/" class="article-date">
+	  <time datetime="2016-12-26T02:32:29.000Z" itemprop="datePublished">2016-12-26</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、JDBC常用类和接口"><a href="#一、JDBC常用类和接口" class="headerlink" title="一、JDBC常用类和接口"></a>一、JDBC常用类和接口</h1><p>JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行SQL语句的Java API。JDBC是Java访问数据库的标准规范，可以为不同的关系型数据库提供统一访问，它由一组用Java语言编写的接口和类组成。</p>
+<p><strong>JDBC**</strong>与数据库驱动的关系：接口与实现类的关系。**</p>
+<h1 id="二、JDBC常用类和接口"><a href="#二、JDBC常用类和接口" class="headerlink" title="二、JDBC常用类和接口"></a>二、JDBC常用类和接口</h1><p>JDBC有关的类：都在java.sql 和 javax.sql 包下.</p>
+<p>接口在Java中是用来定义 <code>行为规范的</code>.   接口必须有实现类.</p>
+<p>JDBC规范（四个核心对象）：</p>
+<p>DriverManager:用于注册驱动</p>
+<p>Connection: 表示与数据库创建的连接</p>
+<p>Statement: 操作数据库sql语句的对象</p>
+<p>ResultSet: 结果集或一张虚拟表</p>
+<p><strong>特别注意：</strong></p>
+<p><strong>Mysql驱动的driverClass 和url 的写法</strong></p>
+<p><strong>com.mysql.jdbc.Driver</strong></p>
+<hr>
+<p><strong>jdbc:mysql://localhost:3306/text</strong></p>
+<h2 id="1-JDBC-初体验"><a href="#1-JDBC-初体验" class="headerlink" title="1.JDBC 初体验"></a>1.JDBC 初体验</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JDBC 初体验</span></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demo01</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">	<span class="comment">// 1. 装载驱动</span></span><br><span class="line">	DriverManager.registerDriver(<span class="keyword">new</span> Driver());</span><br><span class="line">	<span class="comment">// 2. 建立连接</span></span><br><span class="line">	Connection conn = DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost:3306/mydb"</span>, <span class="string">"root"</span>, <span class="string">"111"</span>);</span><br><span class="line">	<span class="comment">// 3. 操作数据</span></span><br><span class="line">	String sql = <span class="string">"select * from user;"</span>;</span><br><span class="line">	Statement stmt = conn.createStatement();</span><br><span class="line">	ResultSet rs = stmt.executeQuery(sql);</span><br><span class="line">	<span class="keyword">while</span> (rs.next()) &#123;</span><br><span class="line">		<span class="keyword">int</span> id = rs.getInt(<span class="string">"id"</span>);</span><br><span class="line">		String username = rs.getString(<span class="string">"username"</span>);</span><br><span class="line">		String password = rs.getString(<span class="string">"password"</span>);</span><br><span class="line">		String email = rs.getString(<span class="string">"email"</span>);</span><br><span class="line">		System.out.println(id + <span class="string">" : "</span> + username + <span class="string">" : "</span> + password + <span class="string">" : "</span> + email);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 4. 释放资源</span></span><br><span class="line">	rs.close();</span><br><span class="line">	stmt.close();</span><br><span class="line">	conn.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-JDBC工具类的提取（）"><a href="#2-JDBC工具类的提取（）" class="headerlink" title="2.JDBC工具类的提取（）"></a>2.<strong>JDBC工具类的提取（）</strong></h2><p>方式一、</p>
+<p>–src下放连接数据库的配置文件</p>
+<pre><code>|--properties
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 配置文件的名字     jdbc.properties</span></span><br><span class="line"></span><br><span class="line">#mysql</span><br><span class="line">driverClass=com.mysql.jdbc.Driver</span><br><span class="line">url=jdbc:mysql:<span class="comment">//localhost:3306/mydb</span></span><br><span class="line">user=root</span><br><span class="line">password=<span class="number">111</span></span><br></pre></td></tr></table></figure>
+<p>–util包</p>
+<pre><code>|--JDBCUtils 类   
+
+|
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JDBCUtils</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 属性</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> String driverClass;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> String url;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> String username;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> String password;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//  什么时候加载外部配置文件最合适 ???   </span></span><br><span class="line">	<span class="comment">// 特点1 : 随着类的加载而加载.</span></span><br><span class="line">	<span class="comment">// 特点2 : 静态代码块只在类加载的被执行一次. 仅一次.</span></span><br><span class="line">	<span class="keyword">static</span> &#123;</span><br><span class="line">		Properties prop = <span class="keyword">new</span> Properties();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			prop.load(<span class="keyword">new</span> FileReader(<span class="string">"jdbc.properties"</span>));</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// 如果程序执行到这里, 说明外部资源文件加载成功, 需要给我们的静态属性赋值</span></span><br><span class="line">			driverClass = prop.getProperty(<span class="string">"driverClass"</span>);</span><br><span class="line">			url = prop.getProperty(<span class="string">"url"</span>);</span><br><span class="line">			username = prop.getProperty(<span class="string">"username"</span>);</span><br><span class="line">			password = prop.getProperty(<span class="string">"password"</span>);</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// 直接执行加载驱动</span></span><br><span class="line">			loadDriver();</span><br><span class="line">			</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"文件资源加载失败!"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 加载驱动</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loadDriver</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// 1. 加载驱动</span></span><br><span class="line">			Class.forName(driverClass);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">			<span class="comment">// e.printStackTrace();</span></span><br><span class="line">			<span class="comment">// 驱动加载失败!</span></span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"驱动加载失败!"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 建立连接</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">		<span class="comment">// 2. 建立连接</span></span><br><span class="line">		<span class="keyword">return</span> DriverManager.getConnection(url, username, password);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 释放资源</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">release</span><span class="params">(Connection conn, Statement stmt, ResultSet rs)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 4. 释放资源</span></span><br><span class="line">		<span class="keyword">if</span> (rs != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				rs.close();</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">// 将 rs 清空</span></span><br><span class="line">			rs = <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 直接调用</span></span><br><span class="line">		release(conn, stmt);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">release</span><span class="params">(Connection conn, Statement stmt)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// 4. 释放资源</span></span><br><span class="line">		<span class="keyword">if</span> (stmt != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				stmt.close();</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			stmt = <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (conn != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				conn.close();</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			conn = <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-测试"><a href="#3-测试" class="headerlink" title="3.测试"></a>3.测试</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_update</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Connection conn = <span class="keyword">null</span>;</span><br><span class="line">		Statement stmt = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// 2. 建立连接</span></span><br><span class="line">			conn = JDBCUtils.getConnection();</span><br><span class="line">			<span class="comment">// 3. 操作数据</span></span><br><span class="line">			String sql = <span class="string">"update user set username = 'zhaoliu', password = '123', email = 'zhaoliu@youjian.cn' where id = 4;"</span>;</span><br><span class="line">			stmt = conn.createStatement();</span><br><span class="line">			<span class="keyword">int</span> affectedRowNum = stmt.executeUpdate(sql);</span><br><span class="line">			System.out.println(affectedRowNum);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="comment">// 4. 释放资源</span></span><br><span class="line">			JDBCUtils.release(conn, stmt);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_delete</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Connection conn = <span class="keyword">null</span>;</span><br><span class="line">		Statement stmt = <span class="keyword">null</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// 1. 建立连接</span></span><br><span class="line">			conn = JDBCUtils.getConnection();</span><br><span class="line">			<span class="comment">// 2. 操作数据</span></span><br><span class="line">			String sql = <span class="string">"delete from user where id = 5;"</span>;</span><br><span class="line">			stmt = conn.createStatement();</span><br><span class="line">			<span class="keyword">int</span> affectedRowNum = stmt.executeUpdate(sql);</span><br><span class="line">			System.out.println(affectedRowNum);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="comment">// 4. 释放资源</span></span><br><span class="line">			JDBCUtils.release(conn, stmt);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_insert</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		Connection conn = <span class="keyword">null</span>;</span><br><span class="line">		Statement stmt = <span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// 1. 建立连接</span></span><br><span class="line">			conn = JDBCUtils.getConnection();</span><br><span class="line">			<span class="comment">// 2. 操作数据</span></span><br><span class="line">			String sql = <span class="string">"insert into user values(null, 'xiaoqi', '123', 'xiaoqi@youjian.cn');"</span>;</span><br><span class="line">			stmt = conn.createStatement();</span><br><span class="line">			<span class="keyword">int</span> affectedRowNumber = stmt.executeUpdate(sql);</span><br><span class="line">			System.out.println(affectedRowNumber);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="comment">// 4. 释放资源</span></span><br><span class="line">			JDBCUtils.release(conn, stmt);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 以上使用时 在进行查询的操作时 有可能会出现 sql注入问题</span></span><br><span class="line"><span class="comment">// 解决SQL注入：使用PreparedStatement 取代 Statement </span></span><br><span class="line"><span class="comment">// PreparedStatement 解决SQL注入原理，运行在SQL中参数以?占位符的方式表示</span></span><br><span class="line"><span class="comment">// select * from user where username = ? and password = ? ;</span></span><br><span class="line"><span class="comment">// 将带有?的SQL 发送给数据库完成编译 （不能执行的SQL 带有?的SQL 进行编译 叫做预编译），在SQL编译后发现缺少两个参数</span></span><br><span class="line"><span class="comment">// PreparedStatement 可以将? 代替参数 发送给数据库服务器，因为SQL已经编译过，参数中特殊字符不会当做特殊字符编译，无法达到SQL注入的目的 </span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">/************ JDBC 数据库连接操作 ***************/</span></span><br><span class="line">		Connection conn = <span class="keyword">null</span>;</span><br><span class="line">		PreparedStatement stmt = <span class="keyword">null</span>;</span><br><span class="line">		ResultSet rs = <span class="keyword">null</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// 1. 建立连接</span></span><br><span class="line">			conn = JDBCUtils.getConnection();</span><br><span class="line">			<span class="comment">// 2. 操作数据</span></span><br><span class="line">			String sql = <span class="string">"select * from user where username = ? and password = ?;"</span>;</span><br><span class="line">			stmt = conn.prepareStatement(sql);</span><br><span class="line">			<span class="comment">// 设置sql语句的参数</span></span><br><span class="line">			stmt.setString(<span class="number">1</span>, username);</span><br><span class="line">			stmt.setString(<span class="number">2</span>, password);</span><br><span class="line">			<span class="comment">// 执行sql语句</span></span><br><span class="line">			rs = stmt.executeQuery();</span><br><span class="line">			<span class="comment">// 判断返回的结果</span></span><br><span class="line">			<span class="keyword">if</span> (rs.next()) &#123;</span><br><span class="line">				<span class="comment">// 登录成功</span></span><br><span class="line">				<span class="keyword">int</span> id = rs.getInt(<span class="string">"id"</span>);</span><br><span class="line">				String u_name = rs.getString(<span class="string">"username"</span>);</span><br><span class="line">				String u_pwd = rs.getString(<span class="string">"password"</span>);</span><br><span class="line">				String email = rs.getString(<span class="string">"email"</span>);</span><br><span class="line">				System.out.println(id + <span class="string">" : "</span> + u_name + <span class="string">" : "</span> + u_pwd + <span class="string">" : "</span> + email);</span><br><span class="line">				System.out.println(<span class="string">"登录成功!"</span>);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="comment">// 登录失败</span></span><br><span class="line">				System.out.println(<span class="string">"登录失败! 用户名或密码错误!"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="comment">// 3. 释放资源</span></span><br><span class="line">			JDBCUtils.release(conn, stmt, rs);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2016/12/26/16JavaSEJDBC初体验/" target="_blank" title="16JavaSEJDBC初体验">htts://cocked.github.io/2016/12/26/16JavaSEJDBC初体验/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/01/10/02MySQL2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          17JavaMysql2
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/12/15JavaSE动态代理、XML、正则/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">15JavaSE动态代理、XML、正则</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、JDBC常用类和接口"><span class="nav-number">1.</span> <span class="nav-text">一、JDBC常用类和接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、JDBC常用类和接口"><span class="nav-number">2.</span> <span class="nav-text">二、JDBC常用类和接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-JDBC-初体验"><span class="nav-number">2.1.</span> <span class="nav-text">1.JDBC 初体验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-JDBC工具类的提取（）"><span class="nav-number">2.2.</span> <span class="nav-text">2.JDBC工具类的提取（）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-测试"><span class="nav-number">2.3.</span> <span class="nav-text">3.测试</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

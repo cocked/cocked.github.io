@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>16javamysql1 | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="mysql" />
+  
+  
+  
+  
+  <meta name="description" content="一、数据库的基本概念1.1  常用的关系型数据库123数据库（Database）是按照数据结构来组织、存储和管理数据的仓库。   1.2  sql语言SQL是Structured Query Language(结构化查询语言)的缩写。SQL是专为数据库而建立的操作命令集。SQL功能强大、简单易学、使用方便，已经成为了数据库操作的基础，并且现在几乎所有的关系型数据库均支持SQL。 特点：1非过程性语">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="16JavaMysql1">
+<meta property="og:url" content="htts://cocked.github.io/2017/01/18/01MySQL1/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="一、数据库的基本概念1.1  常用的关系型数据库123数据库（Database）是按照数据结构来组织、存储和管理数据的仓库。   1.2  sql语言SQL是Structured Query Language(结构化查询语言)的缩写。SQL是专为数据库而建立的操作命令集。SQL功能强大、简单易学、使用方便，已经成为了数据库操作的基础，并且现在几乎所有的关系型数据库均支持SQL。 特点：1非过程性语">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-27T02:22:08.230Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="16JavaMysql1">
+<meta name="twitter:description" content="一、数据库的基本概念1.1  常用的关系型数据库123数据库（Database）是按照数据结构来组织、存储和管理数据的仓库。   1.2  sql语言SQL是Structured Query Language(结构化查询语言)的缩写。SQL是专为数据库而建立的操作命令集。SQL功能强大、简单易学、使用方便，已经成为了数据库操作的基础，并且现在几乎所有的关系型数据库均支持SQL。 特点：1非过程性语">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-01MySQL1" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      16JavaMysql1
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/01/18/01MySQL1/" class="article-date">
+	  <time datetime="2017-01-18T10:21:43.000Z" itemprop="datePublished">2017-01-18</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、数据库的基本概念"><a href="#一、数据库的基本概念" class="headerlink" title="一、数据库的基本概念"></a>一、数据库的基本概念</h1><h2 id="1-1-常用的关系型数据库"><a href="#1-1-常用的关系型数据库" class="headerlink" title="1.1  常用的关系型数据库"></a>1.1  常用的关系型数据库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">数据库（Database）是按照数据结构来组织、存储和管理数据的仓库。</span><br><span class="line">   1.2  sql语言</span><br><span class="line">SQL是Structured Query Language(结构化查询语言)的缩写。SQL是专为数据库而建立的操作命令集。SQL功能强大、简单易学、使用方便，已经成为了数据库操作的基础，并且现在几乎所有的关系型数据库均支持SQL。</span><br></pre></td></tr></table></figure>
+<h2 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">非过程性语言。一条语句一个结果。多条语句之间没有影响。每一条SQL执行完都会有一个具体的结果出现。</span><br></pre></td></tr></table></figure>
+<p>SQL是用来操作关系数据库的语言，具有查询、操纵、定义和控制关系型数据库的四方面功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1.3  sql分类</span><br></pre></td></tr></table></figure>
+<h2 id="DDL-（数据定义语言）"><a href="#DDL-（数据定义语言）" class="headerlink" title="DDL （数据定义语言）"></a>DDL （数据定义语言）</h2><p>数据定义语言 - Data Definition Language<br>用来定义数据库的对象，如数据表、视图、索引等<br>create drop alter truncate</p>
+<h2 id="DML-（数据操纵语言）"><a href="#DML-（数据操纵语言）" class="headerlink" title="DML （数据操纵语言）"></a>DML （数据操纵语言）</h2><p>数据处理语言 - Data Manipulation Language<br>在数据库表中更新，增加和删除记录<br>如 update， insert， delete    不包含查询</p>
+<h2 id="DCL-（数据控制语言）"><a href="#DCL-（数据控制语言）" class="headerlink" title="DCL （数据控制语言）"></a>DCL （数据控制语言）</h2><p>数据控制语言 – Data Control Language<br>指用于设置用户权限和控制事务语句<br>如grant，revoke，if…else，while，begin transaction</p>
+<h2 id="DQL-（数据查询语言）（★★★★★）"><a href="#DQL-（数据查询语言）（★★★★★）" class="headerlink" title="DQL （数据查询语言）（★★★★★）"></a>DQL （数据查询语言）（★★★★★）</h2><p>数据查询语言 – Data Query Language<br>数据表记录的查询。<br>select</p>
+<h1 id="二、对数据库进行操作的语句"><a href="#二、对数据库进行操作的语句" class="headerlink" title="二、对数据库进行操作的语句"></a>二、对数据库进行操作的语句</h1><h2 id="1-1-数据库中默认自带有4个库："><a href="#1-1-数据库中默认自带有4个库：" class="headerlink" title="1.1 数据库中默认自带有4个库："></a>1.1 数据库中默认自带有4个库：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    1.information_schema 数据库：</span><br><span class="line">其中保存着关于MySQL服务器所维护的所有其他数据库的信息。如数据库名，数据库的表，表栏的数据的表，表栏的数据类型与访问权限等。</span><br><span class="line">    2.performance_schema 数据库：</span><br></pre></td></tr></table></figure>
+<p>存储引擎：命名PERFORMANCE_SCHEMA，主要用于手机数据库服务器性能参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">3.mysql 数据库：</span><br><span class="line">mysql库是系统库，里面保存有账户信息，权限信息，存储过程，event,时区等信息</span><br><span class="line">4.test 数据库:</span><br></pre></td></tr></table></figure>
+<p>这个是安装时候创建的一个测试数据库，和它的名字一样，是一个完全的空数据库，没有任何表，可以删除。</p>
+<h2 id="1-2-查看所有数据库"><a href="#1-2-查看所有数据库" class="headerlink" title="1.2 查看所有数据库"></a>1.2 查看所有数据库</h2><p>1.1 查询当前所有的数据库<br>show databases；<br>1.2 查看当前数据的创建方式：查看数据库的编码表<br>show create database 库名；<br>1.3 创建数据库<br>create database 数据库名： 由于创建数据库时没有指定编码表，因此会使用安装数据库时默认的编码表<br>create database 数据库名 character set 编码表名；创建数据库会使用指定的编码表<br>1.4 删除数据库<br>drop database 数据库名；<br>1.5 修改数据库编码集<br>alter database 数据库名称 character set 字符集；</p>
+<p>1.3 数据表结构的sql语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.1 数据表的创建语句</span><br><span class="line">create table 表名(</span><br></pre></td></tr></table></figure>
+<p> 列名 数据类型，<br> 列名 数据类型，<br> ……<br> 列名 数据类型 (最后一个列不需要逗号)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">)；</span><br></pre></td></tr></table></figure>
+<p>1.2 查看表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">show tables : 查看该数据库的所有的表</span><br><span class="line">         show create table 表名 ：查看建表语句以及字符集</span><br><span class="line">         desc emp 查看表的详细信息</span><br><span class="line">         show columns from emp ；查看表的列信息</span><br></pre></td></tr></table></figure>
+<p>1.4 约束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.1 主键约束</span><br><span class="line">        primary key</span><br><span class="line">        varchar 类型的主键不可以自增长.</span><br><span class="line">        示例：</span><br><span class="line">                【示例】</span><br></pre></td></tr></table></figure>
+<p>create table 表名 (<br> id int primary key auto_increment,<br> name varchar(20),<br> ………….<br>)；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.2 唯一约束</span><br><span class="line">      unique 内容不允许重复，可以为null（null不算重复）。</span><br></pre></td></tr></table></figure>
+<p>一个表里可以添加多个唯一约束。<br>【示例】<br>create table 表名 (<br> id int primary key auto_increment,<br> name varchar(20) unique,<br> ………….<br>)；<br>唯一约束和主键约束的区别<br>1、唯一约束可以是空(null)。 但是主键约束不能为空<br>2、一张表中只能有一个主键，但是唯一约束可以有多个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  1.3 非空约束</span><br><span class="line">not null 不允许为空 表示该列的内容 不允许为空。</span><br></pre></td></tr></table></figure>
+<p>约束的目的。<br>目的：保证数据的正确性。<br>约束列。限制列的内容。<br>1.5  数据表结构的修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1.修改数据表</span><br><span class="line">        可以对表名、表中的列名、列的类型、列的约束进行增删改</span><br><span class="line">        语法 ：alter table 表名  add/drop/modify  改名  类型长度  约束；</span><br><span class="line"> 2. 修改现有列的类型，长度和约束 用modify</span><br><span class="line">3. 修改现有列名称</span><br><span class="line">            语法 alter table 表名 change 旧列名 新列名 类型（长度） 约束；</span><br></pre></td></tr></table></figure>
+<p>·        4. 删除现有列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">          语法 alter table 表名 drop 列名；</span><br><span class="line">5. 修改表名 </span><br><span class="line">          语法 ：rename table 旧表名 to 新表名</span><br><span class="line">6. 修改表的字符集 </span><br><span class="line">          语法 ： alter table 表名 character set 编码集；</span><br></pre></td></tr></table></figure>
+<p>1.6 数据表的删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">语法 ： drop table 表名：</span><br></pre></td></tr></table></figure>
+<h1 id="三、数据记录的增删改"><a href="#三、数据记录的增删改" class="headerlink" title="三、数据记录的增删改"></a>三、数据记录的增删改</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在java代码中对数据库操作最频繁的就是对表中数据的CRUD操作：create read / retrive update delete</span><br></pre></td></tr></table></figure>
+<p>数据记录存储位置<br>​            </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">增：  语法：insert into 表名 （列名，列名，列名。。。） values（ 值，值，值。。。）；</span><br><span class="line">改：update 表名 set 列名 = 值 ， 列名 = 值 .. . [where 条件语句]；            notes：如果不加条件 则修改整列</span><br><span class="line">删：delete ：delete from 表名 [where 条件语句]                       </span><br><span class="line">         notes：如果没有where 删除表中所有的记录    delete 删除的是行</span><br><span class="line">                      truncate table 表名 是删除一个表，之后在根据你 的表结构在给你创建一张新表</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2017/01/18/01MySQL1/" target="_blank" title="16JavaMysql1">htts://cocked.github.io/2017/01/18/01MySQL1/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/01/03MySQL3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          18JavaMysql3
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/10/02MySQL2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">17JavaMysql2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、数据库的基本概念"><span class="nav-number">1.</span> <span class="nav-text">一、数据库的基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-常用的关系型数据库"><span class="nav-number">1.1.</span> <span class="nav-text">1.1  常用的关系型数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点："><span class="nav-number">1.2.</span> <span class="nav-text">特点：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDL-（数据定义语言）"><span class="nav-number">1.3.</span> <span class="nav-text">DDL （数据定义语言）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DML-（数据操纵语言）"><span class="nav-number">1.4.</span> <span class="nav-text">DML （数据操纵语言）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DCL-（数据控制语言）"><span class="nav-number">1.5.</span> <span class="nav-text">DCL （数据控制语言）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DQL-（数据查询语言）（★★★★★）"><span class="nav-number">1.6.</span> <span class="nav-text">DQL （数据查询语言）（★★★★★）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、对数据库进行操作的语句"><span class="nav-number">2.</span> <span class="nav-text">二、对数据库进行操作的语句</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-数据库中默认自带有4个库："><span class="nav-number">2.1.</span> <span class="nav-text">1.1 数据库中默认自带有4个库：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-查看所有数据库"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 查看所有数据库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、数据记录的增删改"><span class="nav-number">3.</span> <span class="nav-text">三、数据记录的增删改</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

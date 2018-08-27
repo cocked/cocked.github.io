@@ -6,23 +6,26 @@
   <title>2redis | Francis的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
+  <meta name="keywords" content="nosql" />
+  
   
   
   
   <meta name="description" content="#一、NoSQL1.什么是nosql​    NoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，是一项全新的数据库理念，泛指非关系型的数据库。适合存储不经常改变的从mysql中获取的数据，经常使用又不经常改变的数据存储在缓存数据库中 2.为什么需要nosql​    High performance - 对数据库高并发读写的需求 Huge Storage - 对海量数">
+<meta name="keywords" content="nosql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2Redis">
-<meta property="og:url" content="https://www.qiezi.com/2018/08/19/2Redis/index.html">
+<meta property="og:url" content="htts://cocked.github.io/2018/08/19/Redis初探01/index.html">
 <meta property="og:site_name" content="Francis的个人博客">
 <meta property="og:description" content="#一、NoSQL1.什么是nosql​    NoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，是一项全新的数据库理念，泛指非关系型的数据库。适合存储不经常改变的从mysql中获取的数据，经常使用又不经常改变的数据存储在缓存数据库中 2.为什么需要nosql​    High performance - 对数据库高并发读写的需求 Huge Storage - 对海量数">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.qiezi.com/2018/08/19/2Redis/2Redisimg/1531535474245.png">
-<meta property="og:image" content="https://www.qiezi.com/2018/08/19/2Redis/2Redisimg/clip_image016.jpg">
-<meta property="og:updated_time" content="2018-08-19T07:39:50.805Z">
+<meta property="og:image" content="htts://cocked.github.io/2018/08/19/Redis初探01/2Redisimg/1531535474245.png">
+<meta property="og:image" content="htts://cocked.github.io/2018/08/19/Redis初探01/2Redisimg/clip_image016.jpg">
+<meta property="og:updated_time" content="2018-08-27T02:24:00.315Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2Redis">
 <meta name="twitter:description" content="#一、NoSQL1.什么是nosql​    NoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，是一项全新的数据库理念，泛指非关系型的数据库。适合存储不经常改变的从mysql中获取的数据，经常使用又不经常改变的数据存储在缓存数据库中 2.为什么需要nosql​    High performance - 对数据库高并发读写的需求 Huge Storage - 对海量数">
-<meta name="twitter:image" content="https://www.qiezi.com/2018/08/19/2Redis/2Redisimg/1531535474245.png">
+<meta name="twitter:image" content="htts://cocked.github.io/2018/08/19/Redis初探01/2Redisimg/1531535474245.png">
   
     <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
   
@@ -162,7 +165,7 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="post-2Redis" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-Redis初探01" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -178,7 +181,7 @@
     
     <div class="article-meta">
       
-	<a href="/2018/08/19/2Redis/" class="article-date">
+	<a href="/2018/08/19/Redis初探01/" class="article-date">
 	  <time datetime="2018-08-19T00:34:12.000Z" itemprop="datePublished">2018-08-19</time>
 	</a>
 
@@ -331,28 +334,30 @@
 <p>​    4，List中可以包含的最大元素数量是<strong>4294967295</strong></p>
 <blockquote>
 <ol>
-<li><p><strong>lpush key value1 value2 …</strong></p>
+<li><strong>lpush key value1 value2 …</strong></li>
+</ol>
 <p>在指定的key所关联的list的<strong>头部插入所有的values</strong>，</p>
 <p>如果该key不存在，该命令在插入的之前创建一个与该key关联的空链表，之后再向该链表的头部插入数据。</p>
 <p>插入成功，返回元素的个数。</p>
 <p>​</p>
-</li>
-<li><p><strong>rpush key value value value</strong></p>
+<ol>
+<li><strong>rpush key value value value</strong></li>
+</ol>
 <p>在指定的key对应的list的尾部插入所有的value，</p>
 <p>如果该key不存在，该命令在插入之前创建一个与该key对应的空链表，再从尾部插入数据。</p>
 <p>​</p>
-</li>
-<li><p><strong>lpop key</strong></p>
+<ol>
+<li><strong>lpop key</strong></li>
+</ol>
 <p>先进后出，弹出第一个元素</p>
 <p>返回并弹出指定的key关联的链表中的第一个元素，即头部元素。</p>
 <p>如果该key不存在，返回nil；</p>
 <p>若key存在，则返回链表的头部元素。</p>
 <p>​</p>
-</li>
-<li><p><strong>rpop key</strong></p>
-<p>从尾部弹出元素。</p>
-</li>
+<ol>
+<li><strong>rpop key</strong></li>
 </ol>
+<p>从尾部弹出元素。</p>
 </blockquote>
 <h2 id="5-集合类型set"><a href="#5-集合类型set" class="headerlink" title="5.集合类型set"></a>5.集合类型set</h2><p>应用场景：    </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Redis set对外提供的功能与list类似是一个列表的功能，</span><br><span class="line">  特殊之处在于set是可以自动排重的，当你需要存储一个列表数据，又不希望出现重复数据时，</span><br><span class="line">  set是一个很好的选择，并且set提供了判断某个成员是否在一个set集合内的重要接口，</span><br><span class="line">  这个也是list所不能提供的。</span><br></pre></td></tr></table></figure>
@@ -361,17 +366,18 @@
 <p>常用命令</p>
 <blockquote>
 <ol>
-<li><p><strong>sadd key values[value1**</strong>、<strong>**value2…]</strong></p>
+<li><strong>sadd key values[value1**</strong>、<strong>**value2…]</strong></li>
+</ol>
 <p>向set中添加数据，如果该key的值已有则不会重复添加</p>
 <p>sadd myset 1 2 4</p>
-</li>
-<li><p><strong>srem key members[member1、member2…]</strong></p>
-<p>获取set中所有的成员</p>
-</li>
-<li><p><strong>srem key members[member1、member2…]</strong></p>
-<p>删除set中指定的成员</p>
-</li>
+<ol>
+<li><strong>srem key members[member1、member2…]</strong></li>
 </ol>
+<p>获取set中所有的成员</p>
+<ol>
+<li><strong>srem key members[member1、member2…]</strong></li>
+</ol>
+<p>删除set中指定的成员</p>
 </blockquote>
 <h2 id="6小结"><a href="#6小结" class="headerlink" title="6小结"></a>6小结</h2><table>
 <thead>
@@ -514,11 +520,11 @@ var a = new Donate({
       <div>
         <ul class="post-copyright">
           <li class="post-copyright-author">
-          <strong>Post author:  </strong>Francis的个人博客</a>
+          <strong>Post author:  </strong>Francis</a>
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/2018/08/19/2Redis/" target="_blank" title="2Redis">https://www.qiezi.com/2018/08/19/2Redis/</a>
+          <a href="/2018/08/19/Redis初探01/" target="_blank" title="2Redis">htts://cocked.github.io/2018/08/19/Redis初探01/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -564,7 +570,7 @@ var a = new Donate({
     
 <nav id="article-nav">
   
-    <a href="/2018/08/20/Jquery初探/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/08/20/Jquery初探01/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
@@ -759,7 +765,7 @@ var a = new Donate({
             Francis的个人博客
           </div>
           <div class="panel-body">
-            Copyright © 2018 Francis的个人博客 All Rights Reserved.
+            Copyright © 2018 Francis All Rights Reserved.
           </div>
         </div>
       </div>

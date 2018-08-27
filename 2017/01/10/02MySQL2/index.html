@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>17javamysql2 | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="msyql" />
+  
+  
+  
+  
+  <meta name="description" content="一、数据库的查询用法1、    数据表记录的查询: 运算符、虑重、列运算、别名、排序、聚合函数、分组 1.1数据准备 create table exam(   id int primary key auto_increment,   name varchar(20) not null,   chinese double,   math double,   english double ); ins">
+<meta name="keywords" content="msyql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="17JavaMysql2">
+<meta property="og:url" content="htts://cocked.github.io/2017/01/10/02MySQL2/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="一、数据库的查询用法1、    数据表记录的查询: 运算符、虑重、列运算、别名、排序、聚合函数、分组 1.1数据准备 create table exam(   id int primary key auto_increment,   name varchar(20) not null,   chinese double,   math double,   english double ); ins">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="file:///D:/IT/note/temp/4d86da2b-529c-4adb-8449-a7a5321f42a2/128/index_files/0.8006739059700678.png">
+<meta property="og:updated_time" content="2018-08-27T02:22:18.526Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="17JavaMysql2">
+<meta name="twitter:description" content="一、数据库的查询用法1、    数据表记录的查询: 运算符、虑重、列运算、别名、排序、聚合函数、分组 1.1数据准备 create table exam(   id int primary key auto_increment,   name varchar(20) not null,   chinese double,   math double,   english double ); ins">
+<meta name="twitter:image" content="file:///D:/IT/note/temp/4d86da2b-529c-4adb-8449-a7a5321f42a2/128/index_files/0.8006739059700678.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-02MySQL2" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      17JavaMysql2
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/01/10/02MySQL2/" class="article-date">
+	  <time datetime="2017-01-10T09:10:23.000Z" itemprop="datePublished">2017-01-10</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、数据库的查询用法"><a href="#一、数据库的查询用法" class="headerlink" title="一、数据库的查询用法"></a>一、数据库的查询用法</h1><p>1、    数据表记录的查询: 运算符、虑重、列运算、别名、排序、聚合函数、分组</p>
+<h2 id="1-1数据准备"><a href="#1-1数据准备" class="headerlink" title="1.1数据准备"></a>1.1数据准备</h2><blockquote>
+<p>create table exam(</p>
+<p>  id int primary key auto_increment,</p>
+<p>  name varchar(20) not null,</p>
+<p>  chinese double,</p>
+<p>  math double,</p>
+<p>  english double</p>
+<p>);</p>
+<p>insert into exam values(null,’关羽’,85,76,60);</p>
+<p>insert into exam values(null,’张飞’,70,75,70);</p>
+<p>insert into exam values(null,’赵云’,90,65,95);</p>
+<p>insert into exam values(null,’刘备’,97,50,50);</p>
+<p>insert into exam values(null,’曹操’,90,89,80);</p>
+<p>insert into exam values(null,’司马懿’,90,67,65);</p>
+<p>insert into exam values（null，’刘阿斗’）；</p>
+</blockquote>
+<h2 id="1-2-数据查询"><a href="#1-2-数据查询" class="headerlink" title="1.2 数据查询"></a>1.2 数据查询</h2><blockquote>
+<blockquote>
+<p>文件结构：</p>
+</blockquote>
+<blockquote>
+<p>名字：    </p>
+</blockquote>
+<blockquote>
+<p>语法：</p>
+</blockquote>
+</blockquote>
+<p>█▓     查询所有信息</p>
+<pre><code>select * from 表名
+</code></pre><p>█▓    查询指定列的信息</p>
+<pre><code>select 列名，列名... from 表名；
+</code></pre><p>█▓     条件查询</p>
+<pre><code>select * from表名 where 条件
+</code></pre><p>█▓    运算符</p>
+<table>
+<thead>
+<tr>
+<th>比较运算符</th>
+<th>&gt;  &lt;&lt;=  &gt;=  =&lt;&gt;</th>
+<th>大于、小于、大于/小于等于、不等于</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>between 1 and 10</td>
+<td>显示某一区间的值:1—10之间</td>
+<td></td>
+</tr>
+<tr>
+<td>in(1,2,3)</td>
+<td>显示在in列表中的值：1、2、3任意一个</td>
+<td></td>
+</tr>
+<tr>
+<td>Like ‘张_’Like ‘张%’</td>
+<td>模糊查询：%表示零或任意多个字符，<em>表示一个字符.例子1：张三丰      like ‘张%’例子2：张三        like ‘张</em>’</td>
+<td></td>
+</tr>
+<tr>
+<td>is null、is not null</td>
+<td>是否为空</td>
+<td></td>
+</tr>
+<tr>
+<td>逻辑运算符</td>
+<td>and&amp;&amp;</td>
+<td>多个条件同时成立</td>
+</tr>
+<tr>
+<td>or\</td>
+<td>\</td>
+<td></td>
+<td>多个条件任意一个成立</td>
+<td></td>
+</tr>
+<tr>
+<td>not!</td>
+<td>不成立，例如：where not(age&gt;18)</td>
+</tr>
+</tbody>
+</table>
+<p>█▓       虑重</p>
+<pre><code>查询排重：select distinct 列名 from 表名 where 条件；
+</code></pre><p>█▓       别名以及列运算</p>
+<pre><code>select 列名 as 别名， 列名 as 别名 ... from 表名 where 条件；
+</code></pre><p>█▓     order by 排序 </p>
+<pre><code>select * from 表名 order by 列名 asc desc；
+</code></pre><p>█▓     关于null 问题 </p>
+<pre><code>通过 ifnull（values，default）解决 
+</code></pre><p>█▓    SQL中聚合 / 聚集函数</p>
+<pre><code>聚集函数：多个数据进行运算，运算出一个结果。例如，求和，平均值，最大值，最小值。
+</code></pre><p><img src="file:///D:/IT/note/temp/4d86da2b-529c-4adb-8449-a7a5321f42a2/128/index_files/0.8006739059700678.png" alt=""></p>
+<pre><code>语法：select avg(列名) from 表名；都是位于 select 后
+</code></pre><p>█▓  █▓  █▓      group by 分组查询</p>
+<pre><code>select  ... from ... group by 列名；
+</code></pre><p>█▓  █▓  █▓ █▓  █▓  █▓ █▓  █▓  █▓ █▓  █▓ <strong>重点总结 select 语句执行顺序</strong>  █▓  █▓ █▓  █▓  █▓ █▓  █▓  █▓ █▓  █▓  █▓ </p>
+<p><strong>select …要显示的内容.. from …表名.. where 条件…. group by …分组的列 …having …分组后的条件… order by …排序</strong></p>
+<hr>
+<p><strong>select …4… from …1.. where …2.. group by ..3…having ..5… order by …6.</strong></p>
+<h1 id="二、数据备份和恢复"><a href="#二、数据备份和恢复" class="headerlink" title="二、数据备份和恢复"></a>二、数据备份和恢复</h1><h2 id="1-备份"><a href="#1-备份" class="headerlink" title="1.备份"></a>1.备份</h2><p><strong>语法：mysqldump -u **</strong>用户名 -p <strong><strong>数据库名 &gt; </strong></strong>磁盘SQL<strong>**文件路径</strong></p>
+<h2 id="2-恢复"><a href="#2-恢复" class="headerlink" title="2.恢复"></a>2.恢复</h2><pre><code>恢复方式1：
+
+        1.创建数据库
+
+                    备份的时候，没有备份创建数据库的语句，当需要恢复某个具体数据的时候需要手动创建
+
+          1. 导入数据
+
+            source D://mydb.sql
+
+  恢复方式2：
+
+        1.创建数据库
+
+         2.语法：mysql -u 用户名 -p 导入库名 &lt; 硬盘SQL文件绝对路径
+</code></pre><h1 id="三、外键约束"><a href="#三、外键约束" class="headerlink" title="三、外键约束"></a>三、外键约束</h1><hr>
+<p><strong>添加外键需要注意的问题</strong></p>
+<p><strong>l  如果从表要去添加一个外键约束。要求主表被引用的字段是主键或者唯一的。通常使用主键。</strong></p>
+<p><strong>l  如果要删除主表中的数据。要求在从表中这个数据，要没有被引用，才可以去删除。</strong></p>
+<p><strong>l  如果要向从表中去添加数据。要求在主表中，要有对应的数据。才可以去添加。</strong></p>
+<p><strong>l  如果要删除表。要先删除从表。然后去删除主表。</strong></p>
+<p><strong>l  新建表的时候。需要先去创建主表，然后去创建从表。</strong></p>
+<hr>
+<p><strong><em>作用：保持数据的完整性，和有效性。</em></strong></p>
+<h2 id="1-添加外键约束的语法"><a href="#1-添加外键约束的语法" class="headerlink" title="1.添加外键约束的语法"></a>1.添加外键约束的语法</h2><pre><code>创建表之后添加外键
+</code></pre><p>█▓  █▓        alter table 从表名称    add foreign key （外键列的名称）references 主表名称（主键）</p>
+<pre><code>创建表的时候添加外键
+</code></pre><p><a href="undefined">/*</a>创建部门表*/</p>
+<p>create table dept(</p>
+<pre><code>id int primary key auto_increment,
+
+name varchar(20)
+</code></pre><p>);</p>
+<p>/<em>创建员工表</em>/</p>
+<p>create table employee(</p>
+<pre><code>id int primary key auto_increment,
+
+name varchar(20),
+
+age int ,
+
+salary double,
+
+dept_id int,
+
+foreign key (dept_id) references dept(id)
+</code></pre><p>);</p>
+<h1 id="总结："><a href="#总结：" class="headerlink" title="#总结："></a>#总结：</h1><h2 id="1-库的操作"><a href="#1-库的操作" class="headerlink" title="1.库的操作"></a>1.库的操作</h2><p>创建库：create database 库名 character set 编码表;</p>
+<p>删除库：drop database 库名;</p>
+<p>查询库：show databases;</p>
+<p>查看库的编码表：show create database 库名;</p>
+<p>更改库：use 库名;</p>
+<p>查看当前正在使用的库：select database();</p>
+<p>修改库的编码表：alter database 库名 character set 编码表;</p>
+<h2 id="2-表本身的操作"><a href="#2-表本身的操作" class="headerlink" title="2.表本身的操作"></a>2.表本身的操作</h2><p>创建表：create table 表名( 列名 列的类型(长度)  类的约束 ,列名 列的类型(长度)  类的约束…… );</p>
+<p>删除表：drop table 表名;</p>
+<p>查询表：show tables;</p>
+<p>查看表的结构：desc 表名;</p>
+<p>查看表的编码表：show create table 表名;</p>
+<p>修改表：alter table 表名 增/删/改 列名 列的类型(长度) 约束;</p>
+<p>add/drop/change/modify</p>
+<p>修改表名：rename table 旧表名 to 新表名；</p>
+<h2 id="3-表中数据的操作"><a href="#3-表中数据的操作" class="headerlink" title="3.表中数据的操作"></a>3.表中数据的操作</h2><p>增：insert into 表名(列名) values(值);</p>
+<p>删：delete from 表名 where 条件;  truncate</p>
+<p>改：update 表名 set 列名=值 ，列名=值 where 条件 ；</p>
+<p>查：select 列名 as 别名 ,列名 as 别名… from 表名  where 条件 group by 列名 having 条件 order by 排序.</p>
+<p>查询排重：select distinct 列名 from 表名 where 条件;</p>
+<h2 id="4-聚合函数："><a href="#4-聚合函数：" class="headerlink" title="4.聚合函数："></a>4.聚合函数：</h2><p>count 统计个数、sum求和、avg 平均值、max、min</p>
+<p>在使用这几个函数进行数据的统计分析时，有时需要对数据表中的列进行数据的分组处理。group by</p>
+<p>分组 group by :</p>
+<p>排序：order  by 列名  asc | desc；</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2017/01/10/02MySQL2/" target="_blank" title="17JavaMysql2">htts://cocked.github.io/2017/01/10/02MySQL2/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/01/18/01MySQL1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          16JavaMysql1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/26/16JavaSEJDBC初体验/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">16JavaSEJDBC初体验</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、数据库的查询用法"><span class="nav-number">1.</span> <span class="nav-text">一、数据库的查询用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1数据准备"><span class="nav-number">1.1.</span> <span class="nav-text">1.1数据准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-数据查询"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 数据查询</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、数据备份和恢复"><span class="nav-number">2.</span> <span class="nav-text">二、数据备份和恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-备份"><span class="nav-number">2.1.</span> <span class="nav-text">1.备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-恢复"><span class="nav-number">2.2.</span> <span class="nav-text">2.恢复</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、外键约束"><span class="nav-number">3.</span> <span class="nav-text">三、外键约束</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-添加外键约束的语法"><span class="nav-number">3.1.</span> <span class="nav-text">1.添加外键约束的语法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结："><span class="nav-number">4.</span> <span class="nav-text">#总结：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-库的操作"><span class="nav-number">4.1.</span> <span class="nav-text">1.库的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-表本身的操作"><span class="nav-number">4.2.</span> <span class="nav-text">2.表本身的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-表中数据的操作"><span class="nav-number">4.3.</span> <span class="nav-text">3.表中数据的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-聚合函数："><span class="nav-number">4.4.</span> <span class="nav-text">4.聚合函数：</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

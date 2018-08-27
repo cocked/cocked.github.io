@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>09javase字节流与字符流 | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="javaSE" />
+  
+  
+  
+  
+  <meta name="description" content="一、IO概述1.1 什么是IO Java中I/O操作主要是指使用java.io包下的内容，进行输入、输出操作。输入也叫做读取数据，输出也叫做作写出数据。 1.2 IO的分类 根据数据的流向分为：输入流和输出流。  输入流 ：把数据从其他设备上读取到内存中的流。  输出流 ：把数据从内存 中写出到其他设备上的流。  格局数据的类型分为：字节流和字符流。  字节流 ：以字节为单位，读写数据的流。 字符">
+<meta name="keywords" content="javaSE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="09JavaSE字节流与字符流">
+<meta property="og:url" content="htts://cocked.github.io/2016/11/26/09JavaSE字节流与字符流/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="一、IO概述1.1 什么是IO Java中I/O操作主要是指使用java.io包下的内容，进行输入、输出操作。输入也叫做读取数据，输出也叫做作写出数据。 1.2 IO的分类 根据数据的流向分为：输入流和输出流。  输入流 ：把数据从其他设备上读取到内存中的流。  输出流 ：把数据从内存 中写出到其他设备上的流。  格局数据的类型分为：字节流和字符流。  字节流 ：以字节为单位，读写数据的流。 字符">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-27T02:22:33.754Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="09JavaSE字节流与字符流">
+<meta name="twitter:description" content="一、IO概述1.1 什么是IO Java中I/O操作主要是指使用java.io包下的内容，进行输入、输出操作。输入也叫做读取数据，输出也叫做作写出数据。 1.2 IO的分类 根据数据的流向分为：输入流和输出流。  输入流 ：把数据从其他设备上读取到内存中的流。  输出流 ：把数据从内存 中写出到其他设备上的流。  格局数据的类型分为：字节流和字符流。  字节流 ：以字节为单位，读写数据的流。 字符">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-09JavaSE字节流与字符流" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      09JavaSE字节流与字符流
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2016/11/26/09JavaSE字节流与字符流/" class="article-date">
+	  <time datetime="2016-11-26T12:03:53.000Z" itemprop="datePublished">2016-11-26</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、IO概述"><a href="#一、IO概述" class="headerlink" title="一、IO概述"></a>一、IO概述</h1><p>1.1 什么是IO</p>
+<p>Java中I/O操作主要是指使用<code>java.io</code>包下的内容，进行输入、输出操作。<strong>输入</strong>也叫做<strong>读取</strong>数据，<strong>输出</strong>也叫做作<strong>写出</strong>数据。</p>
+<p>1.2 IO的分类</p>
+<p>根据数据的流向分为：<strong>输入流</strong>和<strong>输出流</strong>。</p>
+<ul>
+<li><strong>输入流</strong> ：把数据从<code>其他设备</code>上读取到<code>内存</code>中的流。 </li>
+<li><strong>输出流</strong> ：把数据从<code>内存</code> 中写出到<code>其他设备</code>上的流。</li>
+</ul>
+<p>格局数据的类型分为：<strong>字节流</strong>和<strong>字符流</strong>。</p>
+<ul>
+<li><strong>字节流</strong> ：以字节为单位，读写数据的流。</li>
+<li><strong>字符流</strong> ：以字符为单位，读写数据的流。</li>
+</ul>
+<p>1.3 顶级父类们</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"><strong>输入流</strong></th>
+<th style="text-align:center">输出流</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>字节流</strong></td>
+<td style="text-align:center">字节输入流<br><strong>InputStream</strong></td>
+<td style="text-align:center">字节输出流<br><strong>OutputStream</strong></td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>字符流</strong></td>
+<td style="text-align:center">字符输入流<br><strong>Reader</strong></td>
+<td style="text-align:center">字符输出流<br><strong>Writer</strong></td>
+</tr>
+</tbody>
+</table>
+<h1 id="二、-字节流"><a href="#二、-字节流" class="headerlink" title="二、 字节流"></a>二、 字节流</h1><h2 id="2-1-一切皆为字节"><a href="#2-1-一切皆为字节" class="headerlink" title="2.1 一切皆为字节"></a>2.1 一切皆为字节</h2><p>一切文件数据(文本、图片、视频等)在存储时，都是以二进制数字的形式保存，都一个一个的字节，那么传输时一样如此。所以，字节流可以传输任意文件数据。在操作流的时候，我们要时刻明确，无论使用什么样的流对象，底层传输的始终为二进制数据。</p>
+<h2 id="2-2-字节输出流【OutputStream】"><a href="#2-2-字节输出流【OutputStream】" class="headerlink" title="2.2 字节输出流【OutputStream】"></a>2.2 字节输出流【OutputStream】</h2><p><code>java.io.OutputStream</code>抽象类是表示字节输出流的所有类的超类，将指定的字节信息写出到目的地。它定义了字节输出流的基本共性功能方法。</p>
+<ul>
+<li><code>public void close()</code> ：关闭此输出流并释放与此流相关联的任何系统资源。  </li>
+<li><code>public void flush()</code> ：刷新此输出流并强制任何缓冲的输出字节被写出。  </li>
+<li><code>public void write(byte[] b)</code>：将 b.length字节从指定的字节数组写入此输出流。  </li>
+<li><code>public void write(byte[] b, int off, int len)</code> ：从指定的字节数组写入 len字节，从偏移量 off开始输出到此输出流。  </li>
+<li><code>public abstract void write(int b)</code> ：将指定的字节输出流。</li>
+</ul>
+<blockquote>
+<p>小贴士：</p>
+<p>close方法，当完成流的操作时，必须调用此方法，释放系统资源。</p>
+</blockquote>
+<h2 id="2-3-FileOutputStream类"><a href="#2-3-FileOutputStream类" class="headerlink" title="2.3 FileOutputStream类"></a>2.3 FileOutputStream类</h2><p><code>OutputStream</code>有很多子类，我们从最简单的一个子类开始。</p>
+<p><code>java.io.FileOutputStream</code>类是文件输出流，用于将数据写出到文件。</p>
+<h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><ul>
+<li><code>public FileOutputStream(File file)</code>：创建文件输出流以写入由指定的 File对象表示的文件。 </li>
+<li><code>public FileOutputStream(String name)</code>： 创建文件输出流以指定的名称写入文件。  </li>
+</ul>
+<p>当你创建一个流对象时，必须传入一个文件路径。该路径下，如果没有这个文件，会创建该文件。如果有这个文件，会清空这个文件的数据。</p>
+<h3 id="数据追加续写"><a href="#数据追加续写" class="headerlink" title="数据追加续写"></a>数据追加续写</h3><ul>
+<li><code>public FileOutputStream(File file, boolean append)</code>： 创建文件输出流以写入由指定的 File对象表示的文件。  </li>
+<li><code>public FileOutputStream(String name, boolean append)</code>： 创建文件输出流以指定的名称写入文件。  </li>
+</ul>
+<p>这两个构造方法，参数中都需要传入一个boolean类型的值，<code>true</code> 表示追加数据，<code>false</code> 表示清空原有数据。这样创建的输出流对象，就可以指定是否追加续写了，代码使用演示：</p>
+<h3 id="写出换行"><a href="#写出换行" class="headerlink" title="写出换行"></a>写出换行</h3><p>Windows系统里，换行符号是<code>\r\n</code> 。把</p>
+<p>以指定是否追加续写了，代码使用演示：</p>
+<blockquote>
+<ul>
+<li>回车符<code>\r</code>和换行符<code>\n</code> ：</li>
+<li>回车符：回到一行的开头（return）。</li>
+<li>换行符：下一行（newline）。</li>
+<li>系统中的换行：</li>
+<li>Windows系统里，每行结尾是 <code>回车+换行</code> ，即<code>\r\n</code>；</li>
+<li>Unix系统里，每行结尾只有 <code>换行</code> ，即<code>\n</code>；</li>
+<li>Mac系统里，每行结尾是 <code>回车</code> ，即<code>\r</code>。从 Mac OS X开始与Linux统一。</li>
+</ul>
+</blockquote>
+<h2 id="2-4-字节输入流【InputStream】"><a href="#2-4-字节输入流【InputStream】" class="headerlink" title="2.4 字节输入流【InputStream】"></a>2.4 字节输入流【InputStream】</h2><p><code>java.io.InputStream</code>抽象类是表示字节输入流的所有类的超类，可以读取字节信息到内存中。它定义了字节输入流的基本共性功能方法。</p>
+<ul>
+<li><code>public void close()</code> ：关闭此输入流并释放与此流相关联的任何系统资源。    </li>
+<li><code>public abstract int read()</code>： 从输入流读取数据的下一个字节。 </li>
+<li><code>public int read(byte[] b)</code>： 从输入流中读取一些字节数，并将它们存储到字节数组 b中 。</li>
+</ul>
+<h2 id="2-5-FileInputStream类"><a href="#2-5-FileInputStream类" class="headerlink" title="2.5 FileInputStream类"></a>2.5 FileInputStream类</h2><p><code>java.io.FileInputStream</code>类是文件输入流，从文件中读取字节。</p>
+<h3 id="构造方法-1"><a href="#构造方法-1" class="headerlink" title="构造方法"></a>构造方法</h3><ul>
+<li><code>FileInputStream(File file)</code>： 通过打开与实际文件的连接来创建一个 FileInputStream ，该文件由文件系统中的 File对象 file命名。 </li>
+<li><code>FileInputStream(String name)</code>： 通过打开与实际文件的连接来创建一个 FileInputStream ，该文件由文件系统中的路径名 name命名。  </li>
+</ul>
+<p>当你创建一个流对象时，必须传入一个文件路径。该路径下，如果没有该文件,会抛出<code>FileNotFoundException</code> 。</p>
+<h1 id="三、-字符流"><a href="#三、-字符流" class="headerlink" title="三、 字符流"></a>三、 字符流</h1><p>当使用字节流读取文本文件时，可能会有一个小问题。就是遇到中文字符时，可能不会显示完整的字符，那是因为一个中文字符可能占用多个字节存储。所以Java提供一些字符流类，以字符为单位读写数据，专门用于处理文本文件。</p>
+<h2 id="3-1-字符输入流【Reader】"><a href="#3-1-字符输入流【Reader】" class="headerlink" title="3.1 字符输入流【Reader】"></a>3.1 字符输入流【Reader】</h2><p><code>java.io.Reader</code>抽象类是表示用于读取字符流的所有类的超类，可以读取字节信息到内存中。它定义了字节输入流的基本共性功能方法。</p>
+<ul>
+<li><code>public void close()</code> ：关闭此流并释放与此流相关联的任何系统资源。    </li>
+<li><code>public int read()</code>： 从输入流读取一个字符。 </li>
+<li><code>public int read(char[] cbuf)</code>： 从输入流中读取一些字符，并将它们存储到字符数组 cbuf中 。</li>
+</ul>
+<h2 id="3-2-FileReader类"><a href="#3-2-FileReader类" class="headerlink" title="3.2 FileReader类"></a>3.2 FileReader类</h2><p><code>java.io.FileReader</code>类是读取字符文件的便利类。构造时使用系统默认的字符编码和默认字节缓冲区。</p>
+<blockquote>
+<p>小贴士：</p>
+<ol>
+<li>字符编码：字节与字符的对应规则。Windows系统的中文编码默认是GBK编码表。</li>
+</ol>
+<p>idea中UTF-8</p>
+<ol>
+<li>字节缓冲区：一个字节数组，用来临时存储字节数据。</li>
+</ol>
+</blockquote>
+<h3 id="构造方法-2"><a href="#构造方法-2" class="headerlink" title="构造方法"></a>构造方法</h3><ul>
+<li><code>FileReader(File file)</code>： 创建一个新的 FileReader ，给定要读取的File对象。   </li>
+<li><code>FileReader(String fileName)</code>： 创建一个新的 FileReader ，给定要读取的文件的名称。  </li>
+</ul>
+<p>当你创建一个流对象时，必须传入一个文件路径。类似于FileInputStream 。</p>
+<p>java.io.Writer `抽象类是表示用于写出字符流的所有类的超类，将指定的字符信息写出到目的地。它定义了字节输出流的基本共性功能方法。</p>
+<ul>
+<li><code>public abstract void close()</code> ：关闭此输出流并释放与此流相关联的任何系统资源。  </li>
+<li><code>public abstract void flush()</code> ：刷新此输出流并强制任何缓冲的输出字符被写出。  </li>
+<li><code>public void write(int c)</code> ：写出一个字符。</li>
+<li><code>public void write(char[] cbuf)</code>：将 b.length字符从指定的字符数组写出此输出流。  </li>
+<li><code>public abstract void write(char[] b, int off, int len)</code> ：从指定的字符数组写出 len字符，从偏移量 off开始输出到此输出流。  </li>
+<li><code>public void write(String str)</code> ：写出一个字符串。</li>
+</ul>
+<h2 id="3-4-续写和换行与读取：字符缓冲流"><a href="#3-4-续写和换行与读取：字符缓冲流" class="headerlink" title="3.4 续写和换行与读取：字符缓冲流"></a>3.4 续写和换行与读取：字符缓冲流</h2><p><code>代码演示 :</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建字节缓冲输入流</span></span><br><span class="line">BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(<span class="string">"br.txt"</span>, <span class="keyword">true</span>));</span><br><span class="line"><span class="comment">// 创建字节缓冲输出流</span></span><br><span class="line">BufferedWriter bw = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> FileWriter(<span class="string">"bw.txt"</span>, <span class="keyword">true</span>));</span><br></pre></td></tr></table></figure>
+<p><code>特有方法</code></p>
+<p>字符缓冲流的基本方法与普通字符流调用方式一致，不再阐述，我们来看它们具备的特有方法。</p>
+<ul>
+<li>BufferedReader：<code>public String readLine()</code>: 读一行文字。 </li>
+<li>BufferedWriter：<code>public void newLine()</code>: 写一行行分隔符,由系统属性定义符号。 </li>
+</ul>
+<p>notes：字符流，只能操作文本文件，不能操作图片，视频等非文本文件。</p>
+<h1 id="四、-IO异常的处理"><a href="#四、-IO异常的处理" class="headerlink" title="四、 IO异常的处理"></a>四、 IO异常的处理</h1><h3 id="JDK7前处理"><a href="#JDK7前处理" class="headerlink" title="JDK7前处理"></a>JDK7前处理</h3><p>之前的入门练习，我们一直把异常抛出，而实际开发中并不能这样处理，建议使用 <code>try...catch...finally</code>  代码块，处理异常部分，代码使用演示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.BufferedWriter;</span><br><span class="line"><span class="keyword">import</span> java.io.FileWriter;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test6</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1. 定义一个 writer 对象</span></span><br><span class="line">        BufferedWriter writer = <span class="keyword">null</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 2. 初始化 writer 对象</span></span><br><span class="line">            writer = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> FileWriter(<span class="string">"d.txt"</span>));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 写入三部曲 :</span></span><br><span class="line">            writer.write(<span class="string">"茄子创意"</span>);</span><br><span class="line">            writer.newLine();</span><br><span class="line">            writer.flush();</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">// 3. 关闭 writer 对象</span></span><br><span class="line">            <span class="keyword">if</span> (writer != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    writer.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">写入结果 :</span><br><span class="line">茄子创意</span><br></pre></td></tr></table></figure>
+<h3 id="JDK7的处理"><a href="#JDK7的处理" class="headerlink" title="JDK7的处理"></a>JDK7的处理</h3><p>还可以使用JDK7优化后的<code>try-with-resources</code> 语句，该语句确保了每个资源在语句结束时关闭。所谓的资源（resource）是指在程序完成后，必须关闭的对象。</p>
+<p>格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> (创建流对象语句，如果多个,使用<span class="string">';'</span>隔开) &#123;</span><br><span class="line">	<span class="comment">// 读写数据</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码使用演示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.BufferedWriter;</span><br><span class="line"><span class="keyword">import</span> java.io.FileWriter;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test6</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// () 括号中解决的是 `流` 资源关闭的问题.</span></span><br><span class="line">        <span class="keyword">try</span> (BufferedWriter writer = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> FileWriter(<span class="string">"d.txt"</span>))) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 写入三部曲 :</span></span><br><span class="line">            writer.write(<span class="string">"茄子创意"</span>);</span><br><span class="line">            writer.newLine();</span><br><span class="line">            writer.flush();</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">写出结果 :</span><br><span class="line">茄子创意</span><br></pre></td></tr></table></figure>
+<h3 id="JDK9的改进-了解内容"><a href="#JDK9的改进-了解内容" class="headerlink" title="JDK9的改进(了解内容)"></a>JDK9的改进(了解内容)</h3><p>JDK9中<code>try-with-resources</code> 的改进，对于<strong>引入对象</strong>的方式，支持的更加简洁。被引入的对象，同样可以自动关闭，无需手动close，我们来了解一下格式。</p>
+<p>改进前格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test7</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// () 小括号中定义需要释放的资源对象.</span></span><br><span class="line">        <span class="keyword">try</span> (BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(<span class="string">"D:/1.jpg"</span>));</span><br><span class="line">             BufferedOutputStream bos = <span class="keyword">new</span> BufferedOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"1.jpg"</span>))) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 读写操作 :</span></span><br><span class="line">            <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">            <span class="keyword">int</span> len = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> ((len = bis.read(buf)) != -<span class="number">1</span>) &#123;</span><br><span class="line">                bos.write(buf, <span class="number">0</span>, len);</span><br><span class="line">                bos.flush();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>改进后格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test7</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException </span>&#123;</span><br><span class="line"></span><br><span class="line">        BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(<span class="string">"D:/1.jpg"</span>));</span><br><span class="line">        BufferedOutputStream bos = <span class="keyword">new</span> BufferedOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"1.jpg"</span>));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// () 小括号中定义需要释放的资源对象.</span></span><br><span class="line">        <span class="keyword">try</span> (bis; bos) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 读写操作 :</span></span><br><span class="line">            <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">            <span class="keyword">int</span> len = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> ((len = bis.read(buf)) != -<span class="number">1</span>) &#123;</span><br><span class="line">                bos.write(buf, <span class="number">0</span>, len);</span><br><span class="line">                bos.flush();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2016/11/26/09JavaSE字节流与字符流/" target="_blank" title="09JavaSE字节流与字符流">htts://cocked.github.io/2016/11/26/09JavaSE字节流与字符流/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/28/10JavaSE缓冲流、转换流、序列化流、Files/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          10JavaSE缓冲流、转换流、序列化流、Files
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/01/03JavaSE异常处理/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">03JavaSE异常处理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、IO概述"><span class="nav-number">1.</span> <span class="nav-text">一、IO概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、-字节流"><span class="nav-number">2.</span> <span class="nav-text">二、 字节流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-一切皆为字节"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 一切皆为字节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-字节输出流【OutputStream】"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 字节输出流【OutputStream】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-FileOutputStream类"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 FileOutputStream类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造方法"><span class="nav-number">2.3.1.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据追加续写"><span class="nav-number">2.3.2.</span> <span class="nav-text">数据追加续写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写出换行"><span class="nav-number">2.3.3.</span> <span class="nav-text">写出换行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-字节输入流【InputStream】"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 字节输入流【InputStream】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-FileInputStream类"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 FileInputStream类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造方法-1"><span class="nav-number">2.5.1.</span> <span class="nav-text">构造方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、-字符流"><span class="nav-number">3.</span> <span class="nav-text">三、 字符流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-字符输入流【Reader】"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 字符输入流【Reader】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-FileReader类"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 FileReader类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造方法-2"><span class="nav-number">3.2.1.</span> <span class="nav-text">构造方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-续写和换行与读取：字符缓冲流"><span class="nav-number">3.3.</span> <span class="nav-text">3.4 续写和换行与读取：字符缓冲流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、-IO异常的处理"><span class="nav-number">4.</span> <span class="nav-text">四、 IO异常的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK7前处理"><span class="nav-number">4.0.1.</span> <span class="nav-text">JDK7前处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK7的处理"><span class="nav-number">4.0.2.</span> <span class="nav-text">JDK7的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK9的改进-了解内容"><span class="nav-number">4.0.3.</span> <span class="nav-text">JDK9的改进(了解内容)</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

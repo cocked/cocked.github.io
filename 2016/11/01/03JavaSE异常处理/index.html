@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>03javase异常处理 | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="javaSE" />
+  
+  
+  
+  
+  <meta name="description" content="一、 异常概念总结：练习一：异常的体系   问题：  请描述异常的继承体系    2.请描述你对错误(Error)的理解    3.请描述你对异常(Expection的理解)    4.请描述你对运行时异常(RuntimeException)的理解 答：  异常继承体系为：异常的根类是 java.lang.Throwable，其下有两个子类： java.lang.Error 与 java.util">
+<meta name="keywords" content="javaSE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03JavaSE异常处理">
+<meta property="og:url" content="htts://cocked.github.io/2016/11/01/03JavaSE异常处理/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="一、 异常概念总结：练习一：异常的体系   问题：  请描述异常的继承体系    2.请描述你对错误(Error)的理解    3.请描述你对异常(Expection的理解)    4.请描述你对运行时异常(RuntimeException)的理解 答：  异常继承体系为：异常的根类是 java.lang.Throwable，其下有两个子类： java.lang.Error 与 java.util">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-27T02:22:23.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="03JavaSE异常处理">
+<meta name="twitter:description" content="一、 异常概念总结：练习一：异常的体系   问题：  请描述异常的继承体系    2.请描述你对错误(Error)的理解    3.请描述你对异常(Expection的理解)    4.请描述你对运行时异常(RuntimeException)的理解 答：  异常继承体系为：异常的根类是 java.lang.Throwable，其下有两个子类： java.lang.Error 与 java.util">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-03JavaSE异常处理" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      03JavaSE异常处理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2016/11/01/03JavaSE异常处理/" class="article-date">
+	  <time datetime="2016-11-01T12:00:59.000Z" itemprop="datePublished">2016-11-01</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、-异常概念总结："><a href="#一、-异常概念总结：" class="headerlink" title="一、 异常概念总结："></a><strong>一、 异常概念总结：</strong></h1><h2 id="练习一：异常的体系"><a href="#练习一：异常的体系" class="headerlink" title="练习一：异常的体系"></a><strong>练习一：异常的体系</strong></h2><p>   问题：</p>
+<ol>
+<li><p>请描述异常的继承体系</p>
+<p>   2.请描述你对错误(Error)的理解</p>
+<p>   3.请描述你对异常(Expection的理解)</p>
+<p>   4.请描述你对运行时异常(RuntimeException)的理解</p>
+<p>答：</p>
+</li>
+<li><p>异常继承体系为：异常的根类是 java.lang.Throwable，其下有两个子类：</p>
+<p>java.lang.Error 与 java.util.Exception 。而Exception又分为编译时期异常：checked异常，与运行时期异常：runtime异常。 </p>
+</li>
+<li><p>Error:表示不可修复的恶性的错误，只能通过修改代码规避错误的产生，通常是系统级别的，所以很严重。</p>
+<p>   3.Exception:表示可修复的良性（相对于错误）的异常，异常产生后程序员可以并且应该通过代码的方式纠正，使程序继续运行，是必须要处理的。</p>
+<p>   4.运行时期异常:runtime异常。在运行时期,检查异常.在编译时期,运行异常不会编译器检测(不报错)。</p>
+</li>
+</ol>
+<h2 id="练习二：throw与throws的区别"><a href="#练习二：throw与throws的区别" class="headerlink" title="练习二：throw与throws的区别"></a><strong>练习二：throw与throws的区别</strong></h2><p>   问题：</p>
+<ol>
+<li>请描述throw的使用位置,作用是什么?</li>
+<li><p>请描述throws的使用位置,作用是什么?</p>
+<p>答：</p>
+</li>
+<li><p>throw关键字通常用在方法体中，并且抛出一个异常对象。程序在执行到throw语句时立即停止，它后面的语句都不执行。</p>
+<p>   2.throws关键字通常被应用在声明方法时，用来指定可能抛出的异常。多个异常可以使用逗号隔开。当在主函数中调用该方法时，如果发生异常，就会将异常对象抛给方法调用处。</p>
+</li>
+</ol>
+<h2 id="练习三：异常的处理方式"><a href="#练习三：异常的处理方式" class="headerlink" title="练习三：异常的处理方式"></a><strong>练习三：异常的处理方式</strong></h2><p>   问题：</p>
+<ol>
+<li>异常处理方式有几种,分别是什么?</li>
+<li><p>详细阐述每种方式对异常是如何处理的</p>
+<p>答：</p>
+</li>
+<li><p>异常的处理方式有两种,分别是使用throws和try…catch…finally</p>
+<p>   2.throws用在方法的声明上后接异常类名,是把异常抛给调用者进行处理</p>
+<p>   3.try…catch…finally是捕获异常,自己处理,处理完毕后面的程序可以继续运行</p>
+<p>   a)try代码块中是可能出现异常的代码</p>
+<p>   b)catch代码块,是遇到异常,对异常进行处理的代码</p>
+<p>   c)finally代码块是无论是否发生异常,都必须执行的代码,用于释放资源.</p>
+</li>
+</ol>
+<h2 id="练习四：常见异常，及产生原因"><a href="#练习四：常见异常，及产生原因" class="headerlink" title="练习四：常见异常，及产生原因"></a><strong>练习四：常见异常，及产生原因</strong></h2><p>   问题：请列举常见异常，并说明产生原因。</p>
+<p>   答：</p>
+<p>   NullPointerException:空指针异常。</p>
+<pre><code>当应用试图在要求使用对象的地方使用了null时，抛出该异常。譬如：调用null对象的实例方法、访问null对象的属性、计算null对象的长度等等。
+</code></pre><p>   ArrayIndexOutOfBoundsException:数组索引越界异常。</p>
+<p>   当对数组的索引值为负数或大于等于数组大小时抛出此异常。</p>
+<p>   ArithmeticException:算术运算异常。</p>
+<pre><code>程序中出现了除以零这样的运算就会出这样的异常，对这种异常，大家就要好好检查一下自己程序中涉及到数学运算的地方，公式是不是有不妥了。
+</code></pre><p>   NumberFormatException:数字格式异常。</p>
+<pre><code>当试图将一个String转换为指定的数字类型，而该字符串确不满足数字类型要求的格式时，抛出该异常。
+</code></pre><h1 id="二-异常"><a href="#二-异常" class="headerlink" title="二.异常"></a>二.异常</h1><blockquote>
+<p>  介绍：指的是程序在执行过程中，出现的非正常的情况，最终会导致JVM的非正常停止。</p>
+<p>  在Java等面向对象的编程语言中，异常本身是一个类，产生异常就是创建异常对象并抛出了一个异常对象。Java处理异常的方式是中断处理</p>
+</blockquote>
+<p>  <strong>notes:</strong></p>
+<blockquote>
+<p>   异常指的并不是语法错误，语法错误的话 编译不通过，不会产生字节码文件，根本不能运行。</p>
+</blockquote>
+<h2 id="①异常体系："><a href="#①异常体系：" class="headerlink" title="①异常体系："></a><strong>①异常体系：</strong></h2><pre><code>API：
+</code></pre><blockquote>
+<pre><code>异常机制其实就是帮助我们找到程序中的问题，
+
+异常的根类是 
+
+ java.lang.Throwable,下面有两个子类，
+
+  -java.lang.Error    (工程师不能处理，只能尽量避免)
+
+  -java.util.Exception    (由于使用不当导致，可以避免的)
+
+平常所说的异常就是java.util.Exception
+</code></pre></blockquote>
+<h2 id="②Throwable中的常用方法："><a href="#②Throwable中的常用方法：" class="headerlink" title="②Throwable中的常用方法："></a><strong>②Throwable中的常用方法：</strong></h2><pre><code>⑴打印异常的详细信息
+</code></pre><blockquote>
+<p>   public void printStackTrace():</p>
+<pre><code>包含了异常的类型,异常的原因,还包括异常出现的位置,在开发和调试阶段,都得使用printStackTrace。
+</code></pre></blockquote>
+<pre><code>⑵获取发生异常的原因
+</code></pre><blockquote>
+<p>   public String getMessage():</p>
+<pre><code>提示给用户的时候,就提示错误原因。
+</code></pre></blockquote>
+<pre><code>⑶获取异常的类型和异常描述信息(不用)
+</code></pre><blockquote>
+<blockquote>
+<p>   public String toString():</p>
+</blockquote>
+</blockquote>
+<p>​    </p>
+<h1 id="③异常的分类"><a href="#③异常的分类" class="headerlink" title="③异常的分类"></a><strong>③异常的分类</strong></h1><blockquote>
+<p>   ⑴编译时期的异常:checked异常.在编译时期,就会检查,如果没有处理异常,则编译失败(如日期格式化异常)</p>
+<p>   ⑵运行时期异常:runtime异常.在运行时期,检查异常,在编译时期,运行异常不会编译器检测(不报错)(如数学异常)</p>
+</blockquote>
+<p>​    </p>
+<h1 id="三-处理异常"><a href="#三-处理异常" class="headerlink" title="三.处理异常"></a>三.处理异常</h1><pre><code>五大关键字:    try catch finally throw throws
+</code></pre><h2 id="①抛出异常throw"><a href="#①抛出异常throw" class="headerlink" title="①抛出异常throw"></a><strong>①抛出异常throw</strong></h2><p>⑴格式:</p>
+<blockquote>
+<pre><code>throw new 异常类名(参数)
+</code></pre></blockquote>
+<p> ⑵抛出异常告诉调用者 :</p>
+<blockquote>
+<pre><code>步骤1:创建一个异常对象.封装好一些提示信息(信息可以自己编写)
+
+ throw new NullPointerException(&quot;要访问的arr数组不存在&quot;);
+
+步骤2:告知调用者,通过throw抛出一个异常对象,传递到调用者处,并结束当前方法的执行
+</code></pre></blockquote>
+<pre><code>例子:
+
+     public static void main(String[] args) {
+</code></pre><blockquote>
+<pre><code> int[] arr = {2,4,52,2};
+
+ int index = 4;
+
+ int element = getElement(arr, index);
+
+ System.out.println(&quot;element = &quot; + element);
+
+ System.out.println(&quot;over&quot;);
+
+}
+</code></pre></blockquote>
+<pre><code>  private static int getElement(int[] arr, int index) {
+
+   // 判断 索引是否越界
+
+   if (index&lt;0||index&gt;arr.length-1){
+
+    // 如果越界 当执行完 throw 抛出异常随心后，方法无法继续运算
+
+    // 这时就会结束当前方法的执行，并将异常 告知 调用者 这时就需要通过异常来解决
+
+    throw new ArrayIndexOutOfBoundsException(&quot;数组越界&quot;);
+
+   }
+
+   int element = arr[index];
+
+   return element;
+
+  }
+
+结果:  
+
+ Exception in thread &quot;main&quot; java.lang.ArrayIndexOutOfBoundsException: 数组越界l~~~
+
+ at DemoThread.ThrowTest.getElement(ThrowTest.java:22)
+
+ at DemoThread.ThrowTest.main(ThrowTest.java:7)
+</code></pre><h2 id="②Objects非空判断"><a href="#②Objects非空判断" class="headerlink" title="②Objects非空判断"></a>②Objects非空判断</h2><blockquote>
+<p>   还记得我们学习过一个类Objects吗，曾经提到过它由一些静态的实用方法组成，</p>
+<p>   这些方法是null-save（空指针安全的）或null-tolerant（容忍空指针的），</p>
+<p>   那么在它的源码中，对对象为null的值进行了抛出异常操作。</p>
+<p>   public static <t> T requireNonNull(T obj):查看指定引用对象不是null。</t></p>
+</blockquote>
+<p>   public static <t> T requireNonNull(T obj) {</t></p>
+<blockquote>
+<pre><code>if (obj == null)
+
+ throw new NullPointerException();
+
+return obj;
+</code></pre><p>   }</p>
+</blockquote>
+<h2 id="③声明异常throws"><a href="#③声明异常throws" class="headerlink" title="③声明异常throws"></a>③声明异常throws</h2><blockquote>
+<p>   说明:</p>
+<pre><code>将问题标识出来,报告给调用者,如果方法内通过throw抛出了编译时异常,而没有捕获处理,那么必须同throws进行声明
+</code></pre><p>   让调用者去处理.</p>
+<p>   关键字throws运用于方法声明之上,用于表示当前方法不处理异常,而是提醒该方法的调用者来处理异常</p>
+<p>   格式:</p>
+<pre><code>修饰符 返回值类型 方法名(参数) throws 异常类名1 ,异常类名2...{}
+</code></pre></blockquote>
+<p>   例子:</p>
+<blockquote>
+<pre><code>   public static void main(String[] args) throws FileNotFoundException {
+
+ read(&quot;a.txt&quot;);
+
+}
+
+// 如果定义功能时 有问题 发生需要报告给调用者，可以通过在方法上使用throws关键字进行声明
+
+public static void read(String path) throws FileNotFoundException{
+
+ if (!path.equals(&quot;a.txt&quot;)){
+
+  // 假设 如果不是a.txt认为 该文件不存在 是一个错误 也就是异常 throw
+
+  throw new FileNotFoundException(&quot;文件不存在&quot;);
+
+ }
+
+}
+</code></pre></blockquote>
+<h2 id="④捕获异常try-catch"><a href="#④捕获异常try-catch" class="headerlink" title="④捕获异常try catch"></a>④捕获异常try catch</h2><blockquote>
+<p>   捕获异常:</p>
+<pre><code>Java中对异常有针对性的语句进行捕获,可以对出现的异常进行指定方式处理
+</code></pre></blockquote>
+<p>   格式:</p>
+<blockquote>
+<pre><code>try{
+</code></pre></blockquote>
+<blockquote>
+<blockquote>
+<pre><code>// 编写可能出现异常的代码
+</code></pre></blockquote>
+<blockquote>
+<pre><code>}catch(异常类型 e){
+</code></pre></blockquote>
+<blockquote>
+<pre><code>处理异常的代码
+</code></pre></blockquote>
+<blockquote>
+<pre><code>// 可以是记录日志、打印异常信息、继续抛出异常
+</code></pre></blockquote>
+</blockquote>
+<blockquote>
+<pre><code>}
+
+
+
+try：该代码块中编写可能产生的异常代码
+
+catch：用来进行某种异常的捕获，实现对捕获到的异常进行处理
+</code></pre></blockquote>
+<p>   例子： </p>
+<pre><code>  public static void main(String[] args) {
+
+try {
+</code></pre><blockquote>
+<pre><code> read(&quot;a12.txt&quot;);
+
+}catch (FileNotFoundException e){
+
+ // 打印异常
+
+ e.printStackTrace();
+
+}
+
+System.out.println(&quot;over&quot;);
+</code></pre></blockquote>
+<pre><code>}
+
+private static void read(String path) throws FileNotFoundException {
+
+ if (!path.equals(&quot;a.txt&quot;)){
+
+  throw new FileNotFoundException(&quot;文件不存在&quot;);
+
+ }
+
+  /* if (!path.equals(&quot;a.txt&quot;)){
+
+  throw new IOException();
+
+  }*/
+
+}
+</code></pre><p>   捕获的异常常用的方法：</p>
+<pre><code>Throwable类中定义了一些查看方法:
+</code></pre><ul>
+<li>public String getMessage():获取异常的描述信息,原因(提示给用户的时候,就提示错误原因。</li>
+<li>public String toString():获取异常的类型和异常描述信息(不用)。</li>
+<li><p>public void printStackTrace():打印异常的跟踪栈信息并输出到控制台。</p>
+<pre><code>包含了异常的类型,异常的原因,还包括异常出现的位置,在开发和调试阶段,都得使用printStackTrace。
+
+在开发中呢也可以在catch将编译期异常转换成运行期异常处理。
+</code></pre><p>   多个异常使用捕获又该如何处理呢？</p>
+</li>
+</ul>
+<ol>
+<li>多个异常分别处理。</li>
+<li>多个异常一次捕获，多次处理。</li>
+<li><p>多个异常一次捕获一次处理。</p>
+<p>  一般我们是使用一次捕获多次处理方式，</p>
+<p>  格式如下：</p>
+<p>   try{</p>
+<pre><code>  编写可能会出现异常的代码
+
+}catch(异常类型A e){ 当try中出现A类型异常,就用该catch来捕获.
+
+  处理异常的代码
+
+  //记录日志/打印异常信息/继续抛出异常
+
+}catch(异常类型B e){ 当try中出现B类型异常,就用该catch来捕获.
+
+  处理异常的代码
+
+  //记录日志/打印异常信息/继续抛出异常
+
+}
+</code></pre><p>  notes： </p>
+<p>   注意:这种异常处理方式，要求多个catch中的异常不能相同，</p>
+<p>   并且若catch中的多个异常之间有子父类异常的关系，</p>
+<p>   那么子类异常要求在上面的catch处理，</p>
+<p>   父类异常在下面的catch处理</p>
+</li>
+</ol>
+<h2 id="⑤finally代码块"><a href="#⑤finally代码块" class="headerlink" title="⑤finally代码块"></a>⑤finally代码块</h2><p>   说明：</p>
+<pre><code>有一些特定的代码无论异常是否发生，都需要执行。另外，因为异常会引发程序跳转，导致有些语句执行不到。
+
+而finally就是解决这个问题的，在finally代码块中存放的代码都是一定会被执行的。
+
+打开一些物理资源（比如磁盘文件/网络链接/数据库链接等）我们都得在使用完之后，最终关闭打开的资源
+</code></pre><p>   用法：</p>
+<pre><code>try catch finally：自身需要处理异常，最终还得关闭资源。
+
+
+
+notes： 
+
+ finally不能单独使用。
+</code></pre><p>   例子：</p>
+<pre><code>   public static void main(String[] args) {
+
+ try {
+
+  read(&quot;a11.txt&quot;);
+
+ }catch (FileNotFoundException e){
+
+  e.printStackTrace();
+
+ }finally {
+
+  System.out.println(&quot;不管怎么样我都要执行&quot;);
+
+ }
+
+ System.out.println(&quot;over&quot;);
+
+}
+
+private static void read(String path) throws FileNotFoundException {
+
+ if (!path.equals(&quot;a.txt&quot;)){
+
+  throw new FileNotFoundException(&quot;文件不存在！&quot;);
+
+ }
+
+}
+</code></pre><p>   tips:</p>
+<pre><code>只有在try或者catch中调用退出JVM的相关方法时，此时finally才不会执行，否则finally用远会执行
+
+
+
+ 结果：
+
+  不管怎么样我都要执行
+
+  java.io.FileNotFoundException: 文件不存在！
+
+  over
+
+   at DemoThread.finallyTest01.read(finallyTest01.java:19)
+
+   at DemoThread.finallyTest01.main(finallyTest01.java:8)
+</code></pre><h2 id="⑥异常注意事项"><a href="#⑥异常注意事项" class="headerlink" title="⑥异常注意事项"></a>⑥异常注意事项</h2><p>   ⑴运行时期异常被 抛出可以不处理，既不捕获也不声明抛出</p>
+<p>   ⑵如果父类抛出多个异常，子类覆盖父类方法时，只能抛出相同的异常或者他的子集</p>
+<p>   ⑶父类方法没有抛出异常，子类覆盖父类该方法时也不可抛出异常，此时子类产生该异常，只能捕获处理，不能声明抛出</p>
+<p>   ⑷当多异常处理时，捕获处理，前边的类不能时后边类的父类</p>
+<p>   ⑸当try/catch后可以主机finally代码块，其中的代码一定会被执行，通常用于资源回收</p>
+<p>   ⑹如果finally有return语句，永远返回finally中的结果，避免该情况</p>
+<h1 id="四、自定义异常"><a href="#四、自定义异常" class="headerlink" title="四、自定义异常"></a>四、自定义异常</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">  说明： </span><br><span class="line"></span><br><span class="line">   为什么需要自定义异常类:</span><br><span class="line"></span><br><span class="line">    Java中不同的异常类,分别表示着某一种具体的异常情况,那么在开发中总是有些异常情况是SUN没有定义好的,此时我们根据自己业务的异常情况来定义异常类。,例如年龄负数问题,考试成绩负数问题。</span><br><span class="line"></span><br><span class="line">    在上述代码中，发现这些异常都是JDK内部定义好的，但是实际开发中也会出现很多异常,这些异常很可能在JDK中没有定义过,例如年龄负数问题,考试成绩负数问题.那么能不能自己定义异常呢？</span><br><span class="line"></span><br><span class="line">    什么是自定义异常类:</span><br><span class="line"></span><br><span class="line">    在开发中根据自己业务的异常情况来定义异常类.</span><br><span class="line"></span><br><span class="line">    自定义一个业务逻辑异常: LoginException。一个登陆异常类。</span><br><span class="line"></span><br><span class="line">   异常类如何定义:</span><br><span class="line"></span><br><span class="line">    <span class="number">1</span>. 自定义一个编译期异常: 自定义类 并继承于java.lang.Exception。</span><br><span class="line"></span><br><span class="line">    <span class="number">2</span>. 自定义一个运行时期的异常类:自定义类 并继承于java.lang.RuntimeException</span><br><span class="line"></span><br><span class="line">  例子： </span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiyETest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String[] names= &#123;<span class="string">"bill"</span>,<span class="string">"hill"</span>,<span class="string">"jill"</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 模拟登录</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">try</span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 可能出现异常的代码</span></span><br><span class="line"></span><br><span class="line">      checkUsername(<span class="string">"bill"</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 如果没有就是注册成功</span></span><br><span class="line"></span><br><span class="line">      System.out.println(<span class="string">"注册成功"</span>);</span><br><span class="line"></span><br><span class="line">     &#125;<span class="keyword">catch</span> (LoginException e)&#123;</span><br><span class="line"></span><br><span class="line">      e.printStackTrace();</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">checkUsername</span><span class="params">(String uname)</span> <span class="keyword">throws</span> LoginException </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">for</span> (String name:names)&#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (name.equals(uname))&#123;</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 如果名字在其中 则抛出 登录异常</span></span><br><span class="line"></span><br><span class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> LoginException(<span class="string">"禁止登录"</span>);</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">   <span class="class"><span class="keyword">class</span> <span class="title">LoginException</span> <span class="keyword">extends</span> <span class="title">Exception</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LoginException</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name 表示异常提示</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LoginException</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">super</span>(name);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2016/11/01/03JavaSE异常处理/" target="_blank" title="03JavaSE异常处理">htts://cocked.github.io/2016/11/01/03JavaSE异常处理/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/26/09JavaSE字节流与字符流/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          09JavaSE字节流与字符流
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/26/02JavaSE基本语法总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">02JavaSE基本语法总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、-异常概念总结："><span class="nav-number">1.</span> <span class="nav-text">一、 异常概念总结：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#练习一：异常的体系"><span class="nav-number">1.1.</span> <span class="nav-text">练习一：异常的体系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习二：throw与throws的区别"><span class="nav-number">1.2.</span> <span class="nav-text">练习二：throw与throws的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习三：异常的处理方式"><span class="nav-number">1.3.</span> <span class="nav-text">练习三：异常的处理方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习四：常见异常，及产生原因"><span class="nav-number">1.4.</span> <span class="nav-text">练习四：常见异常，及产生原因</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-异常"><span class="nav-number">2.</span> <span class="nav-text">二.异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#①异常体系："><span class="nav-number">2.1.</span> <span class="nav-text">①异常体系：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#②Throwable中的常用方法："><span class="nav-number">2.2.</span> <span class="nav-text">②Throwable中的常用方法：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#③异常的分类"><span class="nav-number">3.</span> <span class="nav-text">③异常的分类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-处理异常"><span class="nav-number">4.</span> <span class="nav-text">三.处理异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#①抛出异常throw"><span class="nav-number">4.1.</span> <span class="nav-text">①抛出异常throw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#②Objects非空判断"><span class="nav-number">4.2.</span> <span class="nav-text">②Objects非空判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#③声明异常throws"><span class="nav-number">4.3.</span> <span class="nav-text">③声明异常throws</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#④捕获异常try-catch"><span class="nav-number">4.4.</span> <span class="nav-text">④捕获异常try catch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#⑤finally代码块"><span class="nav-number">4.5.</span> <span class="nav-text">⑤finally代码块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#⑥异常注意事项"><span class="nav-number">4.6.</span> <span class="nav-text">⑥异常注意事项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、自定义异常"><span class="nav-number">5.</span> <span class="nav-text">四、自定义异常</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

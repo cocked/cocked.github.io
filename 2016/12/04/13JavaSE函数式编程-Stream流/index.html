@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>13javase函数式编程&amp;stream流 | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="javaSE" />
+  
+  
+  
+  
+  <meta name="description" content="13.1常用的函数式接口总结   接口名称 方法名称 抽象/默认 延迟/终结 方法描述     Supplier get 抽象 终结 供给型接口，无参有返回值，主要用于   Consumer accept 抽象 终结 消费型接口，有参数无返回值    andThen 默认 延迟    Function apply 抽象 终结 函数型接口，有参数有返回值    andThen 默认 延迟     c">
+<meta name="keywords" content="javaSE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="13JavaSE函数式编程&amp;Stream流">
+<meta property="og:url" content="htts://cocked.github.io/2016/12/04/13JavaSE函数式编程-Stream流/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="13.1常用的函数式接口总结   接口名称 方法名称 抽象/默认 延迟/终结 方法描述     Supplier get 抽象 终结 供给型接口，无参有返回值，主要用于   Consumer accept 抽象 终结 消费型接口，有参数无返回值    andThen 默认 延迟    Function apply 抽象 终结 函数型接口，有参数有返回值    andThen 默认 延迟     c">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-27T02:22:54.653Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="13JavaSE函数式编程&amp;Stream流">
+<meta name="twitter:description" content="13.1常用的函数式接口总结   接口名称 方法名称 抽象/默认 延迟/终结 方法描述     Supplier get 抽象 终结 供给型接口，无参有返回值，主要用于   Consumer accept 抽象 终结 消费型接口，有参数无返回值    andThen 默认 延迟    Function apply 抽象 终结 函数型接口，有参数有返回值    andThen 默认 延迟     c">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-13JavaSE函数式编程-Stream流" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      13JavaSE函数式编程&amp;Stream流
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2016/12/04/13JavaSE函数式编程-Stream流/" class="article-date">
+	  <time datetime="2016-12-04T11:10:08.000Z" itemprop="datePublished">2016-12-04</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="13-1常用的函数式接口总结"><a href="#13-1常用的函数式接口总结" class="headerlink" title="13.1常用的函数式接口总结"></a>13.1常用的函数式接口总结</h1><table>
+<thead>
+<tr>
+<th>接口名称</th>
+<th>方法名称</th>
+<th>抽象/默认</th>
+<th>延迟/终结</th>
+<th>方法描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Supplier</td>
+<td>get</td>
+<td>抽象</td>
+<td>终结</td>
+<td>供给型接口，无参有返回值，主要用于</td>
+</tr>
+<tr>
+<td>Consumer</td>
+<td>accept</td>
+<td>抽象</td>
+<td>终结</td>
+<td>消费型接口，有参数无返回值</td>
+</tr>
+<tr>
+<td></td>
+<td>andThen</td>
+<td>默认</td>
+<td>延迟</td>
+<td></td>
+</tr>
+<tr>
+<td>Function</td>
+<td>apply</td>
+<td>抽象</td>
+<td>终结</td>
+<td>函数型接口，有参数有返回值</td>
+</tr>
+<tr>
+<td></td>
+<td>andThen</td>
+<td>默认</td>
+<td>延迟</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>compose</td>
+<td>默认</td>
+<td>延迟</td>
+<td></td>
+</tr>
+<tr>
+<td>Predicate</td>
+<td>test</td>
+<td>抽象</td>
+<td>终结</td>
+<td>断言型接口，元芳你怎么看</td>
+</tr>
+<tr>
+<td></td>
+<td>and</td>
+<td>默认</td>
+<td>延迟</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>or</td>
+<td>默认</td>
+<td>延迟</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>negate</td>
+<td>默认</td>
+<td>延迟</td>
+</tr>
+</tbody>
+</table>
+<p>notes：</p>
+<ul>
+<li>延迟方法：只是在拼接Lambda函数模型的方法，并不立即执行得到结果。</li>
+<li>终结方法：根据拼好的Lambda函数模型，立即执行得到结果值的方法。</li>
+</ul>
+<h1 id="13-2-Stream流"><a href="#13-2-Stream流" class="headerlink" title="13.2 Stream流"></a>13.2 Stream流</h1><h2 id="13-2-1-获取流的三种方式"><a href="#13-2-1-获取流的三种方式" class="headerlink" title="13.2.1 获取流的三种方式"></a>13.2.1 获取流的三种方式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Collection 集合</span></span><br><span class="line">    Collection c = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">    Stream stream1 = c.stream();</span><br><span class="line">    System.out.println(<span class="string">"stream1 = "</span> + stream1);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// List 集合</span></span><br><span class="line">    ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    Stream&lt;String&gt; stream2 = list.stream();</span><br><span class="line">    System.out.println(<span class="string">"stream2 = "</span> + stream2);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set 集合</span></span><br><span class="line">    HashSet&lt;String&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    Stream&lt;String&gt; stream3 = set.stream();</span><br><span class="line">    System.out.println(<span class="string">"stream3 = "</span> + stream3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Map集合</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Map 集合</span></span><br><span class="line">    HashMap&lt;String, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取流</span></span><br><span class="line">    <span class="comment">// 1. keySet</span></span><br><span class="line">    Stream&lt;String&gt; stream1 = map.keySet().stream();</span><br><span class="line">    <span class="comment">// 2. values</span></span><br><span class="line">    Stream&lt;Integer&gt; stream2 = map.values().stream();</span><br><span class="line">    <span class="comment">// 3. entrySet</span></span><br><span class="line">    Stream&lt;Map.Entry&lt;String, Integer&gt;&gt; stream3 = map.entrySet().stream();</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">"stream1 = "</span> + stream1);</span><br><span class="line">    System.out.println(<span class="string">"stream2 = "</span> + stream2);</span><br><span class="line">    System.out.println(<span class="string">"stream3 = "</span> + stream3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="13-2-2-流的常用方法"><a href="#13-2-2-流的常用方法" class="headerlink" title="13.2.2 流的常用方法"></a>13.2.2 流的常用方法</h2><pre><code>** 终结方法**：返回值类型不再是Stream接口自身类型的方法，因此不再支持类似StringBuilder那样的链式调用。本小节中，终结方法包括count和forEach方法。
+</code></pre><ul>
+<li><strong>非终结方法</strong>：返回值类型仍然是Stream接口自身类型的方法，因此支持链式调用。（除了终结方法外，其余方法均为非终结方法。）</li>
+</ul>
+<blockquote>
+<pre><code> 终结方法：逐一处理：forEach，统计个数：count
+
+ 非终结方法：过滤：filter，取用前几个：limit，跳过前几个：skip，映射：map
+
+组合： 使用Stream接口的静态方法concat
+</code></pre></blockquote>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>方法作用</th>
+<th>方法种类</th>
+<th>是否支持链式调用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>count</td>
+<td>统计个数</td>
+<td>终结</td>
+<td>否</td>
+</tr>
+<tr>
+<td>forEach</td>
+<td>逐一处理</td>
+<td>终结</td>
+<td>否</td>
+</tr>
+<tr>
+<td>filter</td>
+<td>过滤</td>
+<td>函数拼接</td>
+<td>是</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>取用前几个</td>
+<td>函数拼接</td>
+<td>是</td>
+</tr>
+<tr>
+<td>skip</td>
+<td>跳过前几个</td>
+<td>函数拼接</td>
+<td>是</td>
+</tr>
+<tr>
+<td>map</td>
+<td>映射</td>
+<td>函数拼接</td>
+<td>是</td>
+</tr>
+<tr>
+<td>concat</td>
+<td>组合</td>
+<td>函数拼接</td>
+<td>是</td>
+</tr>
+</tbody>
+</table>
+<p>并发流：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">转换为并发流</span><br><span class="line">   1. Stream的父接口java.util.stream.BaseStream中定义了一个parallel方法：</span><br><span class="line">   2.在通过集合获取流时，也可以直接调用parallelStream方法来直接获取支持并发操作的流</span><br><span class="line">                         default Stream&lt;E&gt; parallelStream() &#123;...</span><br><span class="line"> 	收集集合三种：</span><br><span class="line">         收集到集合中</span><br><span class="line">         Stream流提供collect方法，其参数需要一个java.util.stream.Collector&lt;T,A, R&gt;接口对象来指定收集到哪种集合中。幸运的是，java.util.stream.Collectors类提供一些方法，可以作为Collector接口的实例：</span><br><span class="line"></span><br><span class="line">- public static &lt;T&gt; Collector&lt;T, ?, List&lt;T&gt;&gt; toList()：转换为List集合。</span><br><span class="line">- public static &lt;T&gt; Collector&lt;T, ?, Set&lt;T&gt;&gt; toSet()：转换为Set集合。</span><br><span class="line">  		收集到数组中</span><br><span class="line">  Stream提供toArray方法来将结果放到一个数组中，由于泛型擦除的原因，返回值类型是Object[]的：</span><br><span class="line"></span><br><span class="line">		扩展：解决泛型数组问题</span><br><span class="line"></span><br><span class="line">有了Lambda和方法引用之后，可以使用toArray方法的另一种重载形式传递一个IntFunction&lt;A[]&gt;的函数，继而从外面指定泛型参数。方法签名：</span><br><span class="line"></span><br><span class="line">    &lt;A&gt; A[] toArray(IntFunction&lt;A[]&gt; generator);</span><br><span class="line"></span><br><span class="line">有了它，上例代码中不再局限于Object[]结果，而可以得到String[]结果</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2016/12/04/13JavaSE函数式编程-Stream流/" target="_blank" title="13JavaSE函数式编程&amp;Stream流">htts://cocked.github.io/2016/12/04/13JavaSE函数式编程-Stream流/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/08/14JavaSE反射、注解、Junit/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          14JavaSE反射、注解、Junit
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/28/11Java网络编程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">11Java网络编程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#13-1常用的函数式接口总结"><span class="nav-number">1.</span> <span class="nav-text">13.1常用的函数式接口总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-2-Stream流"><span class="nav-number">2.</span> <span class="nav-text">13.2 Stream流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#13-2-1-获取流的三种方式"><span class="nav-number">2.1.</span> <span class="nav-text">13.2.1 获取流的三种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-2-2-流的常用方法"><span class="nav-number">2.2.</span> <span class="nav-text">13.2.2 流的常用方法</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2013 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
