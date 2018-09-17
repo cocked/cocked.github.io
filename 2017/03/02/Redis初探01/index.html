@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>2redis | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="nosql" />
+  
+  
+  
+  
+  <meta name="description" content="#一、NoSQL1.什么是nosql​    NoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，是一项全新的数据库理念，泛指非关系型的数据库。适合存储不经常改变的从mysql中获取的数据，经常使用又不经常改变的数据存储在缓存数据库中 2.为什么需要nosql​    High performance - 对数据库高并发读写的需求 Huge Storage - 对海量数">
+<meta name="keywords" content="nosql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2Redis">
+<meta property="og:url" content="htts://cocked.github.io/2017/03/02/Redis初探01/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="#一、NoSQL1.什么是nosql​    NoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，是一项全新的数据库理念，泛指非关系型的数据库。适合存储不经常改变的从mysql中获取的数据，经常使用又不经常改变的数据存储在缓存数据库中 2.为什么需要nosql​    High performance - 对数据库高并发读写的需求 Huge Storage - 对海量数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="htts://cocked.github.io/2017/03/02/Redis初探01/2Redisimg/1531535474245.png">
+<meta property="og:image" content="htts://cocked.github.io/2017/03/02/Redis初探01/2Redisimg/clip_image016.jpg">
+<meta property="og:updated_time" content="2018-09-17T06:45:57.903Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2Redis">
+<meta name="twitter:description" content="#一、NoSQL1.什么是nosql​    NoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，是一项全新的数据库理念，泛指非关系型的数据库。适合存储不经常改变的从mysql中获取的数据，经常使用又不经常改变的数据存储在缓存数据库中 2.为什么需要nosql​    High performance - 对数据库高并发读写的需求 Huge Storage - 对海量数">
+<meta name="twitter:image" content="htts://cocked.github.io/2017/03/02/Redis初探01/2Redisimg/1531535474245.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Redis初探01" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      2Redis
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/03/02/Redis初探01/" class="article-date">
+	  <time datetime="2017-03-02T00:34:12.000Z" itemprop="datePublished">2017-03-02</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、NoSQL"><a href="#一、NoSQL" class="headerlink" title="#一、NoSQL"></a>#一、NoSQL</h1><h2 id="1-什么是nosql"><a href="#1-什么是nosql" class="headerlink" title="1.什么是nosql"></a>1.什么是nosql</h2><p>​    NoSQL(NoSQL = Not Only SQL)，意即“不仅仅是SQL”，是一项全新的数据库理念，泛指非关系型的数据库。适合存储不经常改变的从mysql中获取的数据，经常使用又<strong>不经常改变的数据存储在缓存数据库中</strong></p>
+<h2 id="2-为什么需要nosql"><a href="#2-为什么需要nosql" class="headerlink" title="2.为什么需要nosql"></a>2.为什么需要nosql</h2><p>​    High performance - 对数据库<strong>高并发读写</strong>的需求</p>
+<pre><code>Huge Storage - 对海量数据的**高效率存储和访问**的需求 
+</code></pre><p>​    High Scalability &amp;&amp; High Availability- 对数据库的<strong>高可扩展性和高可用性</strong>的需求</p>
+<h2 id="3-nosql的特点"><a href="#3-nosql的特点" class="headerlink" title="3.nosql的特点"></a>3.nosql的特点</h2><p>​    1.易扩展</p>
+<p>​    2.大数据量，高性能</p>
+<p>​    3.灵活的数据模型</p>
+<p>​    4.高可用</p>
+<h2 id="4-nosql支持的数据类型"><a href="#4-nosql支持的数据类型" class="headerlink" title="4.nosql支持的数据类型"></a>4.nosql支持的数据类型</h2><p>​    <strong>1.字符串类型 string（常用：json/xml）</strong></p>
+<p>​    <strong>2.散列类型 hash(key value   key–value(map) )</strong></p>
+<p>​    <strong>3.列表类型 list   linkedlist  用户列表</strong></p>
+<p>​    <strong>4.集合类型 set</strong></p>
+<p>​    <strong>5.有序集合类型 sortedset</strong></p>
+<h2 id="5-Redis目录"><a href="#5-Redis目录" class="headerlink" title="5.Redis目录"></a>5.Redis目录</h2><table>
+<thead>
+<tr>
+<th style="text-align:center"><strong>目录或文件</strong></th>
+<th style="text-align:center"><strong>作用</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">redis-benchmark</td>
+<td style="text-align:center">性能测试工具</td>
+</tr>
+<tr>
+<td style="text-align:center">redis-check-aof</td>
+<td style="text-align:center">AOF文件修复工具</td>
+</tr>
+<tr>
+<td style="text-align:center">redis-check-dump</td>
+<td style="text-align:center">RDB文件检查工具（快照持久化文件）</td>
+</tr>
+<tr>
+<td style="text-align:center">redis-cli</td>
+<td style="text-align:center">命令行客户端</td>
+</tr>
+<tr>
+<td style="text-align:center">redis-server</td>
+<td style="text-align:center">redis服务器启动命令</td>
+</tr>
+<tr>
+<td style="text-align:center">redis.windows.conf</td>
+<td style="text-align:center">redis核心配置文件</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Windows下安装6379(nosql)服务</strong>：</p>
+<p>​    <em>redis-server –service-install redis.windows.conf–loglevel verbose</em></p>
+<h1 id="二、Redis的5种数据类型"><a href="#二、Redis的5种数据类型" class="headerlink" title="#二、Redis的5种数据类型"></a>#二、Redis的5种数据类型</h1><p>​    <strong>1.字符串类型 string（常用：json/xml）</strong></p>
+<p>​    <strong>2.散列类型 hash(key value   key–value(map) )</strong></p>
+<p>​    <strong>3.列表类型 list   linkedlist  用户列表</strong></p>
+<p>​    <strong>4.集合类型 set</strong></p>
+<p>​    <strong>5.有序集合类型 sortedset</strong></p>
+<p>​    </p>
+<p>​    在日常开发中主要使用比较多的<strong>有字符串、哈希、字符串列表、字符串集合</strong>四种类型，其中最为常用的是字符串类型。</p>
+<h2 id="1-关于key的定义，注意如下几点："><a href="#1-关于key的定义，注意如下几点：" class="headerlink" title="1.关于key的定义，注意如下几点："></a>1.关于key的定义，注意如下几点：</h2><p>​    1.key不要太长，最好不要超过1024个字节，这不仅会消耗内存还会降低查找效率.</p>
+<p>​    2.key不要太短，如果太短会降低key的可读性 </p>
+<p>​    3.在项目中，key最好有一个统一的命名规范</p>
+<h2 id="2-字符串类型String"><a href="#2-字符串类型String" class="headerlink" title="2.字符串类型String"></a>2.字符串类型String</h2><blockquote>
+<p>​    1.字符串类型是在Redis中字符串类型的Value最多可以容纳的数据长度是512M。</p>
+<p>​    2.Redis中最为基础的数据存储类型，字符串在Redis中是<strong>二进制</strong>保存，因此是安全的，这便意味着该类型存入和获取的数据相同。</p>
+<p>​    </p>
+<p>​    <strong>##3.常用命令</strong></p>
+<p>​    (1)设定key持有指定的字符串value，<strong>如果该key存在则进行覆盖操作。总是返回”OK”</strong></p>
+<p>​    #设置<strong>key-value</strong></p>
+<p>​    <strong><em>set company “qiezicy”</em></strong></p>
+<p>​    获取value</p>
+<p>​    <strong><em>get company</em></strong></p>
+<p>​    删除 key</p>
+<p>​    <strong><em>del company</em></strong></p>
+<p>​    (2)当存储的key对应的值是一个整数时，让当前的key对应的值进行递增。并返回递增后的值。</p>
+<p>​    <strong><em>INCR key</em></strong>：给key的值递增1</p>
+<p>​    <strong><em>INCRBY key increment</em></strong>：给key的值增加指定的整数（increment）</p>
+<p>​    <strong><em>DECR key</em></strong>：给key的值递减1</p>
+<p>​    <strong><em>DECRBY key decrement</em></strong>：给key的值递减指定的整数（decrement）</p>
+<p>​    </p>
+<p>​    <strong>用途</strong>：数据存储于一个库的一张表可以达到id的自增长，但当数据量非常庞大，不得不存储于多个表甚至于多个库时，如果使用数据库的id自增长就存在问题，多个表或者多个库中的不同数据的id会重复，因为每个表的id都是从1自增长的。这就需要借助于其他手段或者机制来实现，比如：借助于redis的INCR自增长的机制，维护共同的id</p>
+<p>​    (3)<strong>APPEND</strong></p>
+<p>​    1） 如果 key 已经存在并且是一个字符串， APPEND 命令将 value 追加到 key 原来的值的末尾。</p>
+<p>​    2） 如果 key 不存在， APPEND 就简单地将给定 key 设为 value ，就像执行 SET key value 一样。</p>
+<p>​    <strong>语法：APPEND key value</strong></p>
+<p>​    <strong>返回值</strong>：追加指定值之后， key 中字符串的长度。</p>
+<p>​    (4) <strong>STRLEN</strong></p>
+<p>​    Strlen 命令用于获取指定 key 所储存的字符串值的长度。</p>
+<p>​    <strong>语法：STRLEN key</strong></p>
+<p>​    <strong>返回值</strong>：追加指定值之后， key 中字符串的长度。</p>
+<p>​    (5)<strong>MGET MSET</strong></p>
+<p>​    Mset命令用于同时设置一个或多个 k-v对</p>
+<p>​    <strong>语法：MSET key1 value1 key2 value2 … keyN valueN</strong></p>
+<p>​    Mget 命令返回所有(一个或多个)给定 key 的值。 如果给定的 key 里面，有某个 key 不存在，那么这个 key 返回特殊值 nil 。</p>
+<p>​    <strong>语法：MGET KEY1 KEY2 .. KEYN</strong></p>
+</blockquote>
+<h2 id="3-哈希类型hash"><a href="#3-哈希类型hash" class="headerlink" title="3.哈希类型hash"></a>3.哈希类型hash</h2><p> <img src="2Redisimg\1531535474245.png" alt="1531535474245"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Key是用户ID, value是一个Map，这个Map的key是成员的属性名，value是属性值，这样对数据的修改和存取都可以直接通过其内部Map的Key(Redis里称内部Map的key为field), </span><br><span class="line">也就是通过 key(用户ID) + field(属性标签) 就可以操作对应属性数据了，既不需要重复存储数据，也不会带来序列化和并发修改控制的问题</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>使用场景：</p>
+<p>​    存储部分变更数据，如用户信息等</p>
+<p>语法：</p>
+<p>​    <strong>1.为指定的key设定field/value对（键值对）</strong></p>
+<p>​    hset key field value———&gt;&gt;hset myhash username haha</p>
+<p>​    <strong>2.返回指定的key中的field的值</strong></p>
+<p>​    hget key field—————–&gt;&gt;hget myhash username </p>
+<p>​    <strong>3.可以删除一个或多个字段，返回值是被删除的字段个数</strong></p>
+<p>​    hdel key field /field…———&gt;&gt;hdel myhash username</p>
+<p>​    <strong>4. HGETALL、HKEYS、HVALS     批量查询</strong></p>
+<p>​        <strong>#HGETALL</strong>获取在哈希表中指定 key 的所有字段和值</p>
+<p>​        <strong>语法</strong>：<code>HGETALL key</code></p>
+<p>​        <strong>返回值：</strong></p>
+<p>​        以列表形式返回哈希表的域和域的值。若 key 不存在，返回空列表。在返回值里，紧跟每个域名(field name)之后是域的值(value)</p>
+<p>​        <strong>#HKEYS</strong>获取所有哈希表中的字段</p>
+<p>​        <strong>语法</strong>：HKEYS key</p>
+<p>​        <strong>返回值：</strong></p>
+<p>​        一个包含哈希表中所有字段的表。当 key 不存在时，返回一个空表。</p>
+<p>​        <strong>#HVALS</strong>获取哈希表中所有值</p>
+<p>​        <strong>语法：</strong>HVALS key</p>
+<p>​        <strong>返回值：</strong></p>
+<p>​        一个包含哈希表中所有域(field)值的列表。 当 key 不存在时，返回一个空表</p>
+<p>​    <strong>5.</strong> <strong>HMSET、HMGET（批量新增）</strong></p>
+<p>​    <strong>语法</strong>：<code>HMSET key field1 value1 [field2 value2 ]</code> </p>
+<p>​    同时将多个 field-value (域-值)对设置到哈希表 key 中。此命令会覆盖哈希表中已存在的字段。</p>
+<p>​    <strong>返回值</strong>：如果命令执行成功，返回 OK 。当 key 不是哈希表(hash)类型时，返回一个错误。</p>
+<pre><code>&gt;hmset myhash qq 10001 email 10001@qq.com  address china
+</code></pre><p>​    <strong>语法：</strong><code>HMGET key field [field ...]</code></p>
+<p>​    获取所有给定字段的值</p>
+<p>​    <strong>返回值：</strong></p>
+<p>​    一个包含多个给定域的关联值的表，表值的排列顺序和给定域参数的请求顺序一样。</p>
+<pre><code>&gt;hmget myhash username qq email
+</code></pre></blockquote>
+<h2 id="4-列表类型list"><a href="#4-列表类型list" class="headerlink" title="4.列表类型list"></a>4.列表类型list</h2><p><strong>应用场景：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Redis list的应用场景非常多，也是Redis最重要的数据结构之一，比如twitter的关注列表，粉丝列表等都可以用Redis的list结构来实现。</span><br><span class="line"></span><br><span class="line">List 就是链表，使用List结构，我们可以轻松地实现最新消息排行等功能。List的另一个应用就是消息队列，</span><br><span class="line"></span><br><span class="line">可以利用List的PUSH操作，将任务存在List中，然后工作线程再用POP操作将任务取出进行执行。Redis还提供了操作List中某一段的api，你可以直接查询，删除List中某一段的元素。</span><br></pre></td></tr></table></figure>
+<p><img src="2Redisimg/clip_image016.jpg" alt="img"></p>
+<p>​    1，在Redis中，List类型是按照插入顺序排序的字符串链表。和数据结构中的普通链表一样，我们可以在其头部(left)和尾部(right)添加新的元素。</p>
+<p>​    2，在插入时，<strong>如果该键不存在，Redis将为该键创建一个新的链表。</strong></p>
+<p>​    3，如果链表中所有的元素均被移除，<strong>那么该键也将会被从数据库中删除。</strong></p>
+<p>​    4，List中可以包含的最大元素数量是<strong>4294967295</strong></p>
+<blockquote>
+<ol>
+<li><strong>lpush key value1 value2 …</strong></li>
+</ol>
+<p>在指定的key所关联的list的<strong>头部插入所有的values</strong>，</p>
+<p>如果该key不存在，该命令在插入的之前创建一个与该key关联的空链表，之后再向该链表的头部插入数据。</p>
+<p>插入成功，返回元素的个数。</p>
+<p>​</p>
+<ol>
+<li><strong>rpush key value value value</strong></li>
+</ol>
+<p>在指定的key对应的list的尾部插入所有的value，</p>
+<p>如果该key不存在，该命令在插入之前创建一个与该key对应的空链表，再从尾部插入数据。</p>
+<p>​</p>
+<ol>
+<li><strong>lpop key</strong></li>
+</ol>
+<p>先进后出，弹出第一个元素</p>
+<p>返回并弹出指定的key关联的链表中的第一个元素，即头部元素。</p>
+<p>如果该key不存在，返回nil；</p>
+<p>若key存在，则返回链表的头部元素。</p>
+<p>​</p>
+<ol>
+<li><strong>rpop key</strong></li>
+</ol>
+<p>从尾部弹出元素。</p>
+</blockquote>
+<h2 id="5-集合类型set"><a href="#5-集合类型set" class="headerlink" title="5.集合类型set"></a>5.集合类型set</h2><p>应用场景：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Redis set对外提供的功能与list类似是一个列表的功能，</span><br><span class="line">  特殊之处在于set是可以自动排重的，当你需要存储一个列表数据，又不希望出现重复数据时，</span><br><span class="line">  set是一个很好的选择，并且set提供了判断某个成员是否在一个set集合内的重要接口，</span><br><span class="line">  这个也是list所不能提供的。</span><br></pre></td></tr></table></figure>
+<p>简单介绍：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在Redis中，我们可以将Set类型看作为没有排序的字符集合，和List类型一样，我们也可以在该类型的数据值上执行添加、删除或判断某一元素是否存在等操作。需要说明的是，这些操作的时间复杂度为O(1)，即常量时间内完成次操作。Set可包含的最大元素数量是4294967295，和List类型不同的是，Set集合中不允许出现重复的元素。</span><br></pre></td></tr></table></figure>
+<p>常用命令</p>
+<blockquote>
+<ol>
+<li><strong>sadd key values[value1**</strong>、<strong>**value2…]</strong></li>
+</ol>
+<p>向set中添加数据，如果该key的值已有则不会重复添加</p>
+<p>sadd myset 1 2 4</p>
+<ol>
+<li><strong>srem key members[member1、member2…]</strong></li>
+</ol>
+<p>获取set中所有的成员</p>
+<ol>
+<li><strong>srem key members[member1、member2…]</strong></li>
+</ol>
+<p>删除set中指定的成员</p>
+</blockquote>
+<h2 id="6小结"><a href="#6小结" class="headerlink" title="6小结"></a>6小结</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">字符串</th>
+<th style="text-align:center">set</th>
+<th style="text-align:center">get</th>
+<th style="text-align:center">del</th>
+<th style="text-align:center">json格式字符串</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">hash</td>
+<td style="text-align:center">hset</td>
+<td style="text-align:center">hget</td>
+<td style="text-align:center">hgetall</td>
+<td style="text-align:center">hmset</td>
+</tr>
+<tr>
+<td style="text-align:center">list</td>
+<td style="text-align:center">lpush</td>
+<td style="text-align:center">rpush</td>
+<td style="text-align:center">lpop</td>
+<td style="text-align:center">rpop</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">sadd</td>
+<td style="text-align:center">smemebers</td>
+<td style="text-align:center">srem</td>
+</tr>
+</tbody>
+</table>
+<h1 id="三、Redis的通用命令"><a href="#三、Redis的通用命令" class="headerlink" title="#三、Redis的通用命令"></a>#三、Redis的通用命令</h1><h2 id="1-keys-pattern"><a href="#1-keys-pattern" class="headerlink" title="1.keys pattern"></a>1.keys pattern</h2><p>示例：keys * (查询所有的键)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">?</td>
+<td>匹配一个字符</td>
+</tr>
+<tr>
+<td style="text-align:center">*</td>
+<td>匹配任意个(包括0个) 字符</td>
+</tr>
+<tr>
+<td style="text-align:center">[]</td>
+<td>匹配括号间任一字符，可以使用”-“表示范围，如果a[a-d]可以匹配“ab”，“ac”，”ad”</td>
+</tr>
+<tr>
+<td style="text-align:center">\x</td>
+<td>匹配字符x,用于转义符号，如果要匹配“?”就需要使用\?</td>
+</tr>
+</tbody>
+</table>
+<p>获取所有与pattern匹配的key，返回所有与该key匹配的keys。*表示任意一个或多个字符，?表示任意一个字符</p>
+<h2 id="2-del-key1-key2…"><a href="#2-del-key1-key2…" class="headerlink" title="2.del key1 key2…"></a>2.del key1 key2…</h2><p>删除指定的key</p>
+<h2 id="3-exists-key"><a href="#3-exists-key" class="headerlink" title="3.exists key"></a>3.exists key</h2><p>判断该key是否存在，1代表存在，0代表不存在</p>
+<h2 id="4-type-key"><a href="#4-type-key" class="headerlink" title="4.type key"></a>4.type key</h2><p>​    获取指定key的类型。该命令将以字符串的格式返回。 返回的字符串为string、list、set、hash，如果key不存在返回none</p>
+<h1 id="四、Jedis的基本使用"><a href="#四、Jedis的基本使用" class="headerlink" title="#四、Jedis的基本使用"></a>#四、Jedis的基本使用</h1><h2 id="1-jedis介绍"><a href="#1-jedis介绍" class="headerlink" title="1.jedis介绍"></a>1.jedis介绍</h2><p>​    在官方网站里列一些Java的客户端，有Jedis、Redisson、Jredis、JDBC-Redis、等其中官方推荐使用Jedis和Redisson。 </p>
+<h2 id="2-jedis常用API及Jar包"><a href="#2-jedis常用API及Jar包" class="headerlink" title="2.jedis常用API及Jar包"></a>2.jedis常用API及Jar包</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>new Jedis(host, port)</td>
+<td>创建jedis对象，参数host是redis服务器地址，参数port是redis服务端口</td>
+</tr>
+<tr>
+<td>set(key value)</td>
+<td>设置字符串类型的数据</td>
+</tr>
+<tr>
+<td>get(key)</td>
+<td>获得字符串类型的数据</td>
+</tr>
+<tr>
+<td>hset(key, field, value)</td>
+<td>设置哈希类型的数据</td>
+</tr>
+<tr>
+<td>hget(key, field)</td>
+<td>获得哈希类型的数据</td>
+</tr>
+<tr>
+<td>lpush(key, values)</td>
+<td>设置列表类型的数据</td>
+</tr>
+<tr>
+<td>lpop(key)</td>
+<td>列表左面弹栈</td>
+</tr>
+<tr>
+<td>rpop(key)</td>
+<td>列表右面弹栈</td>
+</tr>
+<tr>
+<td>del(key)</td>
+<td>删除指定的key</td>
+</tr>
+</tbody>
+</table>
+<p>commons-pool2-2.3.jar</p>
+<p>jedis-2.7.0.jar</p>
+<h2 id="3-jedis连接池的使用"><a href="#3-jedis连接池的使用" class="headerlink" title="3.jedis连接池的使用"></a>3.jedis连接池的使用</h2><p>jedis连接资源的创建与销毁是很消耗程序性能<strong>，所以jedis为我们提供了jedis的</strong>池化技术**</p>
+<p>‘#基本使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//1 获得连接池配置对象，设置配置项</span></span><br><span class="line">  JedisPoolConfig config = <span class="keyword">new</span> JedisPoolConfig();</span><br><span class="line">  <span class="comment">// 1.1 最大连接数</span></span><br><span class="line">  config.setMaxTotal(<span class="number">30</span>);</span><br><span class="line">  <span class="comment">// 1.2  最大空闲连接数</span></span><br><span class="line">  config.setMaxIdle(<span class="number">10</span>);</span><br><span class="line">  <span class="comment">//2 获得连接池</span></span><br><span class="line">  JedisPool jedisPool = <span class="keyword">new</span> JedisPool(config, <span class="string">"localhost"</span>, <span class="number">6379</span>);</span><br><span class="line">  <span class="comment">//3 获得核心对象</span></span><br><span class="line">  Jedis jedis = <span class="keyword">null</span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">      jedis = jedisPool.getResource();</span><br><span class="line">      <span class="comment">//4 设置数据</span></span><br><span class="line">      jedis.set(<span class="string">"name"</span>, <span class="string">"qiezicy"</span>);</span><br><span class="line">      <span class="comment">//5 获得数据</span></span><br><span class="line">      String name = jedis.get(<span class="string">"name"</span>);</span><br><span class="line">      System.out.println(name);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">  &#125; <span class="keyword">finally</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(jedis != <span class="keyword">null</span>)&#123;</span><br><span class="line">         jedis.close();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 虚拟机关闭时，释放pool资源</span></span><br><span class="line">      <span class="keyword">if</span>(jedisPool != <span class="keyword">null</span>)&#123;</span><br><span class="line">          jedisPool.close();</span><br><span class="line">      &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-JedisUtils工具类"><a href="#4-JedisUtils工具类" class="headerlink" title="4.JedisUtils工具类"></a>4.JedisUtils工具类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qiezi.jedisPool;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> redis.clients.jedis.Jedis;</span><br><span class="line"><span class="keyword">import</span> redis.clients.jedis.JedisPool;</span><br><span class="line"><span class="keyword">import</span> redis.clients.jedis.JedisPoolConfig;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ResourceBundle;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by IntelliJ IDEA</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Eric.Shen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2018/8/19</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@time</span> 14:09</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">JedisUtil</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">JedisUtil</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 连接池对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> JedisPool jedisPool;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 最大连接数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> maxtotal;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *最大等待时间</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> maxwaitmillis;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 主机地址</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String host;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 端口：默认6379</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> port;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 读取jedis.properties配置文件</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        ResourceBundle rb = ResourceBundle.getBundle(<span class="string">"jedis"</span>);</span><br><span class="line">        maxtotal = Integer.parseInt(rb.getString(<span class="string">"maxtotal"</span>));</span><br><span class="line">        maxwaitmillis = Integer.parseInt(rb.getString(<span class="string">"maxwaitmillis"</span>));</span><br><span class="line">        host = rb.getString(<span class="string">"host"</span>);</span><br><span class="line">        port = Integer.parseInt(rb.getString(<span class="string">"port"</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建连接池</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        JedisPoolConfig jedisPoolConfig = <span class="keyword">new</span> JedisPoolConfig();</span><br><span class="line">        jedisPoolConfig.setMaxIdle(maxtotal);</span><br><span class="line">        jedisPoolConfig.setMaxWaitMillis(maxwaitmillis);</span><br><span class="line">        jedisPool = <span class="keyword">new</span> JedisPool(jedisPoolConfig, host, port);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取Jedis</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Jedis <span class="title">getJedis</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> jedisPool.getResource();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 关闭Jedis</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> jedis</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">(Jedis jedis)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (jedis != <span class="keyword">null</span>) &#123;</span><br><span class="line">            jedis.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>jedis.properties</strong>(src目录下配置文件，编写配置文件)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">maxtotal=100</span><br><span class="line">maxwaitmillis=3000</span><br><span class="line">host=127.0.0.1</span><br><span class="line">port=6379</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2017/03/02/Redis初探01/" target="_blank" title="2Redis">htts://cocked.github.io/2017/03/02/Redis初探01/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/15/01Mybatis初探/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          01Mybatis初探
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/28/06WEB初识Filter/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">06WEB初识Filter</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、NoSQL"><span class="nav-number">1.</span> <span class="nav-text">#一、NoSQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是nosql"><span class="nav-number">1.1.</span> <span class="nav-text">1.什么是nosql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-为什么需要nosql"><span class="nav-number">1.2.</span> <span class="nav-text">2.为什么需要nosql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-nosql的特点"><span class="nav-number">1.3.</span> <span class="nav-text">3.nosql的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-nosql支持的数据类型"><span class="nav-number">1.4.</span> <span class="nav-text">4.nosql支持的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Redis目录"><span class="nav-number">1.5.</span> <span class="nav-text">5.Redis目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、Redis的5种数据类型"><span class="nav-number">2.</span> <span class="nav-text">#二、Redis的5种数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-关于key的定义，注意如下几点："><span class="nav-number">2.1.</span> <span class="nav-text">1.关于key的定义，注意如下几点：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-字符串类型String"><span class="nav-number">2.2.</span> <span class="nav-text">2.字符串类型String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-哈希类型hash"><span class="nav-number">2.3.</span> <span class="nav-text">3.哈希类型hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-列表类型list"><span class="nav-number">2.4.</span> <span class="nav-text">4.列表类型list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-集合类型set"><span class="nav-number">2.5.</span> <span class="nav-text">5.集合类型set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6小结"><span class="nav-number">2.6.</span> <span class="nav-text">6小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Redis的通用命令"><span class="nav-number">3.</span> <span class="nav-text">#三、Redis的通用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-keys-pattern"><span class="nav-number">3.1.</span> <span class="nav-text">1.keys pattern</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-del-key1-key2…"><span class="nav-number">3.2.</span> <span class="nav-text">2.del key1 key2…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-exists-key"><span class="nav-number">3.3.</span> <span class="nav-text">3.exists key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-type-key"><span class="nav-number">3.4.</span> <span class="nav-text">4.type key</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、Jedis的基本使用"><span class="nav-number">4.</span> <span class="nav-text">#四、Jedis的基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-jedis介绍"><span class="nav-number">4.1.</span> <span class="nav-text">1.jedis介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-jedis常用API及Jar包"><span class="nav-number">4.2.</span> <span class="nav-text">2.jedis常用API及Jar包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-jedis连接池的使用"><span class="nav-number">4.3.</span> <span class="nav-text">3.jedis连接池的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-JedisUtils工具类"><span class="nav-number">4.4.</span> <span class="nav-text">4.JedisUtils工具类</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

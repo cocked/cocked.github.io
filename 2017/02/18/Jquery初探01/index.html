@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>jquery初探 | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="jQuery" />
+  
+  
+  
+  
+  <meta name="description" content="#一、jQuery1.jQery核心语法​    jq的核心语法： jQuery(“选择器”)， jQuery(callback)， jQuery(html)。其中jQuery可以使用$代替。 2.js和jQery对象比较 JS对象（DOM） DOM：是文档对象模型；DOM对象指的是这个文档（html）中的某一个具体的节点对象；  jQuery对象 jQuery对象是一个类数组的对象这个对象里面其">
+<meta name="keywords" content="jQuery">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jquery初探">
+<meta property="og:url" content="htts://cocked.github.io/2017/02/18/Jquery初探01/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="#一、jQuery1.jQery核心语法​    jq的核心语法： jQuery(“选择器”)， jQuery(callback)， jQuery(html)。其中jQuery可以使用$代替。 2.js和jQery对象比较 JS对象（DOM） DOM：是文档对象模型；DOM对象指的是这个文档（html）中的某一个具体的节点对象；  jQuery对象 jQuery对象是一个类数组的对象这个对象里面其">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-17T06:45:04.359Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jquery初探">
+<meta name="twitter:description" content="#一、jQuery1.jQery核心语法​    jq的核心语法： jQuery(“选择器”)， jQuery(callback)， jQuery(html)。其中jQuery可以使用$代替。 2.js和jQery对象比较 JS对象（DOM） DOM：是文档对象模型；DOM对象指的是这个文档（html）中的某一个具体的节点对象；  jQuery对象 jQuery对象是一个类数组的对象这个对象里面其">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Jquery初探01" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Jquery初探
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/02/18/Jquery初探01/" class="article-date">
+	  <time datetime="2017-02-18T02:15:18.000Z" itemprop="datePublished">2017-02-18</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、jQuery"><a href="#一、jQuery" class="headerlink" title="#一、jQuery"></a>#一、jQuery</h1><h2 id="1-jQery核心语法"><a href="#1-jQery核心语法" class="headerlink" title="1.jQery核心语法"></a>1.jQery核心语法</h2><p>​    jq的核心语法： jQuery(“选择器”)， jQuery(callback)， jQuery(html)。其中jQuery可以使用$代替。</p>
+<h2 id="2-js和jQery对象比较"><a href="#2-js和jQery对象比较" class="headerlink" title="2.js和jQery对象比较"></a>2.js和jQery对象比较</h2><ol>
+<li><p><strong>JS对象（DOM）</strong></p>
+<p>DOM：是文档对象模型；DOM对象指的是这个文档（html）中的某一个具体的节点对象；</p>
+</li>
+<li><p><strong>jQuery对象</strong></p>
+<p>jQuery对象是一个类数组的对象这个对象里面其实是包含了DOM对象的信息的然后封装了很多操作方法，调用自己的方法html与css处理，得到的效果与标准的JavaScript处理结果是一致的。</p>
+<p>​jQuery     ——–&gt;      js</p>
+<blockquote>
+<p>jQuery对象[0]；</p>
+<p>jQuery对象.get(0)；</p>
+</blockquote>
+<p>​js       ———&gt;   jQuery</p>
+<blockquote>
+<p>只需要使用<code>$</code>将JS对象包裹即可：<code>$(dom)</code> </p>
+</blockquote>
+</li>
+</ol>
+<p>3.<strong>两者方法不通用</strong></p>
+<p>​    jQuery对象不能使用JS对象的方法；</p>
+<p>​    JS对象不能使用jQuery对象的方法；</p>
+<p><strong>4.事件注册</strong></p>
+<p>​    <strong>js的事件的写法</strong>：js对象.onclick = function(){ … … }<br>​    <strong>jquery的事件的写法</strong>：jquery对象.click( function(){ … … } )<br>​    JS可以使用<strong>事件绑定和事件派发</strong>两种事件注册方式；</p>
+<p>​    jQuery只能使用<strong>事件派发</strong>的方式来绑定事</p>
+<p><strong>5.onload事件</strong></p>
+<p>​    js的页面加载完毕：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; ...... &#125;</span><br></pre></td></tr></table></figure>
+<p>​    jquery的页面加载完毕：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;)</span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;... ... &#125;)</span><br></pre></td></tr></table></figure>
+<p><strong>6.jQuery常用事件</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">事件</th>
+<th style="text-align:center">使用方法</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">click()</td>
+<td style="text-align:center">jq对象.click( function(){      //方法体       } )</td>
+<td style="text-align:center">鼠标单击事件</td>
+</tr>
+<tr>
+<td style="text-align:center">blur()</td>
+<td style="text-align:center">jq对象.blur( function(){      //方法体       } )</td>
+<td style="text-align:center">失去焦点事件</td>
+</tr>
+<tr>
+<td style="text-align:center">change()</td>
+<td style="text-align:center">jq对象.change( function(){      //方法体       } )</td>
+<td style="text-align:center">内容改变事件</td>
+</tr>
+<tr>
+<td style="text-align:center">submit()</td>
+<td style="text-align:center">jq对象.submit( function(){      //方法体       } )</td>
+<td style="text-align:center">表单提交事件</td>
+</tr>
+</tbody>
+</table>
+<h1 id="二、选择器"><a href="#二、选择器" class="headerlink" title="#二、选择器"></a>#二、选择器</h1><h2 id="1-jQuery选择器"><a href="#1-jQuery选择器" class="headerlink" title="1.jQuery选择器"></a>1.jQuery选择器</h2><table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基本选择器</td>
+<td><code>$(element),$(&quot;#id&quot;),$(&quot;.class&quot;),$(element,element)</code></td>
+<td>元素，id，class，组合选择器</td>
+</tr>
+<tr>
+<td>层级选择器</td>
+<td><code>$(&quot;A  B &quot;),$(&quot;A &gt; B&quot;),$(&quot;A + B&quot;),$(&quot;A ~ B&quot;)</code></td>
+<td>根据标签之间的层级关系进行选择</td>
+</tr>
+<tr>
+<td>属性过滤选择器</td>
+<td><code>$(&quot;A[属性名]&quot;),$(&quot;A[属性名!=值]&quot;)</code></td>
+<td>根据标签的属性对选中的标签进行过滤</td>
+</tr>
+<tr>
+<td>基本过滤选择器</td>
+<td><code>$(&quot;div:first&quot;),$(&quot;div:even&quot;)</code></td>
+<td>根据标签所处的位置及特性进行过滤</td>
+</tr>
+<tr>
+<td>表单对象属性过滤选择器</td>
+<td><code>$(&quot;:selected&quot;),$(&quot;input:disabled&quot;)</code></td>
+<td>根据表单对象的属性对选中的标签进行过滤</td>
+</tr>
+<tr>
+<td>可见性过滤选择器</td>
+<td><code>$(&quot;input:visible&quot;),$(&quot;input:hidden&quot;)</code></td>
+<td>根据表单是否可见进行过滤。不可见的元素包括：1.隐藏域；2.style=”display:none”</td>
+</tr>
+<tr>
+<td>内容过滤选择器</td>
+<td><code>$(&quot;div:has(&#39;selector&#39;)&quot;)</code></td>
+<td>根据元素中包含的内容过滤</td>
+</tr>
+<tr>
+<td>表单过滤选择器</td>
+<td><code>$(&quot;:input&quot;)$(&quot;:radio&quot;)</code></td>
+<td>根据表单的特性进行过滤</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-基本选择器"><a href="#2-基本选择器" class="headerlink" title="2.基本选择器"></a>2.基本选择器</h2><p>​    基本选择器主要有：<strong>标签名（元素）选择器，id选择器，class选择器和组合选择器</strong>；如下：</p>
+<table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>标签名（元素）选择器</td>
+<td><code>$(p),$(div)</code></td>
+<td>根据标签名选择具有相同标签名的标签</td>
+</tr>
+<tr>
+<td>id选择器</td>
+<td><code>$(#idVal)</code></td>
+<td>根据标签的id属性值选择</td>
+</tr>
+<tr>
+<td>class选择器</td>
+<td><code>$(.classVal)</code></td>
+<td>根据标签的class属性值，选择具有相同class属性值的元素</td>
+</tr>
+<tr>
+<td>组合选择器</td>
+<td><code>$(div,p)</code></td>
+<td>将多个选择器选中的标签合并返回</td>
+</tr>
+<tr>
+<td>*</td>
+<td><code>$(*)</code></td>
+<td>选择页面上的所有标签</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-层级选择器"><a href="#3-层级选择器" class="headerlink" title="3.层级选择器"></a>3.层级选择器</h2><p>根据元素之间的层级关系进行选择。</p>
+<table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$(“A空格B”)</td>
+<td>后代选择器</td>
+<td><strong>后代选择器</strong>:选择给定祖先A元素的所有后代B元素，包括子元素，孙子元素等全部后代元素</td>
+</tr>
+<tr>
+<td>$(“parent &gt; child”)</td>
+<td>直接子元素</td>
+<td><strong>子选择器</strong>:选择所有指定”parent”元素中指定的”child”的<strong>直接</strong>子元素</td>
+</tr>
+<tr>
+<td>$(“A+ B”)</td>
+<td>相邻兄弟</td>
+<td><strong>相邻兄弟选择器</strong>:选择所有<strong>紧接</strong>在A元素后的第一个B元素</td>
+</tr>
+<tr>
+<td>$(“A~ B”)</td>
+<td>后面的兄弟元素</td>
+<td><strong>后面兄弟选择器</strong>：匹配“A”元素之后的所有兄弟B元素。</td>
+</tr>
+<tr>
+<td>$(“A”).siblings(“B”);</td>
+<td>一般兄弟元素</td>
+<td><strong>兄弟元素选择器</strong> ：匹配所有的（之前+之后）兄弟元素</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-属性过滤选择器"><a href="#4-属性过滤选择器" class="headerlink" title="4.属性过滤选择器"></a>4.属性过滤选择器</h2><p>属性过滤选择器的<strong>作用</strong>：1.先选中；2.再根据属性过滤出想要的元素；</p>
+<table>
+<thead>
+<tr>
+<th>过滤器</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>[attribute]</strong></td>
+<td>$(“input[name]”)</td>
+<td>过滤拥有指定属性的元素</td>
+</tr>
+<tr>
+<td><strong>[attribute=value]</strong></td>
+<td>$(“input[name=userName]”)</td>
+<td>过滤出属性值=value的元素</td>
+</tr>
+<tr>
+<td>[attribute!=value]</td>
+<td>$(“input[name!=password]”)</td>
+<td>过滤出属性值！=value的元素</td>
+</tr>
+<tr>
+<td>[attribute^=value]</td>
+<td>$(“input[name^=myClass]”)</td>
+<td>过滤出属性值以value开始的元素</td>
+</tr>
+<tr>
+<td>[attribute$=value]</td>
+<td><code>$(&quot;input[name$=myClass]&quot;)</code></td>
+<td>过滤出属性值以value结束的元素</td>
+</tr>
+<tr>
+<td>[attribute*=value]</td>
+<td>$(“input[class*=myClass]”)</td>
+<td>过滤出属性值含有value的元素</td>
+</tr>
+<tr>
+<td><strong><code>[attr1][attr2][attr3]...</code></strong></td>
+<td><code>$(&quot;input[name=username][value!=张三]...&quot;&quot;)</code></td>
+<td>过滤指定的多个属性同时满足条件的元素，以上属性过滤的任意组合</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-基本过滤选择器"><a href="#5-基本过滤选择器" class="headerlink" title="5.基本过滤选择器"></a>5.基本过滤选择器</h2><table>
+<thead>
+<tr>
+<th>过滤方法</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:first</td>
+<td><code>$(&quot;tr:first&quot;)</code>：第一个tr，相当于<code>$(&quot;tr:eq(0)&quot;)</code></td>
+<td>第一个位置</td>
+</tr>
+<tr>
+<td>:last</td>
+<td><code>$(&quot;tr:last&quot;)</code>:tr中的最后一个，相当于<code>$(&quot;tr:eq(-1)&quot;)</code></td>
+<td>最后一个位置</td>
+</tr>
+<tr>
+<td>:odd</td>
+<td><code>$(&quot;tr:odd&quot;)</code>:tr中的奇数行（1,3,5,7……）</td>
+<td>奇数位置</td>
+</tr>
+<tr>
+<td>:even</td>
+<td><code>$(&quot;tr:even&quot;)</code>:tr中的偶数行(2,4,6,8……)</td>
+<td>偶数位置</td>
+</tr>
+<tr>
+<td>:eq(index)</td>
+<td>$(“tr:eq(0)”)：第一个tr</td>
+<td>选取指定索引的元素</td>
+</tr>
+<tr>
+<td>:gt(index)</td>
+<td>$(“tr:gt(1)”)：索引大于1的tr，即第2个tr之后的tr</td>
+<td>选取索引大于指定索引的元素</td>
+</tr>
+<tr>
+<td>:lt(index)</td>
+<td>$(“tr:lt(3)”)：索引小于3的tr，即前3个tr(0,1,2)</td>
+<td>选取索引小于指定索引的元素</td>
+</tr>
+<tr>
+<td>:not(selector)</td>
+<td><code>$(&quot;tr:not(tr:eq(2))&quot;)</code>:tr中除第2行外的行</td>
+<td>去除与给定选择器匹配的元素（排除）</td>
+</tr>
+<tr>
+<td>:header</td>
+<td><code>$(&quot;:header&quot;)</code>：获取h1到h6</td>
+<td>匹配所有标题元素</td>
+</tr>
+<tr>
+<td>:animated</td>
+<td><code>$(&quot;:animated&quot;)</code>:匹配所有正在执行动画效果的元素</td>
+<td>匹配所有正在执行动画效果的元素</td>
+</tr>
+<tr>
+<td>:focus</td>
+<td><code>$(&quot;input:focus&quot;)</code>:获取input中获取焦点的</td>
+<td>匹配所有获取焦点的元素</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-表单对象属性过滤选择器"><a href="#6-表单对象属性过滤选择器" class="headerlink" title="6.表单对象属性过滤选择器"></a>6.表单对象属性过滤选择器</h2><p>表单对象属性过滤选择器是根据表单元素的某些属性来进行过滤选择的。</p>
+<table>
+<thead>
+<tr>
+<th>过滤器</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:enabled</td>
+<td>$(“input:enabled”)</td>
+<td>过滤可用的元素</td>
+</tr>
+<tr>
+<td>:disabled</td>
+<td>$(“input:disabled”</td>
+<td>过滤不可用的元素</td>
+</tr>
+<tr>
+<td>:checked</td>
+<td><code>$(&quot;input[type=checkbox]:checked&quot;)</code>或<code>$(&quot;:checkbox:checked&quot;)</code></td>
+<td>过滤被选中元素(复选框、单选框等，不包括select中的option)</td>
+</tr>
+<tr>
+<td>:selected</td>
+<td><code>$(&quot;select option:selected&quot;)</code></td>
+<td>过滤被选中的元素（select的option）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-可见性过滤选择器"><a href="#7-可见性过滤选择器" class="headerlink" title="7.可见性过滤选择器"></a>7.可见性过滤选择器</h2><p>​    可见性过滤选择器是根据标签是否可见进行过滤的，页面上能够看见的标签都是可见的。不可见的标签主要包括以下两种：</p>
+<ol>
+<li>隐藏域：<code>&lt;input type=&quot;hidden&quot; name=&quot;id&quot; value=&quot;520&quot;&gt;</code> ；</li>
+<li>diaplay属性隐藏：<code>&lt;div style=&quot;display:none&quot;&gt;&lt;/div&gt;</code> ;</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="comment">//&lt;input type="button" value=" 选取所有可见的div元素" id="b1" /&gt;</span></span><br><span class="line">	$(<span class="string">"#b1"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		</span><br><span class="line">		$(<span class="string">"div:visible"</span>).css(<span class="string">"background-color"</span>,<span class="string">"yellow"</span>);</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="comment">//&lt;input type="button" value=" 选取所有不可见的div元素, 利用 jQuery 中的 show() 方法将它们显示出来" id="b2" /&gt;</span></span><br><span class="line">	$(<span class="string">"#b2"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		</span><br><span class="line">		$(<span class="string">"div:hidden"</span>).show();</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="8-内容过滤选择器"><a href="#8-内容过滤选择器" class="headerlink" title="8.内容过滤选择器"></a>8.内容过滤选择器</h2><p>内容过滤选择器是根据标签中时候包含有某些内容，来对选择的标签进行过滤的。语法格式：<code>$(&quot;div:has(selector)&quot;)</code> 。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="comment">//&lt;input type="button" value="选取含有class为mini元素 的div元素." id="btn1" /&gt;</span></span><br><span class="line">	$(<span class="string">"#btn1"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		</span><br><span class="line">		$(<span class="string">"div:has('.mini')"</span>).css(<span class="string">"background-color"</span>,<span class="string">"yellow"</span>);</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="9-表单选择器"><a href="#9-表单选择器" class="headerlink" title="9.表单选择器"></a>9.表单选择器</h2><p>​    根据表单子标签的type属性进行过滤。目前只需要大家知道<code>:input</code>选择器选中的标签有哪些。其余的都可以使用属性过滤选择器来代替。 </p>
+<table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>使用方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:input</code></td>
+<td><code>$(&quot;:input&quot;)</code></td>
+<td>过滤出所有的表单子标签，包括：input，select，textarea，button</td>
+</tr>
+<tr>
+<td><code>:text</code></td>
+<td><code>$(&quot;:text&quot;)</code></td>
+<td>过滤出表单子标签中type=”text”的标签</td>
+</tr>
+<tr>
+<td><code>:password</code></td>
+<td><code>$(&quot;:password&quot;)</code></td>
+<td>过滤出表单子标签中type=”password”的标签</td>
+</tr>
+<tr>
+<td><code>:radio</code></td>
+<td><code>$(&quot;:radio&quot;)</code></td>
+<td>过滤出表单子标签中type=”radio”的标签</td>
+</tr>
+<tr>
+<td><code>:checkbox</code></td>
+<td><code>$(&quot;:checkbox&quot;)</code></td>
+<td>过滤出表单子标签中type=”checkbox”的标签</td>
+</tr>
+<tr>
+<td><code>:file</code></td>
+<td><code>$(&quot;:file&quot;)</code></td>
+<td>过滤出表单子标签中type=”file”的标签</td>
+</tr>
+<tr>
+<td><code>:hidden</code></td>
+<td><code>$(&quot;:hidden&quot;)</code></td>
+<td>过滤出表单子标签中type=”hidden”的标签</td>
+</tr>
+<tr>
+<td><code>:button</code></td>
+<td><code>$(&quot;:button&quot;)</code></td>
+<td>过滤出表单子标签中type=”button”的标签，和<code>&lt;button&gt;&lt;/button&gt;</code>标签</td>
+</tr>
+<tr>
+<td><code>:reset</code></td>
+<td><code>$(&quot;:reset&quot;)</code></td>
+<td>过滤出表单子标签中type=”reset”的标签</td>
+</tr>
+<tr>
+<td><code>:submit</code></td>
+<td><code>$(&quot;:submit&quot;)</code></td>
+<td>过滤出表单子标签中type=”submit”的标签</td>
+</tr>
+<tr>
+<td><code>:image</code></td>
+<td><code>$(&quot;:image&quot;)</code></td>
+<td>过滤出表单子标签中type=”image”的标签</td>
+</tr>
+</tbody>
+</table>
+<h1 id="三、jQuery操作方法"><a href="#三、jQuery操作方法" class="headerlink" title="#三、jQuery操作方法"></a>#三、jQuery操作方法</h1><h2 id="1-jQuery的dom操作"><a href="#1-jQuery的dom操作" class="headerlink" title="1.jQuery的dom操作"></a>1.jQuery的dom操作</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>html()/text()/val()</code></td>
+<td>设置或者获取：html代码/文本/值</td>
+<td>方法不传参数为取值；方法传入参数为设置值</td>
+</tr>
+<tr>
+<td><code>attr()/prop()</code></td>
+<td>设置或者获取标签的属性</td>
+<td>方法不传入参数为获取属性值，方法传入参数为设置属性值</td>
+</tr>
+<tr>
+<td><code>addClass()/    removeClass()</code></td>
+<td>添加或者移除标签的class属性</td>
+<td><code>addClass()</code>为添加class属性；<code>removeClass()</code>为移除class属性；</td>
+</tr>
+<tr>
+<td><code>css()</code></td>
+<td>设置或者获取css样式</td>
+<td>方法传入一个参数（样式名）为获取指定样式；方法传入两个参数为设置样式</td>
+</tr>
+<tr>
+<td><code>$(&quot;&lt;p&gt;茄子创意&lt;/p&gt;&quot;)</code></td>
+<td>创建新的标签</td>
+<td>参数为完整的html标签</td>
+</tr>
+<tr>
+<td><code>append()/prepend()</code></td>
+<td>给父标签添加子标签</td>
+<td>append（）：在父标签的子节点后面追加；prepend（）：在父标签的子节点前面追加；</td>
+</tr>
+<tr>
+<td><code>remove()/empty()</code></td>
+<td>移除标签（文本和子标签）/清空标签体（文本和子标签）</td>
+<td>remove()：移除标签（当前标签及其子标签）；empty()：清空当前标签中的内容（保留原标签）；</td>
+</tr>
+</tbody>
+</table>
+<p><strong><strong>(1)、html代码/文本/值操作</strong></strong></p>
+<ol>
+<li>html()方法与dom中的innerHTML操作结果一样，获取的是标签中的html内容；</li>
+<li>text()方法与dom中的innerText操作的结果一样，获取的是标签中的文本内容；</li>
+<li>val()方法与dom中的value操作的结果一样，获取的是标签的vlaue属性值；</li>
+<li>html(),text()和val()方法如果不传入参数则为取值，如果传入参数则为赋值操作；</li>
+</ol>
+<p><strong>(2)、属性操作：attr()和prop()</strong></p>
+<ol>
+<li>对标签的普通属性的操作使用attr()方法更准确；</li>
+<li>在获取checked或者selected属性值的时候建议使用prop()方法，其余都使用attr()方法；</li>
+</ol>
+<p><strong>(3)、class属性操作和css样式操作</strong></p>
+<ul>
+<li>class属性操作：<ul>
+<li>addClass()：给元素添加class属性；</li>
+<li>removeClass()：给元素移除class属性；</li>
+</ul>
+</li>
+<li>css属性操作：<ul>
+<li>css(cssName)：获取标签的css样式；</li>
+<li>css(cssName,cssValue)：给标签添加css样式；</li>
+</ul>
+</li>
+</ul>
+<p>(<strong>4)、html元素创建与插入</strong></p>
+<ol>
+<li>html元素创建：$(html代码)；</li>
+<li>html元素插入：（注：a和b都是jq对象）</li>
+</ol>
+<p>【内部插入】父子关系</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>append()</td>
+<td>a.append(b)</td>
+<td>a把b插入到自己内部的后面（追加）</td>
+</tr>
+<tr>
+<td>appendTo()</td>
+<td>a.appendTo(b)</td>
+<td>a把自己插入到b的内部的后面</td>
+</tr>
+<tr>
+<td>prepend()</td>
+<td>a.prepend(b)</td>
+<td>a把b插入到自己内部的前面</td>
+</tr>
+<tr>
+<td>prependTo()</td>
+<td>a.prependTo(b)</td>
+<td>a把自己插入到b的内部的前面</td>
+</tr>
+</tbody>
+</table>
+<p>【外部插入】兄弟关系</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>after()</td>
+<td>a.after(b)</td>
+<td>a把b插入到自己的后面</td>
+</tr>
+<tr>
+<td>insertAfter()</td>
+<td>a.insertAfter(b)</td>
+<td>a把自己插入到b的后面</td>
+</tr>
+<tr>
+<td>before()</td>
+<td>a.before(b)</td>
+<td>a把b插入到自己的前面</td>
+</tr>
+<tr>
+<td>insertBefore()</td>
+<td>a.insertBefore(b)</td>
+<td>a把自己插入到b的前面</td>
+</tr>
+</tbody>
+</table>
+<p><strong>(5)、html元素的删除操作</strong></p>
+<p>删除元素主要用到以下两个方法：remove() 和empty()方法，两者的区别：</p>
+<ul>
+<li>remove()方法：移除当前元素及其所有子元素；</li>
+<li>empty()方法：将当前元素的所有子元素清空，保留当前元素；</li>
+</ul>
+<p>【应用场景】</p>
+<ol>
+<li>remove()方法适用于完全删除元素及其子元素；</li>
+<li>empty()方法适用于将元素中的文本及其子元素清空，保留当前元素；如：清空select中的option。</li>
+</ol>
+<h2 id="2-jQuery效果"><a href="#2-jQuery效果" class="headerlink" title="2.jQuery效果"></a>2.jQuery效果</h2><p>（1）元素的显示与隐藏</p>
+<p>元素的显示与隐藏主要用到以下3个方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>show(speed,fn)</td>
+<td><code>$(&quot;#_div&quot;).show(3000,function(){ alert(&quot;Hello World&quot;) })</code></td>
+<td>参数speed：元素显示的速度；参数fn：元素显示后执行的方法；</td>
+</tr>
+<tr>
+<td>hide(speed,fn)</td>
+<td><code>$(&quot;#_div&quot;).hide(3000,function(){ alert(&quot;Hello World&quot;) })</code></td>
+<td>同上</td>
+</tr>
+<tr>
+<td>toggle(speed,fn)</td>
+<td>$(“#_div”).toggle(3000,function(){ alert(“Hello World”) })</td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+<p>（2）元素的滑动显示与隐藏</p>
+<p>元素的滑动显示与隐藏主要用到以下3个方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>slideUp(speed,fn)</td>
+<td><code>$(&quot;#_div&quot;).slideUp(3000,function(){ alert(&quot;Hello World&quot;) })</code></td>
+<td>通过高度变化（向上减少）参数speed：元素显示的速度；参数fn：元素显示后执行的方法；</td>
+</tr>
+<tr>
+<td>slideDown(speed,fn)</td>
+<td><code>$(&quot;#_div&quot;).slideDown(3000,function(){ alert(&quot;Hello World&quot;) })</code></td>
+<td>同上</td>
+</tr>
+<tr>
+<td>slideToggle(speed,fn)</td>
+<td>$(“#_div”).slideToggle(3000,function(){ alert(“Hello World”) })</td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+<p>(3)元素的淡入淡出显示效果</p>
+<p>元素的淡入淡出显示效果主要使用到以下3个方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fadeIn(speed,fn)</td>
+<td><code>$(&quot;#_div&quot;).fadeIn(3000,function(){ alert(&quot;Hello World&quot;) })</code></td>
+<td>参数speed：元素显示的速度；参数fn：元素显示后执行的方法；</td>
+</tr>
+<tr>
+<td>fadeOut(speed,fn)</td>
+<td><code>$(&quot;#_div&quot;).fadeOut(3000,function(){ alert(&quot;Hello World&quot;) })</code></td>
+<td>同上</td>
+</tr>
+<tr>
+<td>fadeToggle(speed,fn)</td>
+<td>$(“#_div”).fadeToggle(3000,function(){ alert(“Hello World”) })</td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2017/02/18/Jquery初探01/" target="_blank" title="Jquery初探">htts://cocked.github.io/2017/02/18/Jquery初探01/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/19/01EB初识Tomcat-Servlet/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          01EB初识Tomcat&amp;Servlet
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/17/19JavaSE操作数据库总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">19JavaSE操作数据库总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、jQuery"><span class="nav-number">1.</span> <span class="nav-text">#一、jQuery</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-jQery核心语法"><span class="nav-number">1.1.</span> <span class="nav-text">1.jQery核心语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-js和jQery对象比较"><span class="nav-number">1.2.</span> <span class="nav-text">2.js和jQery对象比较</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、选择器"><span class="nav-number">2.</span> <span class="nav-text">#二、选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-jQuery选择器"><span class="nav-number">2.1.</span> <span class="nav-text">1.jQuery选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-基本选择器"><span class="nav-number">2.2.</span> <span class="nav-text">2.基本选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-层级选择器"><span class="nav-number">2.3.</span> <span class="nav-text">3.层级选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-属性过滤选择器"><span class="nav-number">2.4.</span> <span class="nav-text">4.属性过滤选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-基本过滤选择器"><span class="nav-number">2.5.</span> <span class="nav-text">5.基本过滤选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-表单对象属性过滤选择器"><span class="nav-number">2.6.</span> <span class="nav-text">6.表单对象属性过滤选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-可见性过滤选择器"><span class="nav-number">2.7.</span> <span class="nav-text">7.可见性过滤选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-内容过滤选择器"><span class="nav-number">2.8.</span> <span class="nav-text">8.内容过滤选择器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-表单选择器"><span class="nav-number">2.9.</span> <span class="nav-text">9.表单选择器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、jQuery操作方法"><span class="nav-number">3.</span> <span class="nav-text">#三、jQuery操作方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-jQuery的dom操作"><span class="nav-number">3.1.</span> <span class="nav-text">1.jQuery的dom操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-jQuery效果"><span class="nav-number">3.2.</span> <span class="nav-text">2.jQuery效果</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
