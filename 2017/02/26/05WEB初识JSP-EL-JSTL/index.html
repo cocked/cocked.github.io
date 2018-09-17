@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>05web初识jsp&amp;el&amp;jstl | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="WEB" />
+  
+  
+  
+  
+  <meta name="description" content="1、概述1.1 JSP引入在Servlet中，能够直接获取后台服务器中的数据：获取数据方便 通过拼接字符串的形式，给浏览器响应html：操作麻烦，效率太低 ，阅读性差。 如果能够有一个既能直接书写html代码，又能书写Servlet代码的页面。就能够在客户端和服务端直接进行数据交互了。 1.2JSP是什么JSP全名为Java Server Pages，中文名叫java服务器页面，其本质是一个简化的">
+<meta name="keywords" content="WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05WEB初识JSP&amp;EL&amp;JSTL">
+<meta property="og:url" content="htts://cocked.github.io/2017/02/26/05WEB初识JSP-EL-JSTL/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="1、概述1.1 JSP引入在Servlet中，能够直接获取后台服务器中的数据：获取数据方便 通过拼接字符串的形式，给浏览器响应html：操作麻烦，效率太低 ，阅读性差。 如果能够有一个既能直接书写html代码，又能书写Servlet代码的页面。就能够在客户端和服务端直接进行数据交互了。 1.2JSP是什么JSP全名为Java Server Pages，中文名叫java服务器页面，其本质是一个简化的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="file:///D:/IT/note/temp/2eef1e86-dad2-4373-8de8-333694c40d58/128/index_files/1530284514276.png">
+<meta property="og:image" content="file:///D:/IT/note/temp/2eef1e86-dad2-4373-8de8-333694c40d58/128/index_files/1533186873185.png">
+<meta property="og:image" content="file:///D:/IT/note/temp/2eef1e86-dad2-4373-8de8-333694c40d58/128/index_files/1530291021501.png">
+<meta property="og:updated_time" content="2018-09-01T08:19:37.427Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="05WEB初识JSP&amp;EL&amp;JSTL">
+<meta name="twitter:description" content="1、概述1.1 JSP引入在Servlet中，能够直接获取后台服务器中的数据：获取数据方便 通过拼接字符串的形式，给浏览器响应html：操作麻烦，效率太低 ，阅读性差。 如果能够有一个既能直接书写html代码，又能书写Servlet代码的页面。就能够在客户端和服务端直接进行数据交互了。 1.2JSP是什么JSP全名为Java Server Pages，中文名叫java服务器页面，其本质是一个简化的">
+<meta name="twitter:image" content="file:///D:/IT/note/temp/2eef1e86-dad2-4373-8de8-333694c40d58/128/index_files/1530284514276.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-05WEB初识JSP-EL-JSTL" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      05WEB初识JSP&amp;EL&amp;JSTL
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/02/26/05WEB初识JSP-EL-JSTL/" class="article-date">
+	  <time datetime="2017-02-26T10:53:44.000Z" itemprop="datePublished">2017-02-26</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h3><h4 id="1-1-JSP引入"><a href="#1-1-JSP引入" class="headerlink" title="1.1 JSP引入"></a>1.1 JSP引入</h4><p>在Servlet中，能够直接获取后台服务器中的数据：<strong>获取数据方便</strong></p>
+<p>通过拼接字符串的形式，给浏览器响应html：<strong>操作麻烦，效率太低</strong> ，<strong>阅读性差。</strong></p>
+<p>如果能够有一个既能直接书写html代码，又能书写Servlet代码的页面。就能够在客户端和服务端直接进行数据交互了。</p>
+<h4 id="1-2JSP是什么"><a href="#1-2JSP是什么" class="headerlink" title="1.2JSP是什么"></a>1.2JSP是什么</h4><p>JSP全名为Java Server Pages，中文名叫java服务器页面，其本质是一个<strong>简化的Servlet</strong> 设计，它是由Sun 公司倡导、许多公司参与一起建立的一种<strong>动态网页</strong> 技术标准。其实就是一个既能书写Servlet代码又能书写HTML代码的文件。</p>
+<p>jsp注释：不同的注释可见范围是不同</p>
+<p>1）Html注释：<!--注释内容--> —可见范围 jsp源码、翻译后的servlet、页面                                                                   显示html源码</p>
+<p>2）java注释：//单行注释  /<em>多行注释</em>/ –可见范围 jsp源码 翻译后的servlet</p>
+<p>3）jsp注释：&lt;%–注释内容–%&gt; —– 可见范围 jsp源码可见</p>
+<h4 id="1-3-创建JSP文件"><a href="#1-3-创建JSP文件" class="headerlink" title="1.3 创建JSP文件"></a>1.3 创建JSP文件</h4><p>在web目录下，新建一个jsp文件</p>
+<p>1.4 在JSP中书写代码</p>
+<p>2、JSP的运行原理</p>
+<p>我们通过浏览器访问到的jsp页面，最终访问的是tomcat服务器中的jsp页面。所以，我们可以到tomcat中查看一下上面案例中的jsp页面是怎么样的一种存在。IntilliJ IDEA借助tomcat发布web项目的机制是动态发布（为每一个web项目创建一个单独的发布文件）。我们可以通过tomcat其中日志中的CATALINA_BASE路径找到我们当前这个JSP页面在tomcat中的位置：</p>
+<p>3、JSP中书写java代码的三种方式</p>
+<p>在JSP页面的body标签中，可以直接书写html代码和JS代码。但是，如果在JSP页面中书写java代码。必须遵循固定的格式，才能够生效；JSP页面中书写java代码有三种方式：1.脚本片段；2.脚本声明；3.脚本表达式；</p>
+<h4 id="方式一：脚本片段"><a href="#方式一：脚本片段" class="headerlink" title="方式一：脚本片段"></a>方式一：脚本片段</h4><p>脚本片段指的是一段java代码。书写格式：&lt;% java 代码 %&gt;</p>
+<p>方式二：脚本声明</p>
+<p>脚本片段虽然可以嵌入java代码，但是如果，我们要给当前的jsp中定义一些成员方法或者成员变量，就行需要一个新的技术——脚本声明.</p>
+<p>脚本声明的格式：&lt;%! 书写Java代码 %&gt;</p>
+<p>方式三：脚本表达式</p>
+<p>虽然脚本声明和脚本片段已经可以书写Java代码了，但是如果我们要使用java代码向页面输出一些内容，还是需要 使用原来的response对象，比较繁琐，因此，我们需要一个更加简便的方式，可以代替response<strong>向页面输出内容 \</strong> ——这个就是脚本表达式。</p>
+<p>脚本表达式的格式：&lt;%= 内容 %&gt; 等价于：out.print(内容)</p>
+<p>【小结】</p>
+<ol>
+<li>脚本表达式<code>&lt;%= str %&gt;</code> ：在页面输出内容，在service方法中起作用；</li>
+<li>脚本片段<code>&lt;% %&gt;</code> ：在service方法中，原样输出的代码片段；</li>
+<li>脚本声明：<code>&lt;%! String str = &quot;34534ttert456&quot; %&gt;</code> ：定义成员变量；</li>
+</ol>
+<p>write() 和println()区别</p>
+<p>(1)、write()：仅支持输出字符类型数据，字符、字符数组、字符串等(2)、print()：可以将各种类型（包括Object）的数据通过默认编码转换成bytes字节形式，这些字节都通过write(int c)方法被输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">response.getWriter().println();</span><br><span class="line">response.getWriter().write(&apos;c&apos;);</span><br></pre></td></tr></table></figure>
+<p>response.getWriter().println();和out.write(65);区别</p>
+<p>(1)、out和response.getWriter的类不一样，一个是JspWriter，另一个是java.io.PrintWriter。(2)、执行原理不同:JspWriter相当于一个带缓存功能的printWriter，它不是直接将数据输出到页面，而是将数据刷新到response的缓冲区后再输出，response.getWriter直接输出数据（response.print()），所以（out.print）只能在其后输出。</p>
+<p>(3)、out为jsp的内置对象，刷新jsp页面，自动初始化获得out对象，所以使用out对象是需要刷新页面的，而response.getWriter()响应信息通过out对象输出到网页上，当响应结束时它自动被关闭，与jsp页面无关，无需刷新页面。形象的比喻：当我们调用response.getWriter()这个对象同时获得了网页的画笔，这时你就可以通过这个画笔在网页上画任何你想要显示的东西。</p>
+<h3 id="4、JSP页面常用对象"><a href="#4、JSP页面常用对象" class="headerlink" title="4、JSP页面常用对象"></a>4、JSP页面常用对象</h3><p>我们发现，我们在JSP页面中书写的代码最终都会翻译到_jspService()方法中，我们发现这个方法中有两个入参：<strong>HttpServletRequest对象</strong> ，<strong>HttpServletResponse对象</strong> 。所以说，JSP的本质就是一个Servlet。我们可以直接在JSP页面上使用这两个对象。</p>
+<p>第二章 EL表达式</p>
+<h3 id="1、EL概述"><a href="#1、EL概述" class="headerlink" title="1、EL概述"></a>1、EL概述</h3><h4 id="1-1-EL简介"><a href="#1-1-EL简介" class="headerlink" title="1.1 EL简介"></a>1.1 EL简介</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">EL全称： Expression Language </span><br><span class="line"></span><br><span class="line">作用：代替jsp中脚本表达式的功能，简化对java代码的操作，从【域对象】中取值。 EL表达式简化&lt;%= %&gt;方式取值   </span><br><span class="line">EL语法表达式的格式：$&#123;表达式内容&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2、EL取值"><a href="#2、EL取值" class="headerlink" title="2、EL取值"></a>2、EL取值</h3><h4 id="2-1-JSP的四大域对象"><a href="#2-1-JSP的四大域对象" class="headerlink" title="2.1 JSP的四大域对象"></a>2.1 JSP的四大域对象</h4><p>JSP的四大域对象指的是：page域，request域，session域，application域。我们通常使用EL表达式从这4个域对象用取值。以下是这4个域对象的详细信息：</p>
+<table>
+<thead>
+<tr>
+<th>域对象</th>
+<th>对象名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>page域</td>
+<td>pageScope</td>
+<td>page域指的是当前JSP页面，其中存储的数据只在当前页面有效</td>
+</tr>
+<tr>
+<td>request域</td>
+<td>requestScope</td>
+<td>request域：一次请求或请求链中request域</td>
+</tr>
+<tr>
+<td>session域</td>
+<td>sessionScope</td>
+<td>session域：一次会话过程中，session域</td>
+</tr>
+<tr>
+<td>application域</td>
+<td>applicationScope</td>
+<td>application域：服务启动后整个项目对应的ServletContext域</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-2-EL表达式从四大域中取值"><a href="#2-2-EL表达式从四大域中取值" class="headerlink" title="2.2 EL表达式从四大域中取值"></a>2.2 EL表达式从四大域中取值</h4><p>EL表达式从指定的域中取值的方式如下：</p>
+<table>
+<thead>
+<tr>
+<th>域对象</th>
+<th>取值方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>page域</td>
+<td><code>${pageScope.xxx}</code></td>
+</tr>
+<tr>
+<td>request域</td>
+<td><code>${requestScope.xxx}</code></td>
+</tr>
+<tr>
+<td>session域</td>
+<td><code>${sessionScope.xxx}</code></td>
+</tr>
+<tr>
+<td>application域</td>
+<td><code>${applicationScope.xxx}</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>2</strong>.3 EL表达式搜索数据</p>
+<p>EL表达式取值的时候也可以不指定域，如果取值的时候不指定域对象。就会按照从page域—&gt;request域—&gt;session域—&gt;servletContext域从小到大逐级根据name属性值查找。</p>
+<p>2.4 EL表达式从cookie中取值</p>
+<p>servlet生成cookie <strong>CreateCookieServlet.java</strong></p>
+<p>3、EL运算符</p>
+<p>EL表达式获取到值之后可以直接通过运算符进行运算。EL表达式的运算符主要有以下几类：算术运算，关系运算，逻辑运算，三元运算，empty运算符。</p>
+<p>3.1 算术运算</p>
+<p>顾名思义，算术运算是进行算术运算的符号，主要包括：加，减，乘，除。具体使用如下表：</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+<th>使用示例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>加</td>
+<td><code>${n1+n2}</code></td>
+<td>30</td>
+</tr>
+<tr>
+<td>-</td>
+<td>减</td>
+<td><code>${n1-n2}</code></td>
+<td>-10</td>
+</tr>
+<tr>
+<td>*</td>
+<td>乘</td>
+<td><code>${n1*n2}</code></td>
+<td>200</td>
+</tr>
+<tr>
+<td>/或div</td>
+<td>除</td>
+<td><code>${n1/n2}</code></td>
+<td></td>
+</tr>
+<tr>
+<td>%或mod</td>
+<td>取余</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>3.2 关系运算</p>
+<p>关系运算符是判断两个数据的大小关系的，关系运算符有：==，!=，&lt;，&lt;=，&gt;，&gt;=。具体使用方法如下：</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+<th>使用示例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>==</code> 或 eq</td>
+<td>等于 equal</td>
+<td><code>${n1 == n2}</code></td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>!=</code> 或ne</td>
+<td>不等于 not equal</td>
+<td><code>${n1 != n2}</code></td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>&gt;</code> 或 gt</td>
+<td>大于 greater than</td>
+<td><code>${n1 &gt; n2}</code></td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>&gt;=</code> 或ge</td>
+<td>大于等于 greater than or equal</td>
+<td><code>${n1 &gt;= n2}</code></td>
+<td>false</td>
+</tr>
+<tr>
+<td><code>&lt;</code> 或 lt</td>
+<td>小于 less than</td>
+<td><code>${n1 &lt; n2}</code></td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>&lt;=</code> 或le</td>
+<td>小于等于 less than or equal</td>
+<td><code>${n1 &lt;= n2}</code></td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p>3.3 逻辑运算</p>
+<p>逻辑运算符包括：&amp;&amp; ，||，!使用方法如下：</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>说明</th>
+<th>使用示例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&amp;&amp; 或 and</td>
+<td>逻辑与</td>
+<td><code>${true &amp;&amp; false}</code></td>
+<td>false</td>
+</tr>
+<tr>
+<td>\</td>
+<td>\</td>
+<td>或 or</td>
+<td>逻辑或</td>
+<td>`${true</td>
+<td></td>
+</tr>
+<tr>
+<td>! 或 not</td>
+<td>非</td>
+<td><code>${!false}</code></td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p>3.4 三元运算</p>
+<p>EL表达式也支持三元运算符：如，判断n1是否是正数，</p>
+<p> 表达式1?表达式2：表达式3</p>
+<p>–%&gt;</p>
+<p>三元运算符：<br></p>
+<p>${n1&gt;=n2?”正确”:”错误！”}<br></p>
+<h4 id="3-5-empty运算"><a href="#3-5-empty运算" class="headerlink" title="3.5 empty运算"></a>3.5 empty运算</h4><p>empyt运算符对以下数据运算返回true：</p>
+<ol>
+<li>字符串：””；</li>
+<li>空集合（size=0）：List list = new ArrayList();</li>
+<li>空对象(null)：Student stu = null；</li>
+</ol>
+<p>EL表达式小结：</p>
+<ul>
+<li>EL：Expression Language；</li>
+<li>EL语法：${ }</li>
+<li>作用：简化脚本表达式的取值，简化&lt;%= request.getAttribute(“name”) %&gt; ===&gt; ${name}</li>
+<li>jsp的四大域对象<ul>
+<li>page域：pageContext pageContext.setAttrubute() pageContext.getAttribute() JSP特有 作用范围：当前的JSP页面</li>
+<li>requst域：request request.setAttribute() request.getAttribute() 作用范围：一次请求和响应之间</li>
+<li>session域： session session.setAttribute() session.getAttribute() 作用范围：会话期间（多次请求和响应）</li>
+<li>servletContext域：application application.setAttribute() application.getAttribute() 作用范围：整个项目；</li>
+</ul>
+</li>
+<li>jsp从四大域中取值（指定域对象）：<ul>
+<li>${pageScope.name}</li>
+<li>${requestScope.name}</li>
+<li>${sessionScope.name}</li>
+<li>${applicationScope.name}</li>
+</ul>
+</li>
+<li>JSP搜索域对象中的值：page — request — session — servletContext<ul>
+<li>${name}</li>
+</ul>
+</li>
+<li>运算<ul>
+<li>算术运算</li>
+<li>关系运算</li>
+<li>逻辑运算：&amp;&amp; || ！</li>
+<li>三元运算</li>
+<li>empty运算：empty notempty<ul>
+<li>空字符串：””</li>
+<li>空对象：null</li>
+<li>空集合：list.size = 0;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="第三章-JSTL标签库"><a href="#第三章-JSTL标签库" class="headerlink" title="第三章 JSTL标签库"></a>第三章 JSTL标签库</h2><h3 id="1、JSTL概述"><a href="#1、JSTL概述" class="headerlink" title="1、JSTL概述"></a>1、JSTL概述</h3><h4 id="1-1-、JSTL引入"><a href="#1-1-、JSTL引入" class="headerlink" title="1.1 、JSTL引入"></a>1.1 、JSTL引入</h4><p>1.2、JSTL是什么</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">从JSP 1.1规范开始JSP就支持使用自定义标签，使用自定义标签大大降低了JSP页面的复杂度，同时增强了代码的重</span><br><span class="line">用性，因此自定义标签在WEB应用中被广泛使用。</span><br><span class="line"></span><br><span class="line">许多WEB应用厂商都开发出了自己的一套标签库提供给用户使用，这导致出现了许多功能相同的标签，令网页制作者无所适从，不知道选择哪一家的好。</span><br><span class="line"></span><br><span class="line">为了解决这个问题，</span><br><span class="line">Apache Jakarta小组归纳汇总了那些网页设计人员经常遇到的问题，</span><br><span class="line">开发了一套用于解决这些常用问题的自定义标签库，</span><br><span class="line">这套标签库被SUN公司定义为标准标签库（The JavaServer Pages Standard Tag Library），简称JSTL。</span><br><span class="line"></span><br><span class="line">使用JSTL可以解决用户选用不同WEB厂商的自定义标签时的困惑，JSP规范同时也允许WEB容器厂商按JSTL标签库的</span><br><span class="line">标准提供自己的实现，以获取最佳性能</span><br></pre></td></tr></table></figure>
+<h4 id="1-3、JSTL核心标签库"><a href="#1-3、JSTL核心标签库" class="headerlink" title="1.3、JSTL核心标签库"></a>1.3、JSTL核心标签库</h4><table>
+<thead>
+<tr>
+<th>标签名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;c:out&gt;</td>
+<td>通常用于输出一段文本内容到客户端浏览器</td>
+</tr>
+<tr>
+<td>&lt;c:set&gt;</td>
+<td>用于设置各种Web域中的属性</td>
+</tr>
+<tr>
+<td>&lt;c:remove&gt;</td>
+<td>用于删除各种Web域中的属性</td>
+</tr>
+<tr>
+<td>&lt;c:catch&gt;</td>
+<td>用于捕获嵌套在标签体中的内容抛出的异常</td>
+</tr>
+<tr>
+<td>&lt;c:if&gt;</td>
+<td>用户java代码if(){}语句功能</td>
+</tr>
+<tr>
+<td>&lt;c:choose&gt;</td>
+<td>用于指定多个条件选择的组合边界，它必须与c:when和c:otherwise标签一起使用</td>
+</tr>
+<tr>
+<td>&lt;c:forEach&gt;</td>
+<td>用户代替java代码for循环语句</td>
+</tr>
+<tr>
+<td>&lt;c:forTokens&gt;</td>
+<td>用户迭代操作String字符</td>
+</tr>
+<tr>
+<td>&lt;c:param&gt;</td>
+<td>给请求路径添加参数</td>
+</tr>
+<tr>
+<td>&lt;c:url&gt;</td>
+<td>重写url，在请求路径添加sessionid</td>
+</tr>
+<tr>
+<td>&lt;c:import&gt;</td>
+<td>用于在JSP页面中导入一个URL地址指向的资源内容</td>
+</tr>
+<tr>
+<td>&lt;c:redirect&gt;</td>
+<td>用于将当前的访问请求转发或重定向到其他资源</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2、JSTL标签应用"><a href="#2、JSTL标签应用" class="headerlink" title="2、JSTL标签应用"></a>2、JSTL标签应用</h3><h4 id="2-1-安装JSTL"><a href="#2-1-安装JSTL" class="headerlink" title="2.1 安装JSTL"></a>2.1 安装JSTL</h4><p>我们知道JSTL标签是将一段java代码功能封装成一个标签来使用。所以，我们使用JSTL标签之前必须导入被封装的java代码—jar包。JSTL标签库主要依赖以下两个jar包：</p>
+<p><img src="file:///D:/IT/note/temp/2eef1e86-dad2-4373-8de8-333694c40d58/128/index_files/1530284514276.png" alt="1530284514276"></p>
+<p>我们在IDEA的web项目的WEB-INF目录下创建一个lib文件夹，然后将jar包复制到这个文件夹里。选中这些jar包，右键—add as library即可将jar包导入到项目中。</p>
+<h4 id="2-2-将标签库资源引入JSP页面"><a href="#2-2-将标签库资源引入JSP页面" class="headerlink" title="2.2 将标签库资源引入JSP页面"></a>2.2 将标签库资源引入JSP页面</h4><p>在JSP页面中通过以下标签，通过taglib标签引入JSTL资源：</p>
+<p>【注意】</p>
+<ol>
+<li>prefix：是jstl标签在使用的时候的前缀；</li>
+<li>uri：是标签库的资源路径；</li>
+</ol>
+<h4 id="2-3-在JSP页面中使用JSTL标签"><a href="#2-3-在JSP页面中使用JSTL标签" class="headerlink" title="2.3 在JSP页面中使用JSTL标签"></a>2.3 在JSP页面中使用JSTL标签</h4><p>在JSP页面中书写”&lt;c: “，如果出现如下图的提示则说明标签库引入成功，我们可以根据提示信息使用自己需要的标签。</p>
+<p><img src="file:///D:/IT/note/temp/2eef1e86-dad2-4373-8de8-333694c40d58/128/index_files/1533186873185.png" alt="1533186873185"></p>
+<p>3、常用JSTL标签</p>
+<h4 id="3-1、c-if标签"><a href="#3-1、c-if标签" class="headerlink" title="3.1、c:if标签"></a>3.1、c:if标签</h4><h5 id="3-1-1-作用"><a href="#3-1-1-作用" class="headerlink" title="3.1.1 作用"></a>3.1.1 作用</h5><p><code></code>标签的作用相当于java中的if判断语句。</p>
+<h5 id="3-1-3-属性"><a href="#3-1-3-属性" class="headerlink" title="3.1.3 属性"></a>3.1.3 属性</h5><p>test：if的判断条件</p>
+<h5 id="3-1-2-使用示例"><a href="#3-1-2-使用示例" class="headerlink" title="3.1.2 使用示例"></a>3.1.2 使用示例</h5><p>【案例】完善登录案例，成功页面</p>
+<p>【需求】在success.jsp页面上进行如下判断</p>
+<ol>
+<li>使用<code></code> 标签判断session中的用户信息是否为空；</li>
+<li>如果不为空：获取session中的用户信息，并将其展示在页面上；</li>
+<li>如果为空：提示用户登录；</li>
+</ol>
+<p>3.2 c:foreach标签</p>
+<h5 id="3-2-1-c-foreach标签的作用"><a href="#3-2-1-c-foreach标签的作用" class="headerlink" title="3.2.1 c:foreach标签的作用"></a>3.2.1 c:foreach标签的作用</h5><p><code></code>标签的作用相当于java中的for循环。主要是对数据和集合进行遍历。</p>
+<h5 id="3-2-2-c-foreach标签的属性"><a href="#3-2-2-c-foreach标签的属性" class="headerlink" title="3.2.2 c:foreach标签的属性"></a>3.2.2 c:foreach标签的属性</h5><p><img src="file:///D:/IT/note/temp/2eef1e86-dad2-4373-8de8-333694c40d58/128/index_files/1530291021501.png" alt="1530291021501"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var：在不循环对象的时候，保存的是控制循环的变量；在循环对象的时候，保存的是被循环对象中的元素</span><br><span class="line">items：指定要循环的对象</span><br><span class="line">varStatus：保存了当前循环过程中的信息（循环的开始、结束、步长、次数等）</span><br><span class="line">begin：设置循环的开始</span><br><span class="line">end：设置循环的结束</span><br><span class="line">step：设置步长——间隔几次循环，执行一次循环体中的内容</span><br></pre></td></tr></table></figure>
+<h5 id="3-2-3-c-foreach标签的使用"><a href="#3-2-3-c-foreach标签的使用" class="headerlink" title="3.2.3 c:foreach标签的使用"></a>3.2.3 c:foreach标签的使用</h5><p>【案例】c：foreach遍历案例</p>
+<p>【需求】</p>
+<ol>
+<li>遍历普通数组；</li>
+<li>遍历实体类对象list集合；</li>
+<li><p>遍历map集合；</p>
+<p>3.3choose标签</p>
+</li>
+</ol>
+<h4 id="3-3-1-choose标签作用"><a href="#3-3-1-choose标签作用" class="headerlink" title="3.3.1 choose标签作用"></a>3.3.1 choose标签作用</h4><p>&lt;c:choose&gt;标签用于指定多个条件选择的组合边界，它必须与&lt;c:when&gt;和&lt;c:otherwise&gt;标签一起使用。</p>
+<p>三个标 签组合发挥java代码if(){}else if(){} else{}语句的作用。</p>
+<h4 id="3-3-2-choose标签子标签"><a href="#3-3-2-choose标签子标签" class="headerlink" title="3.3.2    choose标签子标签"></a>3.3.2    choose标签子标签</h4><p>介绍 &lt;c:when&gt;，相当于else if(){}。</p>
+<p>&lt;c:when&gt;标签含有test属性，作用与if相同 &lt;c:otherwise&gt;，相当于else{}。</p>
+<h4 id="3-3-3-choose标签注意事项"><a href="#3-3-3-choose标签注意事项" class="headerlink" title="3.3.3    choose标签注意事项"></a>3.3.3    choose标签注意事项</h4><p>三个标签必须组合使用，一组标签中不能出现两个&lt;c:otherwise&gt;</p>
+<h4 id="3-3-4-choose标签演示"><a href="#3-3-4-choose标签演示" class="headerlink" title="3.3.4    choose标签演示"></a>3.3.4    choose标签演示</h4><p>第四章 JSP的发展</p>
+<h3 id="1、model1时代—一个JSP页面搞定前端和后台"><a href="#1、model1时代—一个JSP页面搞定前端和后台" class="headerlink" title="1、model1时代—一个JSP页面搞定前端和后台"></a>1、model1时代—一个JSP页面搞定前端和后台</h3><p>JSP技术主要用来简化动态网页的开发过程，由于它在形式上和html文档比较相似，因此与Servlet相比，用JSP来编写动态网页更加直观。</p>
+<h3 id="2、model2时代—弱化在JSP页面书写java代码"><a href="#2、model2时代—弱化在JSP页面书写java代码" class="headerlink" title="2、model2时代—弱化在JSP页面书写java代码"></a>2、model2时代—弱化在JSP页面书写java代码</h3><p>但是，当网页非常复杂时，JSP文件中的大量的html标记和java程序片段混杂在一起，会大大削弱JSP代码的可读性和可维护性，而且会增加调试JSP文件的难度。于是，出现了EL表达式帮助我们在JSP页面上简化从容器中取值的操作。【EL表达式】—简化取值</p>
+<p>如果是在JSP页面上处理一些业务逻辑，JSTL标签库给我们提供了一个解决思路。将java代码封装成标签。直接在JSP页面书写标签，如<code></code> 即可完成相应逻辑。【JSTL标签库】—将java代码封装成标签</p>
+<h3 id="3、服务器渲染和前端渲染"><a href="#3、服务器渲染和前端渲染" class="headerlink" title="3、服务器渲染和前端渲染"></a>3、服务器渲染和前端渲染</h3><p>开发网站，网站页面渲染你知道吗？</p>
+<p><code>关键字</code>： <strong>服务器渲染</strong>（后端渲染）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">服务器渲染（后端渲染）</span><br><span class="line">浏览器发送请求到服务器端，服务器端处理请求并处理好数据，然后生成html文件，并返回给浏览器。 </span><br><span class="line"></span><br><span class="line">传统的jsp、php都是属于服务器渲染。</span><br></pre></td></tr></table></figure>
+<p><code>关键字</code>： 前端渲染</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">客户端渲染（前端渲染）</span><br><span class="line"></span><br><span class="line">服务器端处理请求后将数据返回给浏览器，浏览器通过拼接html字符串或者使用js模板引擎，或者React这类框架进行页面渲染,又称作 ： 局部渲染</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">前端渲染的优势：</span><br><span class="line"></span><br><span class="line">1. 局部更新页面，无需每次都进行完整页面请求</span><br><span class="line">2. 懒加载。页面初始时只加载可视区域内的数据，随着滚动等操作再加载其他数据</span><br><span class="line">3. 节约服务器成本</span><br><span class="line">4. 关注分离设计。服务器只用于访问数据库提供接口，前端关注展现。</span><br><span class="line">5. 富交互，使用 JS 实现各种酷炫效果</span><br></pre></td></tr></table></figure>
+<p>前后端分离（前端渲染）未来视图层的趋势。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2017/02/26/05WEB初识JSP-EL-JSTL/" target="_blank" title="05WEB初识JSP&amp;EL&amp;JSTL">htts://cocked.github.io/2017/02/26/05WEB初识JSP-EL-JSTL/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/28/06WEB初识Filter/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          06WEB初识Filter
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/24/04WEB初识Cookie-Session/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">04WEB初识Cookie&amp;Session</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、概述"><span class="nav-number">1.</span> <span class="nav-text">1、概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-JSP引入"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 JSP引入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2JSP是什么"><span class="nav-number">1.2.</span> <span class="nav-text">1.2JSP是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-创建JSP文件"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 创建JSP文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式一：脚本片段"><span class="nav-number">1.4.</span> <span class="nav-text">方式一：脚本片段</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、JSP页面常用对象"><span class="nav-number">2.</span> <span class="nav-text">4、JSP页面常用对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、EL概述"><span class="nav-number">3.</span> <span class="nav-text">1、EL概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-EL简介"><span class="nav-number">3.1.</span> <span class="nav-text">1.1 EL简介</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、EL取值"><span class="nav-number">4.</span> <span class="nav-text">2、EL取值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-JSP的四大域对象"><span class="nav-number">4.1.</span> <span class="nav-text">2.1 JSP的四大域对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-EL表达式从四大域中取值"><span class="nav-number">4.2.</span> <span class="nav-text">2.2 EL表达式从四大域中取值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-empty运算"><span class="nav-number">4.3.</span> <span class="nav-text">3.5 empty运算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三章-JSTL标签库"><span class="nav-number"></span> <span class="nav-text">第三章 JSTL标签库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、JSTL概述"><span class="nav-number">1.</span> <span class="nav-text">1、JSTL概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-、JSTL引入"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 、JSTL引入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3、JSTL核心标签库"><span class="nav-number">1.2.</span> <span class="nav-text">1.3、JSTL核心标签库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、JSTL标签应用"><span class="nav-number">2.</span> <span class="nav-text">2、JSTL标签应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-安装JSTL"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 安装JSTL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-将标签库资源引入JSP页面"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 将标签库资源引入JSP页面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-在JSP页面中使用JSTL标签"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 在JSP页面中使用JSTL标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1、c-if标签"><span class="nav-number">2.4.</span> <span class="nav-text">3.1、c:if标签</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-1-作用"><span class="nav-number">2.4.1.</span> <span class="nav-text">3.1.1 作用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-3-属性"><span class="nav-number">2.4.2.</span> <span class="nav-text">3.1.3 属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-2-使用示例"><span class="nav-number">2.4.3.</span> <span class="nav-text">3.1.2 使用示例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-1-c-foreach标签的作用"><span class="nav-number">2.4.4.</span> <span class="nav-text">3.2.1 c:foreach标签的作用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-2-c-foreach标签的属性"><span class="nav-number">2.4.5.</span> <span class="nav-text">3.2.2 c:foreach标签的属性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-3-c-foreach标签的使用"><span class="nav-number">2.4.6.</span> <span class="nav-text">3.2.3 c:foreach标签的使用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-choose标签作用"><span class="nav-number">2.5.</span> <span class="nav-text">3.3.1 choose标签作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-choose标签子标签"><span class="nav-number">2.6.</span> <span class="nav-text">3.3.2    choose标签子标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-3-choose标签注意事项"><span class="nav-number">2.7.</span> <span class="nav-text">3.3.3    choose标签注意事项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-4-choose标签演示"><span class="nav-number">2.8.</span> <span class="nav-text">3.3.4    choose标签演示</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、model1时代—一个JSP页面搞定前端和后台"><span class="nav-number">3.</span> <span class="nav-text">1、model1时代—一个JSP页面搞定前端和后台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、model2时代—弱化在JSP页面书写java代码"><span class="nav-number">4.</span> <span class="nav-text">2、model2时代—弱化在JSP页面书写java代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、服务器渲染和前端渲染"><span class="nav-number">5.</span> <span class="nav-text">3、服务器渲染和前端渲染</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

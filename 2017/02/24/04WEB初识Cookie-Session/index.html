@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>04web初识cookie&amp;session | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="WEB" />
+  
+  
+  
+  
+  <meta name="description" content="1typora-copy-images-to: img 一、cookie&amp;amp;session第一章  会话技术1、什么是会话​    在日常生活中，从拨通电话到挂断电话之间的一连串的你问我答的过程就是一个会话。Web应用中的会话过程类似于生活中的打电话过程，它指的是一个客户端（浏览器）与Web服务器之间连续发生的一系列请求和响应过程，例如，一个用户在某网站上的整个购物过程就是一个会话。 简而言">
+<meta name="keywords" content="WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="04WEB初识Cookie&amp;Session">
+<meta property="og:url" content="htts://cocked.github.io/2017/02/24/04WEB初识Cookie-Session/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="1typora-copy-images-to: img 一、cookie&amp;amp;session第一章  会话技术1、什么是会话​    在日常生活中，从拨通电话到挂断电话之间的一连串的你问我答的过程就是一个会话。Web应用中的会话过程类似于生活中的打电话过程，它指的是一个客户端（浏览器）与Web服务器之间连续发生的一系列请求和响应过程，例如，一个用户在某网站上的整个购物过程就是一个会话。 简而言">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="file:///D:/IT/note/temp/6b5018b0-fe96-40fc-88d3-3244fd48437a/128/index_files/1530064946331.png">
+<meta property="og:updated_time" content="2018-09-01T08:18:23.578Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="04WEB初识Cookie&amp;Session">
+<meta name="twitter:description" content="1typora-copy-images-to: img 一、cookie&amp;amp;session第一章  会话技术1、什么是会话​    在日常生活中，从拨通电话到挂断电话之间的一连串的你问我答的过程就是一个会话。Web应用中的会话过程类似于生活中的打电话过程，它指的是一个客户端（浏览器）与Web服务器之间连续发生的一系列请求和响应过程，例如，一个用户在某网站上的整个购物过程就是一个会话。 简而言">
+<meta name="twitter:image" content="file:///D:/IT/note/temp/6b5018b0-fe96-40fc-88d3-3244fd48437a/128/index_files/1530064946331.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-04WEB初识Cookie-Session" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      04WEB初识Cookie&amp;Session
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/02/24/04WEB初识Cookie-Session/" class="article-date">
+	  <time datetime="2017-02-24T13:30:12.000Z" itemprop="datePublished">2017-02-24</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typora-copy-images-to: img</span><br></pre></td></tr></table></figure>
+<h1 id="一、cookie-amp-session"><a href="#一、cookie-amp-session" class="headerlink" title="一、cookie&amp;session"></a>一、cookie&amp;session</h1><h2 id="第一章-会话技术"><a href="#第一章-会话技术" class="headerlink" title="第一章  会话技术"></a>第一章  会话技术</h2><h3 id="1、什么是会话"><a href="#1、什么是会话" class="headerlink" title="1、什么是会话"></a>1、什么是会话</h3><p>​    在日常生活中，从拨通电话到挂断电话之间的一连串的你问我答的过程就是一个会话。Web应用中的会话过程类似于生活中的打电话过程，它指的是一个客户端（浏览器）与Web服务器之间连续发生的一系列请求和响应过程，例如，一个用户在某网站上的整个购物过程就是一个会话。</p>
+<p>简而言之：用户访问网站到离开网站，关闭浏览器，这个过程就叫回话。</p>
+<h3 id="2、会话过程要解决的问题"><a href="#2、会话过程要解决的问题" class="headerlink" title="2、会话过程要解决的问题"></a>2、会话过程要解决的问题</h3><p>​    每个用户在使用浏览器与服务器进行会话的过程中，不可避免各自会产生一些数据，程序要想办法为每个用户保存这些数据。Servlet在会话过程中保存数据使用到的技术有两种：Cookie技术和Session技术。</p>
+<p>【小结】</p>
+<ol>
+<li>Cookie和Session技术都是<strong>在会话期间产生的</strong> ；</li>
+<li>Cookie和Session的作用都是<strong>保存数据</strong> ；</li>
+</ol>
+<h2 id="第二章-Cookie技术"><a href="#第二章-Cookie技术" class="headerlink" title="第二章    Cookie技术"></a>第二章    Cookie技术</h2><h3 id="1、Cookie是什么"><a href="#1、Cookie是什么" class="headerlink" title="1、Cookie是什么"></a>1、Cookie是什么</h3><p>​    Cookie英文意指饼干，Cookie就是服务器暂存放在我们电脑上的一笔资料(where？打开浏览器)，使用我们电脑来保存一些服务器希望保存的内容。Cookie是由服务器端生成，发送给浏览器，浏览器会将Cookie的key/value保存到某个目录下的文本文件内，下次请求同一网站时就发送该Cookie给服务器前提是浏览器设置为启用cookie。</p>
+<p>2、Cookie基本API</p>
+<p>​    Cookie的基本API包括Cookie的创建，往Cookie中添加数据，获取Cookie中的数据以及将Cookie响应给浏览器。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建</td>
+<td>Cookie(String name,String value)</td>
+<td>Cookie c1 = new Cookie(“name”,”tom”)</td>
+</tr>
+<tr>
+<td>获取name值</td>
+<td>String  getName()</td>
+<td>c1.getName()</td>
+</tr>
+<tr>
+<td>获取value值</td>
+<td>String getValue()</td>
+<td>c1.getValue()</td>
+</tr>
+<tr>
+<td>发送cookie</td>
+<td>void  addCookie(Cookie cookie)</td>
+<td>response.addCookie(c1)   response</td>
+</tr>
+<tr>
+<td>设置cookie的值</td>
+<td>void  setValue(String value)</td>
+<td>c1.setValue(“李四”)</td>
+</tr>
+<tr>
+<td>获取所有cookie</td>
+<td>Cookie[]  getCookies()</td>
+<td>rquest.getCookies()   request</td>
+</tr>
+</tbody>
+</table>
+<p>3、Cookie的存活时间&amp;有效路径</p>
+<p>将浏览器关闭。然后再打开一个新的浏览器，登录页面上记录的用户名和密码消失了，查看浏览器中的cookie，发现之前保存的cookie都消失了。我们再次登录发现之前设置的Cookie的到期时间为”浏览器会话结束”。</p>
+<p>​    如果，我们想让这个cookie在浏览器关闭后能够在一段时间内都存在，比如记住用户名或密码一周。我们可以通过设置Cookie的最大存活时间来对这个Cookie进行设置。</p>
+<p>【概念】</p>
+<ul>
+<li><strong>会话级别</strong> 的Cookie：浏览器关闭后消失；</li>
+<li><strong>持久性</strong> 的Cookie：浏览器关闭后能够保存一段时间；</li>
+</ul>
+<h4 id="3-1-Cookie的最大存活时间"><a href="#3-1-Cookie的最大存活时间" class="headerlink" title="3.1 Cookie的最大存活时间"></a>3.1 Cookie的最大存活时间</h4><p>​    设置Cookie的最大存活时间的方法是：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void setMaxAge(int  seconds)</td>
+<td><code>userNameCookie.setMaxAge(60*60);</code></td>
+<td>设置Cookie的有效时间：<br><em>  如果没有设置，cookie只会保存在浏览器的缓存中，浏览器关闭后cookie立即被删除。<br></em>  如果设置有效时间，在时间范围内，cookie被写入到浏览器端，关闭浏览器下次访问仍可活的，直到过期。</td>
+</tr>
+</tbody>
+</table>
+<p>【注意事项】Cookie分类</p>
+<ol>
+<li>会话级别的Cookie：浏览器关闭后销毁；</li>
+<li>持久型的Cookie：设置最大存活时间；</li>
+</ol>
+<h4 id="3-2-Cookie的有效路径"><a href="#3-2-Cookie的有效路径" class="headerlink" title="3.2  Cookie的有效路径"></a>3.2  Cookie的有效路径</h4><p>​    Cookie的有效路径指的是cookie允许被访问的路径。设置路径，以及子路径都被允许访问。方法如下：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void  setPath(String path)</td>
+<td>cookie.setPath(“/web”)<br>cookie.setPath(“/“)</td>
+<td><em> 常见设置：cookie.setPath(“/“)指的是当前tomcat下的所有的web项目都可以访问这个cookie；<br></em> cookie.setPath(“/web”)：指的是/web路径及其子路径可以访问这个cookie；【结果】</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>当给cookie设置有效路径”/web/a/b”后：</li>
+</ol>
+<ol>
+<li>访问路径：/web                获取不到cookie；</li>
+<li>访问路径：/web/a/b/c                 <strong>能获取到cookie</strong> ;</li>
+<li>访问路径：/web/a/b                    <strong>能获取到cookie</strong> ；</li>
+<li>访问路径：/web/a/d                    获取不到;</li>
+</ol>
+<p>【结论】</p>
+<ol>
+<li>当设置cookie的有效路径后，只能在有效径或其子路径下访问这个cookie；</li>
+<li>如果不给cookie设置有效路径，默认的有效路径为”/“ ，即在当前tomcat下的任意访问路径均可获取这个cookie；</li>
+<li>一般情况下不必给cookie设置有效路径；</li>
+</ol>
+<h3 id="4、Cookie删除"><a href="#4、Cookie删除" class="headerlink" title="4、Cookie删除"></a>4、Cookie删除</h3><p>​    通常情况下，如果浏览器中的cookie存储的太多，我们需要手动清除浏览器中的cookie。这是通过客户端的技术删除存储在浏览器中的cookie。Servlet中没有专门提供API去删除cookie。我们可以通过以下方式删除cookie；</p>
+<p>【操作步骤】</p>
+<ol>
+<li>创建与要删除的cookie同名的cookie，将其值设置成””;</li>
+<li>将这个cookie的最大存活时间设置成0；</li>
+<li>设置这个cookie的有效路径（与原cookie的有效路径一致）；</li>
+<li>将这个新的cookie响应给浏览器，置换原来的cookie；</li>
+</ol>
+<p>【小结】让cookie消失的几种方法</p>
+<ol>
+<li>没有设置最大存活时间的cookie，浏览器关闭后cookie立即消失；</li>
+<li>使用浏览器手动清除cookie；</li>
+<li>浏览器禁用cookie；</li>
+<li>通过Servlet技术将cookie删除；</li>
+</ol>
+<h3 id="5、Cookie小结"><a href="#5、Cookie小结" class="headerlink" title="5、Cookie小结"></a>5、Cookie小结</h3><ul>
+<li>Cookie：服务器在客户端（浏览器）存储数据的技术；</li>
+<li>Cookie分类：<ul>
+<li>会话级别：没有设置最大存活时间的cookie，浏览器关闭后消失；</li>
+<li>持久级别：设置了最大存活时间，浏览器关闭后不会消失；</li>
+</ul>
+</li>
+<li>Cookie基本API:<ul>
+<li>创建Cookie：Cookie c = new Cookie(“name”,”zhangsan”);</li>
+<li>获取name值：c.getName();</li>
+<li>获取value值：c.getValue();</li>
+<li>将cookie响应给浏览器：response.add(c);</li>
+<li>获取所有的cookie：Cookie[]  cookies = request.getCookies();</li>
+</ul>
+</li>
+<li>Cookie的有效时间：<ul>
+<li>setMaxAge(int seconds)：以秒为单位设置cookie的存活时间；</li>
+</ul>
+</li>
+<li>Cookie的有效路径：<ul>
+<li>setPath(String path)：设置cookie的有效路径，在这个路径及其子路径下有效；</li>
+</ul>
+</li>
+<li>Cookie删除：<ul>
+<li>客户端：<ul>
+<li>会话级别的cookie，关闭浏览器后cookie立即消失；</li>
+<li>禁用cookie；</li>
+<li>手动清除cookie；</li>
+</ul>
+</li>
+<li>服务端：<ul>
+<li>通过Servlet，将原来的cookie置换；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Cookie的优势及弊端：<ul>
+<li>优势：<ul>
+<li>为服务端标识用户提供依据；</li>
+<li>减轻了服务端数据存储的压力；</li>
+</ul>
+</li>
+<li>弊端：<ul>
+<li>数据存储在客户端不安全；</li>
+<li>存储的数据大小受限，一个cookie存储的数据最大为4K；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、-Session技术"><a href="#二、-Session技术" class="headerlink" title="二、 Session技术"></a>二、 Session技术</h2><p>1、Session是什么</p>
+<p>​    Session是服务器为每个访问这个服务器的客户端用户创建的一个容器。这个容器中存储的数据能够在多个request之间实现共享。而且，这个容器只属于当前这个用户。</p>
+<h3 id="2、Session是怎么标识每一个用户的"><a href="#2、Session是怎么标识每一个用户的" class="headerlink" title="2、Session是怎么标识每一个用户的"></a>2、Session是怎么标识每一个用户的</h3><p>​    表面上，我们说Session容器是属于某一个用户。其实在会话过程中，只有客户端(浏览器)和服务器两个角色。所以，Session容器标识的不是用户，而是当前用户正在使用的浏览器。浏览器与服务器交流是通过给服务器发送请求实现的，浏览器的每次请求中如果都有一个相同的标记用来标记session。服务器就能够识别这个用户了。</p>
+<p>​    这个标记叫做JSESSIONID。我们重新演示，cookie的setPath练习，发现服务器启动后，浏览器的每次请求都会携带一个name属性值为”JSESSIONID”的cookie，这个cookie的值在每次请求过程中都是相同的。</p>
+<h3 id="3、Session的作用"><a href="#3、Session的作用" class="headerlink" title="3、Session的作用"></a>3、Session的作用</h3><ol>
+<li>为每个访问服务器的用户创建一个存储数据的容器；</li>
+<li>容器中的数据在多个请求之间共享；</li>
+</ol>
+<h3 id="4、Session容器创建"><a href="#4、Session容器创建" class="headerlink" title="4、Session容器创建"></a>4、Session容器创建</h3><p>​    Session容器的创建，调用的方法是：request.getSession()。具体方法如下：</p>
+<p>【练习】创建session对象</p>
+<p> <code>HttpSession session = new  request.getSession();</code></p>
+<p>session是用来标识用户的，所以不同用户访问网站，服务器都会创建不同的session保存在不同的内存中，所以session的内存地址不一样。我们可以通过不同浏览器访问同一个网站，模仿不同用户访问网站，从而打印的色三四年地址不同。</p>
+<h3 id="5、Session常用API"><a href="#5、Session常用API" class="headerlink" title="5、Session常用API"></a>5、Session常用API</h3><p>​    Session常用API包括：往session容器中存储数据，删除数据，获取数据</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void setAttribute(String name,Object value)</td>
+<td>session.setAttribute(“loginUser”,user)</td>
+<td>将一个对象与一个名称关联<br>之后存储到session中</td>
+</tr>
+<tr>
+<td>Object getAttribute( String name)</td>
+<td>session.getAttribute(“loginUser”)</td>
+<td>通过名称获取session<br>中的数据</td>
+</tr>
+<tr>
+<td>void removeAttribute(String name)</td>
+<td>session.removeAttribute(“loginUser”)</td>
+<td>根据指定名称删除<br>session中的数据</td>
+</tr>
+<tr>
+<td>String sessionId = session.getId();</td>
+<td>session.getId()</td>
+<td>获取session的id</td>
+</tr>
+</tbody>
+</table>
+<p>6、Session的生命周期</p>
+<h4 id="6-1-Session创建"><a href="#6-1-Session创建" class="headerlink" title="6.1 Session创建"></a>6.1 Session创建</h4><p>​    当客户端浏览器第一次访问服务器时，服务器为每个浏览器创建不同的HttpSession对象。在服务器端使用request.getSession()方法来获得HttpSession对象</p>
+<p>当第一次执行 request.getSession()是session对象就被创建了。后续的request.getSession()只能获取已创建的session。</p>
+<h4 id="6-2-Session使用"><a href="#6-2-Session使用" class="headerlink" title="6.2 Session使用"></a>6.2 Session使用</h4><p>​    对session中的数据进行增，删，获取…</p>
+<h4 id="6-3-Session销毁"><a href="#6-3-Session销毁" class="headerlink" title="6.3 Session销毁"></a>6.3 Session销毁</h4><h5 id="方式一：时间超出了session的存活时间"><a href="#方式一：时间超出了session的存活时间" class="headerlink" title="方式一：时间超出了session的存活时间"></a>方式一：时间超出了session的存活时间</h5><p>​    session的默认存活时间是30分钟，在tomcat的全局配置文件web.xml中。(路径：tomcat/config/web.xml)</p>
+<p><img src="file:///D:/IT/note/temp/6b5018b0-fe96-40fc-88d3-3244fd48437a/128/index_files/1530064946331.png" alt="1530064946331"> </p>
+<p>​    我们可以在web.xml中自己设置这个存活时间。我们设置的这个时间会覆盖原来的存活时间。</p>
+<p>【注意】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">注意：30分钟从什么时候开始计算？</span><br><span class="line">从用户最后一次访问时间开始计算：</span><br><span class="line">Session生成后，只要用户继续访问，服务器就会更新Session的最后访问时间，并维护该Session。用户每访问服务器一次，无论是否读写Session，服务器都认为该用户的Session&quot;活跃（active）&quot;了一次。</span><br></pre></td></tr></table></figure>
+<p>【案例】手动配置session的存活时间</p>
+<p>​    将session-config这段配置复制到自己项目中的web.xml中。修改存活时间为1，测试生存时间。</p>
+<p>方式二：在Servlet中手动销毁</p>
+<p>​    SessionTwoServlet.java 手动销毁session，调用的方法是：session.invalidate()方法；</p>
+<p>方式三：服务器非正常关闭【了解】</p>
+<p>​    如果正常关闭服务器，session的信息，会被序列化硬盘中，保存在tomcat的work\Catalina\localhost\web，当tomcat下一次启动的时候，会把session加载回来。序列化的文件会被销毁。</p>
+<h4 id="6-4-浏览器关闭后，session持久化方案"><a href="#6-4-浏览器关闭后，session持久化方案" class="headerlink" title="6.4 浏览器关闭后，session持久化方案"></a>6.4 浏览器关闭后，session持久化方案</h4><p>​    通过上面的例子我们发现，浏览器关闭后，JSESSIONID就消失来，再次访问的时候又重新创建了一个新的session对象。这样，是比较消耗资源的。如何在浏览器关闭后，session能够继续存在呢？</p>
+<p>答案：session之所以重新创建是因为，浏览器关闭后JESSIONID这个cookie消失了。所以，就不能够在标识这个session了。如果能够让cookie不消失（或者存活时间长点）就能够在很长一段时间内把这个标识发送给Servlet了。此时Servlet就能够找到之前创建的session对象了。</p>
+<p>【实现方案】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> 	1. 在Servlet中手动创建JESSIONID；</span><br><span class="line">2. 手动设置JESSIONID的存活时间；</span><br><span class="line">3. 将JESSIONID相应给浏览器；</span><br></pre></td></tr></table></figure>
+<p>7、Servlet作用域总结</p>
+<ul>
+<li><p>ServletContext域：</p>
+<p>一个WEB应用（项目）对应一个ServletContext，这个对象中保存的数据正在整个WEB项目中都有效；</p>
+<ul>
+<li>创建：服务器启动的时候；</li>
+<li>销毁：服务器关闭或项目移除后；</li>
+</ul>
+</li>
+<li><p>HttpSession：</p>
+<p>一次会话给客户端（浏览器）创建一个session。这个对象中保存的数据，一次会话（多次请求）内数据有效；</p>
+<ul>
+<li>创建：服务器第一次调用getSession()的时候；</li>
+<li>销毁：<ul>
+<li>服务器非正常关闭（正常关闭：Session被序列化）；</li>
+<li>Session过期了：默认存活时间30分钟；</li>
+<li>手动调用session的invalidate()方法；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>HttpServletRequest：</p>
+<p>一次请求创建一个request。这个对象中保存的数据，一次请求（请求链）内数据有效；</p>
+<ul>
+<li>创建：客户端向服务器发送一次请求；</li>
+<li>销毁：服务器为这次请求做出响应之后，销毁request；</li>
+</ul>
+</li>
+</ul>
+<p>【API操作】操作三个作用域对象的API</p>
+<ul>
+<li>存储数据：setAttribute(name,value);</li>
+<li>获得数据：getAttribute(name);</li>
+<li>删除数据：removeAttribute(name)；</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2017/02/24/04WEB初识Cookie-Session/" target="_blank" title="04WEB初识Cookie&amp;Session">htts://cocked.github.io/2017/02/24/04WEB初识Cookie-Session/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/26/05WEB初识JSP-EL-JSTL/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          05WEB初识JSP&amp;EL&amp;JSTL
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/22/03WEB初识HttpServletResponse/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">03WEB初识HttpServletResponse</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、cookie-amp-session"><span class="nav-number">1.</span> <span class="nav-text">一、cookie&amp;session</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一章-会话技术"><span class="nav-number">1.1.</span> <span class="nav-text">第一章  会话技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、什么是会话"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、什么是会话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、会话过程要解决的问题"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、会话过程要解决的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二章-Cookie技术"><span class="nav-number">1.2.</span> <span class="nav-text">第二章    Cookie技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Cookie是什么"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、Cookie是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-Cookie的最大存活时间"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">3.1 Cookie的最大存活时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-Cookie的有效路径"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">3.2  Cookie的有效路径</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、Cookie删除"><span class="nav-number">1.2.2.</span> <span class="nav-text">4、Cookie删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、Cookie小结"><span class="nav-number">1.2.3.</span> <span class="nav-text">5、Cookie小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、-Session技术"><span class="nav-number">1.3.</span> <span class="nav-text">二、 Session技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2、Session是怎么标识每一个用户的"><span class="nav-number">1.3.1.</span> <span class="nav-text">2、Session是怎么标识每一个用户的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、Session的作用"><span class="nav-number">1.3.2.</span> <span class="nav-text">3、Session的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、Session容器创建"><span class="nav-number">1.3.3.</span> <span class="nav-text">4、Session容器创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、Session常用API"><span class="nav-number">1.3.4.</span> <span class="nav-text">5、Session常用API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-Session创建"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">6.1 Session创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-Session使用"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">6.2 Session使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3-Session销毁"><span class="nav-number">1.3.4.3.</span> <span class="nav-text">6.3 Session销毁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#方式一：时间超出了session的存活时间"><span class="nav-number">1.3.4.3.1.</span> <span class="nav-text">方式一：时间超出了session的存活时间</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-4-浏览器关闭后，session持久化方案"><span class="nav-number">1.3.4.4.</span> <span class="nav-text">6.4 浏览器关闭后，session持久化方案</span></a></li></ol></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

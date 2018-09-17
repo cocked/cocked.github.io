@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>06web初识filter | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="WEB" />
+  
+  
+  
+  
+  <meta name="description" content="第一章 过滤器简介1.1 过滤器是什么过滤器（filter）本质是Java中预先定义好了不同的接口，和servlet类似，可以过滤不同的内容，具体怎么过滤，需要使用者定义一个实现类，然后实现接口中的过滤方法，在方法中书写过滤的条件。filter是对客户端访问资源的过滤，符合条件放行，不符合条件不放行。简而言之，是在servlet之前执行，拦截请求，将servlet中一些共同的业务代码抽取出来，这就">
+<meta name="keywords" content="WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="06WEB初识Filter">
+<meta property="og:url" content="htts://cocked.github.io/2017/02/28/06WEB初识Filter/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="第一章 过滤器简介1.1 过滤器是什么过滤器（filter）本质是Java中预先定义好了不同的接口，和servlet类似，可以过滤不同的内容，具体怎么过滤，需要使用者定义一个实现类，然后实现接口中的过滤方法，在方法中书写过滤的条件。filter是对客户端访问资源的过滤，符合条件放行，不符合条件不放行。简而言之，是在servlet之前执行，拦截请求，将servlet中一些共同的业务代码抽取出来，这就">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="file:///D:/IT/note/temp/dfe4cb66-3894-48e9-8a32-70405a030f61/128/index_files/1533302931758.png">
+<meta property="og:image" content="file:///D:/IT/note/temp/dfe4cb66-3894-48e9-8a32-70405a030f61/128/index_files/1533302949319.png">
+<meta property="og:updated_time" content="2018-09-01T08:21:15.778Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="06WEB初识Filter">
+<meta name="twitter:description" content="第一章 过滤器简介1.1 过滤器是什么过滤器（filter）本质是Java中预先定义好了不同的接口，和servlet类似，可以过滤不同的内容，具体怎么过滤，需要使用者定义一个实现类，然后实现接口中的过滤方法，在方法中书写过滤的条件。filter是对客户端访问资源的过滤，符合条件放行，不符合条件不放行。简而言之，是在servlet之前执行，拦截请求，将servlet中一些共同的业务代码抽取出来，这就">
+<meta name="twitter:image" content="file:///D:/IT/note/temp/dfe4cb66-3894-48e9-8a32-70405a030f61/128/index_files/1533302931758.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-06WEB初识Filter" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      06WEB初识Filter
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/02/28/06WEB初识Filter/" class="article-date">
+	  <time datetime="2017-02-28T06:24:11.000Z" itemprop="datePublished">2017-02-28</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="第一章-过滤器简介"><a href="#第一章-过滤器简介" class="headerlink" title="第一章 过滤器简介"></a>第一章 过滤器简介</h1><p>1.1 过滤器是什么过滤器（filter）本质是Java中预先定义好了不同的接口，和servlet类似，可以过滤不同的内容，具体怎么过滤，需要使用者定义一个实现类，然后实现接口中的过滤方法，在方法中书写过滤的条件。filter是对客户端访问资源的过滤，符合条件放行，不符合条件不放行。简而言之，是在servlet之前执行，拦截请求，将servlet中一些共同的业务代码抽取出来，这就是过滤器作用。比如：请求乱码处理。</p>
+<h1 id="第二章-过滤器的应用场景"><a href="#第二章-过滤器的应用场景" class="headerlink" title="第二章 过滤器的应用场景"></a>第二章 过滤器的应用场景</h1><p>1、过滤论坛中的非法字符当我们上论坛或者贴吧这类的网站浏览信息时，我们发现，很多评论有时候是携带脏词的。而这些脏词不能显示出来，使用**代替了。类似这类的脏词过滤，我们可以通过java中的过滤器，对请求参数中的脏词进行过滤。</p>
+<p>2、登录权限检查</p>
+<p>1.1 过滤器是什么过滤器（filter）本质是Java中预先定义好了不同的接口，和servlet类似，可以过滤不同的内容，具体怎么过滤，需要使用者定义一个实现类，然后实现接口中的过滤方法，在方法中书写过滤的条件。filter是对客户端访问资源的过滤，符合条件放行，不符合条件不放行。简而言之，是在servlet之前执行，拦截请求，将servlet中一些共同的业务代码抽取出来，这就是过滤器作用。比如：请求乱码处理。、第二章 过滤器的应用场景1、过滤论坛中的非法字符当我们上论坛或者贴吧这类的网站浏览信息时，我们发现，很多评论有时候是携带脏词的。而这些脏词不能显示出来，使用**代替了。类似这类的脏词过滤，我们可以通过java中的过滤器，对请求参数中的脏词进行过滤。2、登录权限检查<br>当客户端浏览器发出一个请求，这个请求在访问到正真的目标资源之前，我们需要进行登录权限的检查。如果已经登录，我们就让这个请求通过，访问资源；如果没有登录，我们不能让请求访问目标资源。这样的操作需要在访问具体资源进行条件的过滤，我们可以使用过滤器来完成。第三章 过滤器开发入门1、过滤器API介绍</p>
+<p>Filter是由Tomcat启动时创建，是javax.servlet包下面的一个接口，这个接口中定义了3个方法。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void init(FilterConfig filterConfig)</td>
+<td>过滤器对象创建的时候调用的方法</td>
+</tr>
+<tr>
+<td>void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)</td>
+<td>执行过滤的方法</td>
+</tr>
+<tr>
+<td>void destory()</td>
+<td>过滤器销毁的时候调用的方法</td>
+</tr>
+</tbody>
+</table>
+<p>2、过滤器开发步骤</p>
+<p>项目中如果需要使用到过滤器，使用Servlet3.0的注解方式进行创建。创建步骤如下：</p>
+<ul>
+<li>第一步：新建一个普通java类，实现Filter接口；</li>
+<li>第二步：根据提示重写Filter接口的3个方法；</li>
+<li>第三步：在这个类上面通过注解的方式配置这个Filter；<ul>
+<li>注解@WebFilter：配置Filter的注解，这个注解有两个参数；<ul>
+<li>filterName：设置过滤器的名称；</li>
+<li>urlPatterns：配置这个过滤器要拦截的资源的路径； </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>第四步：在doFilter（）方法中，书写过滤的业务逻辑；<ul>
+<li>chain.doFilter()方法放行；</li>
+</ul>
+</li>
+</ul>
+<p><strong>总结:</strong></p>
+<p>doFilter()方法的作用</p>
+<p>当不写doFilter()方法时候，jsp文件访问不到，被拦截；</p>
+<p>当有了doFilter()方法时候，jsp文件可以访问，被放行；所以：doFilter()具有放行的作用。</p>
+<p>第四章 过滤器的执行流程</p>
+<p>过滤器的doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)方法中的request对象和response对象并不是过滤器自己创建的。而是，从被过滤的资源中传递过来的。过滤器的执行流程如下：</p>
+<ol>
+<li>客户端（浏览器）的HttpRequest到达Servlet之前，被Filter的doFilter()方法拦截；</li>
+<li>根据需要，我们可以获取或者修改HttpRequest对象中的数据；</li>
+<li>在这个请求响应给浏览器之前，Filter拦截了HttpResponse对象；</li>
+<li>根据需要，我们可以获取或者修改HttpReponse对象中的数据；</li>
+<li>最后，由doFilter中的chain决定是否让这个请求通过；</li>
+</ol>
+<p><strong>问题</strong>：当用xml方法执行filter时候，路径配置为/*,发现，doFilter()里面的代码执行3次？</p>
+<p>答案：这是idea配置Tomcat时导致的，当启动Tomcat时候，doFilter()会执行2次，然后再跳出浏览器，访问localhost，还会再执行foFilter()一次。</p>
+<p>问题：如果多个过滤器都对相同路径进行匹配，执行顺序该是什么？</p>
+<p>按字母照顺序执行</p>
+<p>第五章 Filter的生命周期</p>
+<p>我们分析了Filter的执行流程。我们有没有想过，我们并没有向Filter发送请求，请求是怎么进入到doFilter()中的呢。我们知道，能够调用一个类下面的非静态的成员方法，一定是这个类的对象。Filter类的对象是在什么时候创建的呢?创建之后又是怎么工作的呢？最后是在什么时候销毁的呢？这些问题就是Filter的生命周期问题。我们，可以通过以下代码对Filter的生命周期问题进行验证：</p>
+<p>【结论】</p>
+<ol>
+<li>Filter类的对象是在服务器启动的时候创建的；</li>
+<li>Filter类对象创建完成后会调用init()方法；</li>
+<li>每当一个请求的路径是满足过滤器的配置路径，那么就会执行一次过滤器的doFilter方法 (类似于service方法)</li>
+<li>当服务器停止的时候，销毁过滤器，执行过滤器的destory方法</li>
+</ol>
+<h3 id="1、doFilter-方法"><a href="#1、doFilter-方法" class="headerlink" title="1、doFilter()方法"></a>1、doFilter()方法</h3><p>doFilter()方法是拦截请求的方法，只要一个请求符合Filter拦截路径，都会被doFilter()方法拦截。doFilter()方法有3个参数，这3个参数的作用分别如下：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ServletRequest req</td>
+<td>ServletRequest是HttpServletRequest类的父类，其中包含了被拦截的请求的信息</td>
+</tr>
+<tr>
+<td>ServletResponse resp</td>
+<td>ServletResponse是HttpServletResponse类的父类，其中包含了被拦截的响应的信息</td>
+</tr>
+<tr>
+<td>FilterChain chain</td>
+<td>FilterChain给Filter提供了放行的方法。chain.doFilter();</td>
+</tr>
+</tbody>
+</table>
+<p>FilterChain 类是一个接口，里面有doFilter(req，resp)方法，作用是将浏览器提交请求对象和响应对象传到过滤连的资源里面去，所以doFilter()方法具有放行的作用。</p>
+<h3 id="2、destory-方法"><a href="#2、destory-方法" class="headerlink" title="2、destory()方法"></a>2、destory()方法</h3><p>过滤器的销毁方法。服务器停止或者将项目从服务器中移除的时候，销毁过滤器，调用一次destory方法。</p>
+<p>【关闭tomcat】查看结果</p>
+<p>【结论】</p>
+<ol>
+<li>过滤器是在服务器停止或者项目移除时销毁的；</li>
+<li>过滤器销毁后会调用destory()方法；</li>
+</ol>
+<h3 id="【小结】Filter生命周期小结"><a href="#【小结】Filter生命周期小结" class="headerlink" title="【小结】Filter生命周期小结"></a>【小结】Filter生命周期小结</h3><ol>
+<li>当服务器启动的时候，过滤器就被初始化了，执行过滤器的init方法</li>
+<li>每当一个请求的路径是满足过滤器的配置路径，那么就会执行一次过滤器的doFilter方法</li>
+<li>当服务器停止的时候，销毁过滤器，执行过滤器的destory方法</li>
+</ol>
+<h2 id="第六章-Filter的映射路径"><a href="#第六章-Filter的映射路径" class="headerlink" title="第六章 Filter的映射路径"></a>第六章 Filter的映射路径</h2><p>映射路径指的是当前这个Filter需要拦截的路径。这个路径的配置方式有两种：</p>
+<ol>
+<li>精确匹配：匹配指定的urlpattern；</li>
+<li>模糊匹配：匹配复合条件的一类路径；</li>
+</ol>
+<h3 id="1、精确匹配"><a href="#1、精确匹配" class="headerlink" title="1、精确匹配"></a>1、精确匹配</h3><p>精确匹配，要求访问的资源路径必须与Filter的urlPatterns中的配置一致。如下：</p>
+<table>
+<thead>
+<tr>
+<th>精确匹配</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>urlPatterns = “/index.jsp”</td>
+<td>拦截对index.jsp页面的请求</td>
+</tr>
+<tr>
+<td>urlPatterns = “/loginServlet”</td>
+<td>拦截对loginServlet的请求</td>
+</tr>
+<tr>
+<td>urlPatterns = “/a.jpg”</td>
+<td>拦截对a.jsp的请求</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2、模糊匹配"><a href="#2、模糊匹配" class="headerlink" title="2、模糊匹配"></a>2、模糊匹配</h3><p>有时候，我们需要对这个服务器中的所有请求都有所特殊处理，比如处理post请求的乱码问题。我们就需要多 所有的请求都设置乱码处理。这时候，就需要对多有的请求进行拦截。如果通过上面的精确匹配模式，需要配置很多的请求，这样就比较麻烦了。如果通过urlPatterns的模糊匹配，就能够对这些请求进行统一处理。</p>
+<p>模糊匹配主要有以下3种写法：</p>
+<table>
+<thead>
+<tr>
+<th>模糊匹配</th>
+<th>使用示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>urlPatterns = “/*”</td>
+<td>urlPatterns = “/*”</td>
+<td>对所有的请求都进行拦截</td>
+</tr>
+<tr>
+<td>urlPatterns = “/xxx/*”</td>
+<td>urlPatterns = “/user/*”</td>
+<td>对映射路径中/user下的所有资源进行拦截</td>
+</tr>
+<tr>
+<td>urlPatterns = “*.xxx”</td>
+<td>urlPatterns = “*.jsp”</td>
+<td>对指定后缀的请求进行拦截</td>
+</tr>
+</tbody>
+</table>
+<p><strong>使用场景1</strong></p>
+<p>今天电商狂欢日，要求对所有购买的电脑进行打9折</p>
+<p><a href="http://localhost:8080/computer/dell" target="_blank" rel="noopener">http://localhost:8080/computer/dell</a></p>
+<p><a href="http://localhost:8080/computer/xiaomi" target="_blank" rel="noopener">http://localhost:8080/computer/xiaomi</a></p>
+<p><a href="http://localhost:8080/computer/thinkpad" target="_blank" rel="noopener">http://localhost:8080/computer/thinkpad</a></p>
+<p><strong>使用场景2</strong></p>
+<p>网站有很多种请求：浏览商品，购买商品，删除商品；用户登录，修改用户信息，注册用户信息。</p>
+<p>我们可以将请求分为两类：xxx.action和xxx.do</p>
+<p>这样可以分清楚网站请求的类别。</p>
+<h3 id="3-多个路径匹配"><a href="#3-多个路径匹配" class="headerlink" title="3.多个路径匹配"></a>3.多个路径匹配</h3><p>一个过滤器可以匹配多个路径</p>
+<p>xml</p>
+<p><img src="file:///D:/IT/note/temp/dfe4cb66-3894-48e9-8a32-70405a030f61/128/index_files/1533302931758.png" alt="1533302931758"></p>
+<p>注解</p>
+<p><img src="file:///D:/IT/note/temp/dfe4cb66-3894-48e9-8a32-70405a030f61/128/index_files/1533302949319.png" alt="1533302949319"></p>
+<p>温馨提示：路径没有/，Tomcat会报错！</p>
+<h2 id="第七章-Filter应用案例"><a href="#第七章-Filter应用案例" class="headerlink" title="第七章 Filter应用案例"></a>第七章 Filter应用案例</h2><h3 id="1、Filter统一解决post请求乱码问题"><a href="#1、Filter统一解决post请求乱码问题" class="headerlink" title="1、Filter统一解决post请求乱码问题"></a>1、Filter统一解决post请求乱码问题</h3><p>8.0版本以上的tomcat为我们解决了get请求的乱码问题。我们需要自己处理post请求的乱码问题，因为我们的一个项目中可能有很多的请求。当然，我们可以在每一个Servlet中都对post的乱码进行处理。但是，Filter给我们提供了一个更加便捷的方式。我们自定义一个Filter类，拦截所有的请求，然后对这些请求进行post乱码处理即可。</p>
+<p>xml配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot;</span><br><span class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">       xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee</span><br><span class="line">	  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;</span><br><span class="line">       version=&quot;3.0&quot;&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">    全局参数：</span><br><span class="line">--&gt;</span><br><span class="line">&lt;context-param&gt;</span><br><span class="line">    &lt;param-name&gt;encoding&lt;/param-name&gt;</span><br><span class="line">    &lt;param-value&gt;UTF-8&lt;/param-value&gt;</span><br><span class="line">&lt;/context-param&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure>
+<p>【注意】过滤器doFilter方法默认拦截请求，如果需要经过过滤器之后，可以继续访问资源，要使用chain.doFilter()方法进行放行。</p>
+<p>配置文件 ： 代码耦合性降低 开发繁琐</p>
+<p>注解：嵌入了代码，耦合性高 简化开发</p>
+<p>后期我们代码被编译class文件时候，可以通过修改配置文件，来修改配置信息</p>
+<p>总结：如果后期代码经常修改，我们使用配置文件。代码不易变化，我么使用注解开发。</p>
+<h3 id="2、非法字符过滤器"><a href="#2、非法字符过滤器" class="headerlink" title="2、非法字符过滤器"></a>2、非法字符过滤器</h3><p>在逛论坛的时候，通常会发现一些敏感或者不和谐的字眼都被**给替代了。这个技术也可以使用我们的Filter来实现。</p>
+<p>3、过滤器案例–登录权限校验</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2017/02/28/06WEB初识Filter/" target="_blank" title="06WEB初识Filter">htts://cocked.github.io/2017/02/28/06WEB初识Filter/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/15/01Mybatis初探/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          01Mybatis初探
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/26/05WEB初识JSP-EL-JSTL/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">05WEB初识JSP&amp;EL&amp;JSTL</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-过滤器简介"><span class="nav-number">1.</span> <span class="nav-text">第一章 过滤器简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-过滤器的应用场景"><span class="nav-number">2.</span> <span class="nav-text">第二章 过滤器的应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、doFilter-方法"><span class="nav-number">2.0.1.</span> <span class="nav-text">1、doFilter()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、destory-方法"><span class="nav-number">2.0.2.</span> <span class="nav-text">2、destory()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#【小结】Filter生命周期小结"><span class="nav-number">2.0.3.</span> <span class="nav-text">【小结】Filter生命周期小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第六章-Filter的映射路径"><span class="nav-number">2.1.</span> <span class="nav-text">第六章 Filter的映射路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、精确匹配"><span class="nav-number">2.1.1.</span> <span class="nav-text">1、精确匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、模糊匹配"><span class="nav-number">2.1.2.</span> <span class="nav-text">2、模糊匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-多个路径匹配"><span class="nav-number">2.1.3.</span> <span class="nav-text">3.多个路径匹配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第七章-Filter应用案例"><span class="nav-number">2.2.</span> <span class="nav-text">第七章 Filter应用案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Filter统一解决post请求乱码问题"><span class="nav-number">2.2.1.</span> <span class="nav-text">1、Filter统一解决post请求乱码问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、非法字符过滤器"><span class="nav-number">2.2.2.</span> <span class="nav-text">2、非法字符过滤器</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

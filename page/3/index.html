@@ -12,7 +12,7 @@
   <meta name="description" content="银河街角，时光路口">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Francis的个人博客">
-<meta property="og:url" content="htts://cocked.github.io/index.html">
+<meta property="og:url" content="htts://cocked.github.io/page/3/index.html">
 <meta property="og:site_name" content="Francis的个人博客">
 <meta property="og:description" content="银河街角，时光路口">
 <meta property="og:locale" content="zh-Hans">
@@ -260,7 +260,7 @@
         
           <section id="main" style="float:none;">
   
-    <article id="post-12Java函数式接口、方法引用"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-14JavaSE反射、注解、Junit"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -268,7 +268,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/08/27/12Java函数式接口、方法引用/">12Java函数式接口、方法引用</a>
+      <a class="article-title" href="/2016/12/08/14JavaSE反射、注解、Junit/">14JavaSE反射、注解、Junit</a>
     </h1>
   
 
@@ -276,8 +276,8 @@
     
     <div class="article-meta">
       
-	<a href="/2018/08/27/12Java函数式接口、方法引用/" class="article-date">
-	  <time datetime="2018-08-27T02:31:37.928Z" itemprop="datePublished">2018-08-27</time>
+	<a href="/2016/12/08/14JavaSE反射、注解、Junit/" class="article-date">
+	  <time datetime="2016-12-08T14:19:56.000Z" itemprop="datePublished">2016-12-08</time>
 	</a>
 
       
@@ -286,12 +286,22 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p class="article-excerpt-content">
-          12.1  函数式接口12.1.1 概念1.函数式接口在Java中是指：有且仅有一个抽象方法的接口。
-2.函数式接口，即适用于函数式编程场景的接口，而Java中的函数式编程体现就是Lambda，所有函数式接口就是可以适用于Lamnda使用的接口，只有确保接口中有且仅有一个抽象方法，java中的Lambda才能顺利地进行推导。
-3、语法糖的定义：是指使用更加方便，但是原理不变的代码语法，例如在遍历集合时使用的for-each语法，其实底层的实现原理 仍然是迭代器，这就是语法糖，从应用层讲， ...
+          14Junit、反射、注解14.1.1 Junit的概述一般IDE都内置了junit,若需要自行下载jar包,可以访问官网,官网地址如下：http://www.junit.org 
+
+特点
+
+
+方法命名规则：以test开头，使用驼峰命名法。
+方法声明上：必须使用注解：@Test，必须使用public修饰符，没有返回值，方法没有参数。
+
+
+运行测试方法
+
+
+选中方法名：右键 –&gt; Run 测试方法名，则运行选中的测试方法比如测试方法名为testSum，则右键 --&gt; Run te...
         </p>
         <p class="article-more-link">
-          <a href="/2018/08/27/12Java函数式接口、方法引用/#more">Read More</a>
+          <a href="/2016/12/08/14JavaSE反射、注解、Junit/#more">Read More</a>
         </p>
       
     </div>
@@ -310,7 +320,7 @@
 
 
   
-    <article id="post-Jquery初探01"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-13JavaSE函数式编程-Stream流"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -318,7 +328,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/08/20/Jquery初探01/">Jquery初探</a>
+      <a class="article-title" href="/2016/12/04/13JavaSE函数式编程-Stream流/">13JavaSE函数式编程&amp;Stream流</a>
     </h1>
   
 
@@ -326,8 +336,8 @@
     
     <div class="article-meta">
       
-	<a href="/2018/08/20/Jquery初探01/" class="article-date">
-	  <time datetime="2018-08-20T02:15:18.000Z" itemprop="datePublished">2018-08-20</time>
+	<a href="/2016/12/04/13JavaSE函数式编程-Stream流/" class="article-date">
+	  <time datetime="2016-12-04T11:10:08.000Z" itemprop="datePublished">2016-12-04</time>
 	</a>
 
       
@@ -336,16 +346,68 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p class="article-excerpt-content">
-          #一、jQuery1.jQery核心语法​    jq的核心语法： jQuery(“选择器”)， jQuery(callback)， jQuery(html)。其中jQuery可以使用$代替。
-2.js和jQery对象比较
-JS对象（DOM）
-DOM：是文档对象模型；DOM对象指的是这个文档（html）中的某一个具体的节点对象；
+          13.1常用的函数式接口总结
 
-jQuery对象
-jQuery对象是一个类数组的对象这个对象里面其实是包含了DOM对象的信息的然后封装了很多操作方法，调用自己的方法html与css处理，得到的...
+
+接口名称
+方法名称
+抽象/默认
+延迟/终结
+方法描述
+
+
+
+
+Supplier
+get
+抽象
+终结
+供给型接口，无参有返回值，主要用于
+
+
+Consumer
+accept
+抽象
+终结
+消费型接口，有参数无返回值
+
+
+
+andThen
+默认
+延迟
+
+
+
+Function
+apply
+抽象
+终结
+函数型接口，有参数有返回值
+
+
+
+andThen
+默认
+延迟
+
+
+
+
+compose
+默认
+延迟
+
+
+
+Predicate
+test
+抽象
+终结
+断言型接口，元芳你怎...
         </p>
         <p class="article-more-link">
-          <a href="/2018/08/20/Jquery初探01/#more">Read More</a>
+          <a href="/2016/12/04/13JavaSE函数式编程-Stream流/#more">Read More</a>
         </p>
       
     </div>
@@ -364,14 +426,24 @@ jQuery对象是一个类数组的对象这个对象里面其实是包含了DOM�
 
 
   
-    <article id="post-Redis初探01"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-11Java网络编程"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2016/11/28/11Java网络编程/">11Java网络编程</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-meta">
       
-	<a href="/2018/08/19/Redis初探01/" class="article-date">
-	  <time datetime="2018-08-19T00:34:12.797Z" itemprop="datePublished">2018-08-19</time>
+	<a href="/2016/11/28/11Java网络编程/" class="article-date">
+	  <time datetime="2016-11-28T12:30:18.000Z" itemprop="datePublished">2016-11-28</time>
 	</a>
 
       
@@ -380,10 +452,14 @@ jQuery对象是一个类数组的对象这个对象里面其实是包含了DOM�
     <div class="article-entry" itemprop="articleBody">
       
         <p class="article-excerpt-content">
-          
+          第一章 网络编程入门1.1软件结构C/S结构：全称为Client/Server结构，是指客户端和服务器结构。常见程序有ＱＱ、迅雷等软件。
+B/S结构 ：全称为Browser/Server结构，是指浏览器和服务器结构。常见浏览器有谷歌、火狐等。
+两种架构各有优势，但是无论哪种架构，都离不开网络的支持。网络编程，就是在一定的协议下，实现两台计算机的通信的程序。
+1.2 网络通信协议
+网络通信协议：通信协议是对计算机必须遵守的规则，只有遵守这些规则，计算机之间才能进行通信。这就好比在道路中行驶的...
         </p>
         <p class="article-more-link">
-          <a href="/2018/08/19/Redis初探01/#more">Read More</a>
+          <a href="/2016/11/28/11Java网络编程/#more">Read More</a>
         </p>
       
     </div>
@@ -402,7 +478,7 @@ jQuery对象是一个类数组的对象这个对象里面其实是包含了DOM�
 
 
   
-    <article id="post-01springmvc初探"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-10JavaSE缓冲流、转换流、序列化流、Files"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -410,7 +486,7 @@ jQuery对象是一个类数组的对象这个对象里面其实是包含了DOM�
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/04/05/01springmvc初探/">01springmvc初探</a>
+      <a class="article-title" href="/2016/11/28/10JavaSE缓冲流、转换流、序列化流、Files/">10JavaSE缓冲流、转换流、序列化流、Files</a>
     </h1>
   
 
@@ -418,8 +494,8 @@ jQuery对象是一个类数组的对象这个对象里面其实是包含了DOM�
     
     <div class="article-meta">
       
-	<a href="/2017/04/05/01springmvc初探/" class="article-date">
-	  <time datetime="2017-04-05T01:24:14.000Z" itemprop="datePublished">2017-04-05</time>
+	<a href="/2016/11/28/10JavaSE缓冲流、转换流、序列化流、Files/" class="article-date">
+	  <time datetime="2016-11-28T00:04:33.000Z" itemprop="datePublished">2016-11-28</time>
 	</a>
 
       
@@ -428,11 +504,15 @@ jQuery对象是一个类数组的对象这个对象里面其实是包含了DOM�
     <div class="article-entry" itemprop="articleBody">
       
         <p class="article-excerpt-content">
-          #springmvcspringmvc简介​    大部分java应用都是web应用，表现层是web应用最为重要的部分。Spring为表现层提供了一个优秀的web框架——SpringMVC。和众多其他web框架一样，它是基于mvc的设计理念，此外，它采用了松散耦合可插拔组件结构，比其他mvc框架更具有扩展性和灵活性。
-SpringMVC通过一套MVC注解，让POJO（Plain Ordinary Java Object，简单的Java对象）成为处理请求的处理器，无需实现任何接口，同时，Sp...
+          第一章 属性集1.1 概述java.util.Properties 继承于Hashtable ，来表示一个持久的属性集。它使用键值结构存储数据，每个键及其对应值都是一个字符串。该类也被许多Java类使用，比如获取系统属性时，System.getProperties 方法就是返回一个Properties对象。
+1.2 Properties类构造方法
+public Properties() :创建一个空的属性列表。
+
+基本的存储方法
+public Object setProperty(Stri...
         </p>
         <p class="article-more-link">
-          <a href="/2017/04/05/01springmvc初探/#more">Read More</a>
+          <a href="/2016/11/28/10JavaSE缓冲流、转换流、序列化流、Files/#more">Read More</a>
         </p>
       
     </div>
@@ -451,7 +531,7 @@ SpringMVC通过一套MVC注解，让POJO（Plain Ordinary Java Object，简单�
 
 
   
-    <article id="post-01spring入门"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-09JavaSE字节流与字符流"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -459,7 +539,7 @@ SpringMVC通过一套MVC注解，让POJO（Plain Ordinary Java Object，简单�
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/03/31/01spring入门/">01spring入门</a>
+      <a class="article-title" href="/2016/11/26/09JavaSE字节流与字符流/">09JavaSE字节流与字符流</a>
     </h1>
   
 
@@ -467,8 +547,8 @@ SpringMVC通过一套MVC注解，让POJO（Plain Ordinary Java Object，简单�
     
     <div class="article-meta">
       
-	<a href="/2017/03/31/01spring入门/" class="article-date">
-	  <time datetime="2017-03-31T09:21:56.000Z" itemprop="datePublished">2017-03-31</time>
+	<a href="/2016/11/26/09JavaSE字节流与字符流/" class="article-date">
+	  <time datetime="2016-11-26T12:03:53.000Z" itemprop="datePublished">2016-11-26</time>
 	</a>
 
       
@@ -477,12 +557,34 @@ SpringMVC通过一套MVC注解，让POJO（Plain Ordinary Java Object，简单�
     <div class="article-entry" itemprop="articleBody">
       
         <p class="article-excerpt-content">
-          #Spring概述 Spring是分层的、JavaSE/EE一站式(full-stack)、轻量级开源框架。以IoC（Inverse Of Control：反转控制）和AOP（Aspect Oriented Programming：面向切面编程）为内核，提供了表现层Spring MVC和持久层Spring JDBC以及业务层事务管理等众多的企业级应用技术，还能整合开源世界众多著名的第三方框架和类库，逐渐成为使用最多的Java EE企业应用开源框架。
-Spring的发展历史：
-1997年IB...
+          一、IO概述1.1 什么是IO
+Java中I/O操作主要是指使用java.io包下的内容，进行输入、输出操作。输入也叫做读取数据，输出也叫做作写出数据。
+1.2 IO的分类
+根据数据的流向分为：输入流和输出流。
+
+输入流 ：把数据从其他设备上读取到内存中的流。 
+输出流 ：把数据从内存 中写出到其他设备上的流。
+
+格局数据的类型分为：字节流和字符流。
+
+字节流 ：以字节为单位，读写数据的流。
+字符流 ：以字符为单位，读写数据的流。
+
+1.3 顶级父类们
+
+
+
+
+输入流
+输出流
+
+
+
+
+字节...
         </p>
         <p class="article-more-link">
-          <a href="/2017/03/31/01spring入门/#more">Read More</a>
+          <a href="/2016/11/26/09JavaSE字节流与字符流/#more">Read More</a>
         </p>
       
     </div>
@@ -501,7 +603,7 @@ Spring的发展历史：
 
 
   
-    <article id="post-01Mybatis初探"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-03JavaSE异常处理"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -509,7 +611,7 @@ Spring的发展历史：
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/03/15/01Mybatis初探/">01Mybatis初探</a>
+      <a class="article-title" href="/2016/11/01/03JavaSE异常处理/">03JavaSE异常处理</a>
     </h1>
   
 
@@ -517,8 +619,8 @@ Spring的发展历史：
     
     <div class="article-meta">
       
-	<a href="/2017/03/15/01Mybatis初探/" class="article-date">
-	  <time datetime="2017-03-15T04:04:03.000Z" itemprop="datePublished">2017-03-15</time>
+	<a href="/2016/11/01/03JavaSE异常处理/" class="article-date">
+	  <time datetime="2016-11-01T12:00:59.000Z" itemprop="datePublished">2016-11-01</time>
 	</a>
 
       
@@ -527,16 +629,19 @@ Spring的发展历史：
     <div class="article-entry" itemprop="articleBody">
       
         <p class="article-excerpt-content">
-          首先给大家推荐几个网页：
-http://www.mybatis.cn/
-http://blog.csdn.net/isea533/article/category/2092001   
-http://www.mybatis.org/mybatis-3/zh/index.html
-http://www.mybatis.org/spring/zh/index.html
-http://www.mybatis.tk/
-#什么是Mybatis？简单介绍MybatisMybatis的**前身**是iB...
+          一、 异常概念总结：练习一：异常的体系   问题：
+
+请描述异常的继承体系
+   2.请描述你对错误(Error)的理解
+   3.请描述你对异常(Expection的理解)
+   4.请描述你对运行时异常(RuntimeException)的理解
+答：
+
+异常继承体系为：异常的根类是 java.lang.Throwable，其下有两个子类：
+java.lang.Error 与 java.util.Exception 。而Exception又分为编译时期异常：checked异常，与运行时期...
         </p>
         <p class="article-more-link">
-          <a href="/2017/03/15/01Mybatis初探/#more">Read More</a>
+          <a href="/2016/11/01/03JavaSE异常处理/#more">Read More</a>
         </p>
       
     </div>
@@ -555,7 +660,7 @@ http://www.mybatis.tk/
 
 
   
-    <article id="post-06WEB初识Filter"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-02JavaSE基本语法总结"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -563,7 +668,7 @@ http://www.mybatis.tk/
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/02/28/06WEB初识Filter/">06WEB初识Filter</a>
+      <a class="article-title" href="/2016/10/26/02JavaSE基本语法总结/">02JavaSE基本语法总结</a>
     </h1>
   
 
@@ -571,8 +676,8 @@ http://www.mybatis.tk/
     
     <div class="article-meta">
       
-	<a href="/2017/02/28/06WEB初识Filter/" class="article-date">
-	  <time datetime="2017-02-28T06:24:11.000Z" itemprop="datePublished">2017-02-28</time>
+	<a href="/2016/10/26/02JavaSE基本语法总结/" class="article-date">
+	  <time datetime="2016-10-26T11:59:02.000Z" itemprop="datePublished">2016-10-26</time>
 	</a>
 
       
@@ -581,11 +686,11 @@ http://www.mybatis.tk/
     <div class="article-entry" itemprop="articleBody">
       
         <p class="article-excerpt-content">
-          第一章 过滤器简介1.1 过滤器是什么过滤器（filter）本质是Java中预先定义好了不同的接口，和servlet类似，可以过滤不同的内容，具体怎么过滤，需要使用者定义一个实现类，然后实现接口中的过滤方法，在方法中书写过滤的条件。filter是对客户端访问资源的过滤，符合条件放行，不符合条件不放行。简而言之，是在servlet之前执行，拦截请求，将servlet中一些共同的业务代码抽取出来，这就是过滤器作用。比如：请求乱码处理。
-第二章 过滤器的应用场景1、过滤论坛中的非法字符当我们上论...
+          一、StringBuffer1.类介绍1234①线程安全的可变字符串序列，一个类似于String的字符串缓冲区，但是不能修改（就是不能通过加号+连接，String就可以）②StringBuffer和String类的区别	String是一个可改变的字符序列	StringBuffer是一个可变的字符序列
+2.构造方法12345StringBuffer()	构造一个没有字符的字符串缓冲区，初始容量为16个字符StringBuffer(int capacity)	构造一个没有字符的字符串缓冲区和指...
         </p>
         <p class="article-more-link">
-          <a href="/2017/02/28/06WEB初识Filter/#more">Read More</a>
+          <a href="/2016/10/26/02JavaSE基本语法总结/#more">Read More</a>
         </p>
       
     </div>
@@ -604,7 +709,7 @@ http://www.mybatis.tk/
 
 
   
-    <article id="post-05WEB初识JSP-EL-JSTL"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-01JavaSE入门基础总结"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -612,7 +717,7 @@ http://www.mybatis.tk/
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/02/26/05WEB初识JSP-EL-JSTL/">05WEB初识JSP&amp;EL&amp;JSTL</a>
+      <a class="article-title" href="/2016/10/20/01JavaSE入门基础总结/">01JavaSE入门基础总结</a>
     </h1>
   
 
@@ -620,8 +725,8 @@ http://www.mybatis.tk/
     
     <div class="article-meta">
       
-	<a href="/2017/02/26/05WEB初识JSP-EL-JSTL/" class="article-date">
-	  <time datetime="2017-02-26T10:53:44.000Z" itemprop="datePublished">2017-02-26</time>
+	<a href="/2016/10/20/01JavaSE入门基础总结/" class="article-date">
+	  <time datetime="2016-10-20T13:00:18.000Z" itemprop="datePublished">2016-10-20</time>
 	</a>
 
       
@@ -630,13 +735,11 @@ http://www.mybatis.tk/
     <div class="article-entry" itemprop="articleBody">
       
         <p class="article-excerpt-content">
-          1、概述1.1 JSP引入在Servlet中，能够直接获取后台服务器中的数据：获取数据方便
-通过拼接字符串的形式，给浏览器响应html：操作麻烦，效率太低 ，阅读性差。
-如果能够有一个既能直接书写html代码，又能书写Servlet代码的页面。就能够在客户端和服务端直接进行数据交互了。
-1.2JSP是什么JSP全名为Java Server Pages，中文名叫java服务器页面，其本质是一个简化的Servlet 设计，它是由Sun 公司倡导、许多公司参与一起建立的一种动态网页 技术标准。其...
+          一、String介绍(引用类型)
+123456789101112131415161718192021222324252627282930313233343536373839404142434445461.java.lang.String字符串.	用&quot;&quot;括住的时字符串,都可以看做是实现此类的实例	类String中也有许多简单方法2.特点	1).字符串不变:字符串的值在创建后不能被更改	2).因为String对象不可改变.所有他们可以被共享	3).(底层是这么实现的)对St...
         </p>
         <p class="article-more-link">
-          <a href="/2017/02/26/05WEB初识JSP-EL-JSTL/#more">Read More</a>
+          <a href="/2016/10/20/01JavaSE入门基础总结/#more">Read More</a>
         </p>
       
     </div>
@@ -655,7 +758,7 @@ http://www.mybatis.tk/
 
 
   
-    <article id="post-04WEB初识Cookie-Session"  class="article article-type-post" itemscope itemprop="blogPost" >
+    <article id="post-第一篇博客"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
@@ -663,7 +766,7 @@ http://www.mybatis.tk/
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/02/24/04WEB初识Cookie-Session/">04WEB初识Cookie&amp;Session</a>
+      <a class="article-title" href="/2016/05/19/第一篇博客/">第一篇博客</a>
     </h1>
   
 
@@ -671,8 +774,8 @@ http://www.mybatis.tk/
     
     <div class="article-meta">
       
-	<a href="/2017/02/24/04WEB初识Cookie-Session/" class="article-date">
-	  <time datetime="2017-02-24T13:30:12.000Z" itemprop="datePublished">2017-02-24</time>
+	<a href="/2016/05/19/第一篇博客/" class="article-date">
+	  <time datetime="2016-05-18T23:12:27.000Z" itemprop="datePublished">2016-05-19</time>
 	</a>
 
       
@@ -681,93 +784,17 @@ http://www.mybatis.tk/
     <div class="article-entry" itemprop="articleBody">
       
         <p class="article-excerpt-content">
-          1typora-copy-images-to: img
-一、cookie&amp;session第一章  会话技术1、什么是会话​    在日常生活中，从拨通电话到挂断电话之间的一连串的你问我答的过程就是一个会话。Web应用中的会话过程类似于生活中的打电话过程，它指的是一个客户端（浏览器）与Web服务器之间连续发生的一系列请求和响应过程，例如，一个用户在某网站上的整个购物过程就是一个会话。
-简而言之：用户访问网站到离开网站，关闭浏览器，这个过程就叫回话。
-2、会话过程要解决的问题​    ...
+          #第一篇博客​    ##费尽周折终于将自己的博客上线，
+​    在这里 ，在我对hexo熟悉之后，将会不定期的更新我的博客主要关于Java，以及java中遇到的问题，也有可能分享生活，
+​    ##以后补充：
+​    ##之前的博客：
+​    博客园：https://www.cnblogs.com/zhengyuan/
+​    CSDN：https://blog.csdn.net/A_Eric
+​    GitHub：https://github.com/cocked    
+...
         </p>
         <p class="article-more-link">
-          <a href="/2017/02/24/04WEB初识Cookie-Session/#more">Read More</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-03WEB初识HttpServletResponse"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/02/22/03WEB初识HttpServletResponse/">03WEB初识HttpServletResponse</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/02/22/03WEB初识HttpServletResponse/" class="article-date">
-	  <time datetime="2017-02-22T04:52:09.000Z" itemprop="datePublished">2017-02-22</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          一、响应行【响应行】响应行格式：协议/版本  状态码   
-
-如：HTTP/1.1 200 ;
-
-常见状态码：
-
-
-
-状态码
-状态码描述
-说明
-
-
-
-
-200
-OK
-请求已成功，请求所希望的响应头或数据体将随此响应返回。出现此状态码是表示正常状态。
-
-
-302
-Move temporarily
-重定向，请求的资源临时从不同的 URI响应请求。
-
-
-304
-Not Modified
-从缓存中读取数据，不从服务器重新获取数据
-
-
-404
-Not Found
-请求资源不存在。通常是用户路径编写错...
-        </p>
-        <p class="article-more-link">
-          <a href="/2017/02/22/03WEB初识HttpServletResponse/#more">Read More</a>
+          <a href="/2016/05/19/第一篇博客/#more">Read More</a>
         </p>
       
     </div>
@@ -790,7 +817,7 @@ Not Found
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
   </nav>
 
 </section>

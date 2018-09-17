@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>03web初识httpservletresponse | Francis的个人博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="WEB" />
+  
+  
+  
+  
+  <meta name="description" content="一、响应行【响应行】响应行格式：协议/版本  状态码     如：HTTP/1.1 200 ;  常见状态码：    状态码 状态码描述 说明     200 OK 请求已成功，请求所希望的响应头或数据体将随此响应返回。出现此状态码是表示正常状态。   302 Move temporarily 重定向，请求的资源临时从不同的 URI响应请求。   304 Not Modified 从缓存中读取数据">
+<meta name="keywords" content="WEB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03WEB初识HttpServletResponse">
+<meta property="og:url" content="htts://cocked.github.io/2017/02/22/03WEB初识HttpServletResponse/index.html">
+<meta property="og:site_name" content="Francis的个人博客">
+<meta property="og:description" content="一、响应行【响应行】响应行格式：协议/版本  状态码     如：HTTP/1.1 200 ;  常见状态码：    状态码 状态码描述 说明     200 OK 请求已成功，请求所希望的响应头或数据体将随此响应返回。出现此状态码是表示正常状态。   302 Move temporarily 重定向，请求的资源临时从不同的 URI响应请求。   304 Not Modified 从缓存中读取数据">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-01T08:09:46.580Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="03WEB初识HttpServletResponse">
+<meta name="twitter:description" content="一、响应行【响应行】响应行格式：协议/版本  状态码     如：HTTP/1.1 200 ;  常见状态码：    状态码 状态码描述 说明     200 OK 请求已成功，请求所希望的响应头或数据体将随此响应返回。出现此状态码是表示正常状态。   302 Move temporarily 重定向，请求的资源临时从不同的 URI响应请求。   304 Not Modified 从缓存中读取数据">
+  
+    <link rel="alternate" href="/atom.xml" title="Francis的个人博客" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/mylogo.jpg">
+  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/mylogo.jpg">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-03WEB初识HttpServletResponse" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      03WEB初识HttpServletResponse
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/02/22/03WEB初识HttpServletResponse/" class="article-date">
+	  <time datetime="2017-02-22T04:52:09.000Z" itemprop="datePublished">2017-02-22</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一、响应行"><a href="#一、响应行" class="headerlink" title="一、响应行"></a>一、响应行</h1><h3 id="【响应行】"><a href="#【响应行】" class="headerlink" title="【响应行】"></a><strong>【响应行】</strong></h3><p>响应行格式：协议/版本  状态码   </p>
+<blockquote>
+<p>如：HTTP/1.1 200 ;</p>
+</blockquote>
+<p>常见状态码：</p>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>状态码描述</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>OK</td>
+<td>请求已成功，请求所希望的响应头或数据体将随此响应返回。出现此状态码是表示正常状态。</td>
+</tr>
+<tr>
+<td>302</td>
+<td>Move temporarily</td>
+<td>重定向，请求的资源临时从不同的 URI响应请求。</td>
+</tr>
+<tr>
+<td>304</td>
+<td>Not Modified</td>
+<td>从缓存中读取数据，不从服务器重新获取数据</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>请求资源不存在。通常是用户路径编写错误，也可能是服务器资源已删除。</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden</td>
+<td>服务器已经理解请求，但是拒绝执行它</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed</td>
+<td>请求行中指定的请求方法不能被用于请求相应的资源</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>服务器内部错误。通常程序抛异常</td>
+</tr>
+</tbody>
+</table>
+<h3 id="【响应头】"><a href="#【响应头】" class="headerlink" title="【响应头】"></a><strong>【响应头】</strong></h3><p>响应头也是用的键值对key:value，服务器基于<strong>响应头</strong>通知浏览器的行为。</p>
+<p><strong>常见的响应头</strong> ：</p>
+<table>
+<thead>
+<tr>
+<th>响应头Key</th>
+<th>响应头value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>location</td>
+<td>指定响应的路径，需要与状态码302配合使用，完成跳转。</td>
+</tr>
+<tr>
+<td>content-Type</td>
+<td>响应正文的类型（MIME类型）例如：text/html;charset=UTF-8</td>
+</tr>
+<tr>
+<td>content-disposition</td>
+<td>通过浏览器以附件形式解析正文，例如：attachment;filename=xx.zip</td>
+</tr>
+<tr>
+<td>refresh</td>
+<td>页面刷新，例如：3;url=<a href="">www.qiezi.cn</a>    //三秒刷新页面到<a href="">www.qiezi.c</a>om</td>
+</tr>
+</tbody>
+</table>
+<h3 id="【响应体】"><a href="#【响应体】" class="headerlink" title="【响应体】"></a>【响应体】</h3><p>​    响应体，就是服务器发送给浏览器的数据。当前请求的资源是hello.html，所以浏览器响应的数据是一个html页面。</p>
+<h1 id="二、HttpServletResponse对象"><a href="#二、HttpServletResponse对象" class="headerlink" title="二、HttpServletResponse对象"></a>二、HttpServletResponse对象</h1><p>HttpServletResponse对象代表服务器响应，tomcat创建HttpServletResponse对象，并将该对象作为参数传递给servlet的service方法。</p>
+<p>这个对象的<strong>作用</strong>：</p>
+<p>设置响应行、头、体</p>
+<p>下面，就这几方面对HttpServletResponse对象的常用API进行详细讲解：</p>
+<h3 id="2、HttpServletResponse对象常用API"><a href="#2、HttpServletResponse对象常用API" class="headerlink" title="2、HttpServletResponse对象常用API"></a>2、HttpServletResponse对象常用API</h3><h4 id="2-1【响应行】"><a href="#2-1【响应行】" class="headerlink" title="2.1【响应行】"></a>2.1【响应行】</h4><p>​    响应行：协议/版本        如：HTTP/1.1 200 。这里边的信息，我们通常只会用到状态码，操作状态码的方法setStatus(int  code);</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>setStatus(int code)</td>
+<td>向浏览器发送状态码</td>
+</tr>
+</tbody>
+</table>
+<p>练习服务器重定向</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//location+302 共同完成重定向  重定向到login.html图片``    </span></span><br><span class="line">response.setHeader(<span class="string">"location"</span>, <span class="string">"login.html"</span>);``     response.setStatus(<span class="number">302</span>);</span><br><span class="line">  <span class="comment">//可以使用一行代码替换``response.sendRedirect("login.html");</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>对应的状态码响应状态码常量</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>响应成功</td>
+</tr>
+<tr>
+<td>404</td>
+<td>资源路径错误或资源被删除</td>
+</tr>
+<tr>
+<td>500</td>
+<td>服务器内部错误</td>
+</tr>
+<tr>
+<td>302</td>
+<td>重定向</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-2-【响应头】"><a href="#2-2-【响应头】" class="headerlink" title="2.2 【响应头】"></a>2.2 【响应头】</h4><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>setHeader(String name,String value)</td>
+<td>设置响应头信息</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> 给浏览器设置响应头：Content-Disposition   告诉浏览器以附件的形式打开这个文件response.setHeader(<span class="string">"Content-Disposition"</span>,<span class="string">"attachment;filename="</span>+fileName);</span><br></pre></td></tr></table></figure>
+<p>【常见响应头】</p>
+<table>
+<thead>
+<tr>
+<th>响应头Key</th>
+<th>响应头value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>refresh</td>
+<td>页面刷新，例如：3;url=<a href="">www.itcast.cn</a>    //三秒刷新页面到<a href="">www.itcast.cn</a></td>
+</tr>
+<tr>
+<td>content-type</td>
+<td>设置响应<strong>数据的类型（MIME类型）</strong>和<strong>编码格式</strong> 例如：text/html;charset=UTF-8</td>
+</tr>
+<tr>
+<td>location</td>
+<td>指定响应的路径，需要与状态码302配合使用，完成重定向。</td>
+</tr>
+<tr>
+<td>content-disposition</td>
+<td>通过浏览器以附件形式解析正文，例如：attachment;filename=xx.zip。</td>
+</tr>
+</tbody>
+</table>
+<h5 id="2-处理响应乱码"><a href="#2-处理响应乱码" class="headerlink" title="2.处理响应乱码"></a>2.处理响应乱码</h5><h6 id="乱码产生的原因"><a href="#乱码产生的原因" class="headerlink" title="乱码产生的原因"></a>乱码产生的原因</h6><p>​    服务器如果需要响应给浏览器<strong>中文数据</strong>，tomcat使用<code>getWriter()</code>输出字符时，对于中文需要进行编码处理，而tomcat8 默认编码是<code>ISO-8859-1</code>,该码表是不支持中文编码的。所以响应给浏览器，出现乱码。</p>
+<h6 id="响应乱码解决方案"><a href="#响应乱码解决方案" class="headerlink" title="响应乱码解决方案"></a>响应乱码解决方案</h6><p>​    因为<code>HttpServlerResponse</code>实现类是由tomcat服务器提供的。所以服务器在向浏览器输出数据之前，对于<strong>中文</strong>要采用支持中文的编码进行编码，通过<code>response.setContentType(&quot;text/html;charset=utf-8&quot;);</code> ：</p>
+<ol>
+<li>设置响应的数据类型（mime-type）;</li>
+<li>设置响应的数据编码（utf-8）；</li>
+</ol>
+<h6 id="处理响应乱码的API"><a href="#处理响应乱码的API" class="headerlink" title="处理响应乱码的API"></a>处理响应乱码的API</h6><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>response.setHeader(&quot;content-type&quot;,&quot;text/html;charset=utf-8&quot;);</code></td>
+<td>设置响应头</td>
+</tr>
+<tr>
+<td><code>response.setContentType(&quot;text/html;charset=utf-8&quot;);</code></td>
+<td>简写方式</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【注意事项】</strong> </p>
+<ol>
+<li>开发中通常使用<code>response.setContentType(&quot;text/html;charset=utf-8&quot;);</code>来处理响应乱码；</li>
+<li>处理响应乱码必须书写在响应数据之前才起作用；</li>
+</ol>
+<h5 id="3-重定向"><a href="#3-重定向" class="headerlink" title="3.重定向"></a>3.重定向</h5><p>【重定向API】</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>response.setStatus(302); response.setHeader(&quot;location&quot;, &quot;/otherServlet&quot;);</code></td>
+<td>通过设置响应状态码和响应头实现重定向</td>
+</tr>
+<tr>
+<td><code>response.sendRedirect(&quot;/otherServlet&quot;);</code></td>
+<td>重定向的简写方式</td>
+</tr>
+</tbody>
+</table>
+<p><strong>【注意事项】</strong> </p>
+<ol>
+<li>开发中通常使用<code>response.sendRedirect(&quot;/otherServlet&quot;);</code>来实现重定向。</li>
+</ol>
+<h5 id="转发和重定向的区别"><a href="#转发和重定向的区别" class="headerlink" title="转发和重定向的区别"></a>转发和重定向的区别</h5><table>
+<thead>
+<tr>
+<th>区别点</th>
+<th>转发</th>
+<th>重定向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实现原理</td>
+<td>服务器内部</td>
+<td>浏览器执行</td>
+</tr>
+<tr>
+<td>请求次数</td>
+<td>一次</td>
+<td>两次</td>
+</tr>
+<tr>
+<td>浏览器地址栏地址</td>
+<td>不变化</td>
+<td>变为第二次请求的地址</td>
+</tr>
+<tr>
+<td>能否共享request域</td>
+<td>能够共享</td>
+<td>不能共享</td>
+</tr>
+<tr>
+<td>作用</td>
+<td>共享request域对象</td>
+<td>完成跳转</td>
+</tr>
+</tbody>
+</table>
+<h5 id="转发和重定向怎么选择"><a href="#转发和重定向怎么选择" class="headerlink" title="转发和重定向怎么选择"></a>转发和重定向怎么选择</h5><ol>
+<li>如果需要共享request域，必须使用转发；</li>
+<li>如果需要将浏览器地址栏地址变为第二次请求的地址，必须使用重定向；</li>
+</ol>
+<h4 id="2-4【响应体】"><a href="#2-4【响应体】" class="headerlink" title="2.4【响应体】"></a>2.4【响应体】</h4><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ServletOutputStream  getOutputStream()</td>
+<td>用于向浏览器输出二进制数据。【字节流–文件下载】</td>
+</tr>
+<tr>
+<td>java.io.PrintWriter getWriter()</td>
+<td>用于向浏览器输出字符数据。【字符流–给浏览器响应数据】</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: '',
+  alipayImage: ''
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Francis</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2017/02/22/03WEB初识HttpServletResponse/" target="_blank" title="03WEB初识HttpServletResponse">htts://cocked.github.io/2017/02/22/03WEB初识HttpServletResponse/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/24/04WEB初识Cookie-Session/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          04WEB初识Cookie&amp;Session
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/20/02WEB初识http-request/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">02WEB初识http&amp;request</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、响应行"><span class="nav-number">1.</span> <span class="nav-text">一、响应行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#【响应行】"><span class="nav-number">1.0.1.</span> <span class="nav-text">【响应行】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#【响应头】"><span class="nav-number">1.0.2.</span> <span class="nav-text">【响应头】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#【响应体】"><span class="nav-number">1.0.3.</span> <span class="nav-text">【响应体】</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、HttpServletResponse对象"><span class="nav-number">2.</span> <span class="nav-text">二、HttpServletResponse对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2、HttpServletResponse对象常用API"><span class="nav-number">2.0.1.</span> <span class="nav-text">2、HttpServletResponse对象常用API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1【响应行】"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">2.1【响应行】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-【响应头】"><span class="nav-number">2.0.1.2.</span> <span class="nav-text">2.2 【响应头】</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-处理响应乱码"><span class="nav-number">2.0.1.2.1.</span> <span class="nav-text">2.处理响应乱码</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#乱码产生的原因"><span class="nav-number">2.0.1.2.1.1.</span> <span class="nav-text">乱码产生的原因</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#响应乱码解决方案"><span class="nav-number">2.0.1.2.1.2.</span> <span class="nav-text">响应乱码解决方案</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#处理响应乱码的API"><span class="nav-number">2.0.1.2.1.3.</span> <span class="nav-text">处理响应乱码的API</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-重定向"><span class="nav-number">2.0.1.2.2.</span> <span class="nav-text">3.重定向</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#转发和重定向的区别"><span class="nav-number">2.0.1.2.3.</span> <span class="nav-text">转发和重定向的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#转发和重定向怎么选择"><span class="nav-number">2.0.1.2.4.</span> <span class="nav-text">转发和重定向怎么选择</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4【响应体】"><span class="nav-number">2.0.1.3.</span> <span class="nav-text">2.4【响应体】</span></a></li></ol></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2016 - 2018 Francis的个人博客 All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Francis的个人博客
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Francis All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
